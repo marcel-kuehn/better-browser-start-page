@@ -1,0 +1,31 @@
+{
+  "elements": [
+    {
+      "url": "https://www.netflix.com/"
+    },
+    {
+      "url": "https://www.youtube.com/"
+    },
+    {
+      "url": "https://www.facebook.com/"
+    },
+    {
+      "url": "https://www.linkedin.com/"
+    },
+    {
+      "url": "https://www.amazon.com/"
+    },
+    {
+      "url": "https://www.reddit.com/"
+    },
+    {
+      "url": "https://www.x.com/"
+    },
+    {
+      "url": "https://www.wikipedia.org/"
+    },
+    {
+      "url": "https://www.pinterest.com/"
+    }
+  ]
+}
