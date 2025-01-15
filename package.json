@@ -1,9 +1,31 @@
 {
   "name": "better-browser-start-page",
-  "private": true,
+  "description": "A customizable browser start page built with React, Vite, Shadcn and TailwindCSS.",
   "version": "0.0.0",
   "type": "module",
   "homepage": "https://marcel-kuehn.github.io/better-browser-start-page",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcel-kuehn/better-browser-start-page.git"
+  },
+  "bugs": {
+    "url": "https://github.com/marcel-kuehn/better-browser-start-page/issues"
+  },
+  "author": "Marcel Kühn (https://github.com/marcel-kuehn)",
+  "license": "MIT",
+  "keywords": [
+    "browser",
+    "start-page",
+    "frontend",
+    "react",
+    "vite",
+    "tailwindcss",
+    "shadcn",
+    "radix-ui"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
