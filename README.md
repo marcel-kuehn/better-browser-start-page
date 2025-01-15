@@ -8,7 +8,7 @@ The idea is to have a page where you can:
 - Access a collection of apps and websites you use frequently
 - Store and organize your links in a central place
 
-You can view a demo here: (https://marcel-kuehn.github.io/better-browser-start-page/)[https://marcel-kuehn.github.io/better-browser-start-page/]
+Click [here](https://marcel-kuehn.github.io/better-browser-start-page/) to view the demo.
 
 ## Functionality and Features
 
