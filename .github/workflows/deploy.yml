@@ -22,7 +22,7 @@ jobs:
         run: npm install
 
       - name: Setup configuration files
-        run: npm setup
+        run: npm run setup
 
       - name: Build the project
         run: npm run build
