@@ -27,8 +27,8 @@ The app supports both dark and light modes.
 
 1. Clone the repository.
 2. Run `npm install`.
-3. Got to the `/src/config` directory copy each file and remove the `example.` prefix, e.g. copy `example.apps.json` and name the name file `apps.json`
-4. Verify the site renders by opening [http://localhost:5173](http://localhost:5173) in your browser. Initially, only the background and header will be visible, as the sections are not yet configured.
+3. Run `npm setup`. This will initialize the config files for you and will fill it with test data.
+4. Verify the site renders by opening [http://localhost:5173](http://localhost:5173) in your browser.
 5. Configure the app (see the "Configuration" section for instructions).
 6. Run `npm run build`.
 7. Navigate to the `dist` folder and copy the full path to the `index.html` file (e.g., `/Users/<YourUser>/git/better-browser-start-page/dist/index.html`).
@@ -57,11 +57,9 @@ The app supports both dark and light modes.
 
 ## Configuration
 
-> **INFO:** You can find example by viewing the `example.*.json` file in the `/src/config` directory.
+> **INFO:** You can find examples by viewing the `example.*.json` files in the `/src/config` directory.
 
 The app can be fully customized using JSON files. The configuration is straightforward and quick. This guide explains how to set up each section.
-
-> **NOTE:** A future update will include a UI to simplify configuration.
 
 ### Directory
 
