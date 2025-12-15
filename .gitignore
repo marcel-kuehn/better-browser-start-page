@@ -24,10 +24,7 @@ dist-ssr
 *.sw?
 
 # config files
-src/config/*.json
-
-# allow example config files
-!src/config/example.*.json
+app.config.json
 
 .npmrc
 

@@ -1,25 +1,22 @@
-import { useSearchContext } from "@/context/search";
 import { getDomain, openUrl } from "@/lib/url";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SearchIcon } from "lucide-react";
 import { replacePlaceholder } from "@/lib/string";
-import LogoLoader from "@/components/custom/LogoLoader";
-import { Widget } from "@/components/custom/Widget";
+import type { SearchWidget } from "./types";
+import { Widget } from "@/components/shared/Widget";
+import FaviconLoader from "@/components/shared/FaviconLoader";
 
-export function SearchWidget() {
-  const { elements } = useSearchContext();
-  const [selectedElement, setSelectedElement] = useState<string | undefined>();
+export function SearchWidget({ elements }: SearchWidget) {
+  const [selectedElement, setSelectedElement] = useState<string>(
+    elements[0]?.url ?? ""
+  );
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const hasElements = useMemo(() => elements.length > 0, [elements]);
   const hasMultipleElements = useMemo(() => elements.length > 1, [elements]);
-
-  useEffect(() => {
-    setSelectedElement(elements[0]?.url);
-  }, [elements]);
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -49,10 +46,10 @@ export function SearchWidget() {
           >
             {elements.map((element) => (
               <ToggleGroupItem key={element.url} value={element.url}>
-                <LogoLoader
+                <FaviconLoader
                   url={element.url}
-                  customLogoUrl={element.customLogoUrl}
-                  className="w-6 h-6"
+                  faviconUrl={element.faviconUrl}
+                  className="w-6 h-6 [[data-state=on]_&]:text-primary-foreground"
                 />
               </ToggleGroupItem>
             ))}
@@ -66,7 +63,7 @@ export function SearchWidget() {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
           <div>
-            <Button type="submit" size="icon">
+            <Button type="submit" size="icon" disabled={!selectedElement}>
               <SearchIcon />
             </Button>
           </div>

@@ -8,14 +8,12 @@ The idea is to have a page where you can:
 - Access a collection of apps and websites you use frequently
 - Store and organize your links in a central place
 
-Click [here](https://marcel-kuehn.github.io/better-browser-start-page/) to view the demo.
-
 ## Functionality and Features
 
 ![Light Mode Screenshot](./docs/light-mode-screenshot.png)
 ![Dark Mode Screenshot](./docs/dark-mode-screenshot.png)
 
-This app is divided into the following sections:
+This app can be configured by adding widgets. Here are some examples for common widgets:
 
 - **Search:** A configurable search section where you can choose your preferred search engine or website and search directly. You can customize it with any search engine or website that supports search functionality.
 - **Apps:** A collection of your favorite websites or apps, such as YouTube and Spotify. It automatically detects and displays their favicons. This section is fully customizable.
@@ -32,80 +30,59 @@ The app supports both dark and light modes.
 5. Configure the app (see the "Configuration" section for instructions).
 6. Run `npm run build`.
 7. Navigate to the `dist` folder and copy the full path to the `index.html` file (e.g., `/Users/<YourUser>/git/better-browser-start-page/dist/index.html`).
-8. Replace your browser's default start page URL with the copied path. Instructions for specific browsers are provided below.
+8. You can then link to this url in your browser to set this as your start page.
 
 > **Note:** If you update the configuration, you need to run `npm run build`. However you don't need to redo all the other steps.
 
-### Browser Setup Instructions
-
-#### Chrome
-
-1. Open Chrome settings.
-2. Navigate to "On startup" and select "Open a specific page or set of pages."
-3. Add the path to the `index.html` file you copied.
-
-#### Firefox
-
-1. Open Firefox settings.
-2. Go to "Home" and set "Homepage and new windows" to "Custom URLs."
-3. Add the path to the `index.html` file.
-
-#### Safari
-
-1. Open Safari preferences.
-2. Go to the "General" tab and set the "Homepage" field to the path to the `index.html` file.
-
 ## Configuration
 
-> **INFO:** You can find examples by viewing the `example.*.json` files in the `/src/config` directory.
+> **INFO:** You can find an example by viewing the `example.app.json` file in the root of this project.
 
-The app can be fully customized using JSON files. The configuration is straightforward and quick. This guide explains how to set up each section.
+The app can be fully customized using JSON-configuration. The configuration is straightforward and quick. This guide explains how to set up each section.
 
-### Directory
+### Adding the config file
 
-Place all configs in the `./src/config` directory.
-
-### Search Section
-
-1. Create a file named `search.json` in the `./src/config` directory.
-2. Add the following JSON structure:
+1. Please create a `app.config.json` file in the root of this project.
+2. Add the following json to it:
 
 ```json
 {
-  "elements": []
+  "widgets": []
 }
 ```
 
-3. Populate the `elements` array with your search engine URLs. Use the `{query}` placeholder for the search term.
+3. Add as many widgets to it as you want. See the widgets down below for further instructions
 
-Example:
+### Widgets
 
-```json
+#### Search Widget
+
+![Search Widget](./docs/search-widget.png)
+
+This widget allows you to configure search for your favorite websites.
+A toggle group allows you to specify which search engine you want to use
+and an input allows you to enter a query.
+The widget will replace `{query}`in the url, with the query
+you have entered in your input and then redirect you to the page.
+
+_Example config:_
+
+```ts
 {
+  "type": "search-widget",
   "elements": [
     {
-      "name": "Google",
-      "url": "https://www.google.com/search?q={query}"
-    }
-  ]
-}
-```
-
-4. If the favicon is not displayed properly or you want a different logo to be displayed you can customize it with the `customLogoUrl` property:
-
-```json
-{
-  "elements": [
-    {
-      "name": "Google",
+      // must contain {query}
       "url": "https://www.google.com/search?q={query}",
-      "customLogoUrl": "..."
-    }
+      // optional, use when favicon does not get loaded automatically
+      "faviconUrl": "https://www.google.com/favicon.ico"
+    },
+    // ...
   ]
 }
 ```
 
-#### Common Search URLs
+_Common Search URLs:_
 
 - Google: `https://www.google.com/search?q={query}`
 - YouTube: `https://www.youtube.com/results?search_query={query}`
@@ -118,132 +95,57 @@ Example:
 - GitHub: `https://github.com/search?q={query}`
 - GitLab: `https://gitlab.com/search?search={query}`
 
-### Apps Section
+#### Apps Widget
 
-1. Create a file named `apps.json` in the `./src/config` directory.
-2. Add the following JSON structure:
+![Apps Widget](./docs/apps-widget.png)
 
-```json
+This widget allows you to store links to your most important apps and websites in one place.
+
+_Example config:_
+
+```ts
 {
-  "collection": []
-}
-```
-
-3. Populate the `elements` array with your links:
-
-```json
-{
+  "type": "apps-widget",
   "elements": [
     {
-      "url": "https://www.youtube.com/"
+        "url": "https://www.figma.com/",
+      // optional, use when favicon does not get loaded automatically
+        "faviconUrl": "https://static.figma.com/app/icon/1/favicon.svg"
     },
-    {
-      "url": "https://open.spotify.com/"
-    }
+    // ...
   ]
 }
 ```
 
-4. If the favicon is not displayed properly or you want a different logo to be displayed you can customize it with the `customLogoUrl` property:
+#### Links Widget
 
-```json
+![Links Widget](./docs/links-widget.png)
+
+Use this widget to create link lists by a specific topic or website.
+Let's say you are a developer and you want to store the links to the designs, docs, test pages, repo etc. related to your project. Then this would be the perfect widget for you.
+
+_Example config:_
+
+```ts
 {
-  "elements": [
-    {
-      "url": "https://calendar.google.com/",
-      "customLogoUrl": "https://calendar.google.com/googlecalendar/images/favicons_2020q4/calendar_31_256.ico"
-    }
-  ]
-}
-```
-
-### Links Section
-
-1. Create a file named `links.json` in the `./src/config` directory.
-2. Add the following JSON structure:
-
-```json
-{
-  "collections": []
-}
-```
-
-3. Add a new collection:
-
-```json
-{
-  "collections": [
-    {
-      "title": "Your custom title",
-      "elements": []
-    }
-  ]
-}
-```
-
-4. Populate the `elements` array of your collection with your links:
-
-```json
-{
-  "collections": [
-    {
-      "title": "Your custom title",
-      "elements": [
+    "type": "links-widget",
+    "collections": [
         {
-          "name": "W3 A11Y Guide",
-          "url": "https://www.w3.org/WAI/ARIA/apg/patterns/"
-        }
-      ]
-    }
-  ]
+            "title": "Development",
+            "elements": [
+                {
+                    "label": "Gitlab",
+                    "url": "https://gitlab.com/",
+                    // optional, use when favicon does not get loaded automatically
+                    "faviconUrl": "https://gitlab.com/favicon.svg"
+                },
+                // ....
+            ]
+        },
+        // ....
+    ]
 }
 ```
-
-5. If the favicon is not displayed properly or you want a different logo to be displayed you can customize it with the `customLogoUrl` property:
-
-```json
-{
-  "collections": [
-    {
-      "title": "Your custom title",
-      "elements": [
-        {
-          "name": "W3 A11Y Guide",
-          "url": "https://www.w3.org/WAI/ARIA/apg/patterns/",
-          "customLogoUrl": "..."
-        }
-      ]
-    }
-  ]
-}
-```
-
-#### Dynamic Links
-
-Links support variables. I use them because the subdomain of the test system
-in my company frequently changes and I have a lot of links related to it.
-I do not want to change all of the links every two weeks. Here is how you use them:
-
-```json
-{
-  "variables": {
-    "testSystemSubdomain": "system11-747"
-  }
-  "collections": [
-    {
-      "title": "Test Links",
-      "elements": [
-        {
-          "name": "Test System Admin Panel",
-          "url": "https://{testSystemSubdomain}.some-random-company.com",
-        }
-      ]
-    }
-  ]
-}
-```
-
-Make sure to include a placeholder, like `{variableName}` in your link. The component will detect placeholder automatically and populates them.
 
 ## Development
 
@@ -265,21 +167,6 @@ Before starting development, follow the setup and configuration guides. Below ar
 - **UI Library:** [Shadcn](https://ui.shadcn.com/) (based on [RadixUI](https://www.radix-ui.com/))
 - **CSS Framework:** [Tailwind CSS](https://tailwindcss.com/)
 - **Icons:** [Lucide](https://lucide.dev/)
-
-### Project Structure
-
-- **/docs**: Documentation assets (e.g., screenshots).
-- **/public**: Static files (e.g., images).
-- **/src**: Application source code.
-  - **/components**: Reusable React components.
-    - **/custom**: Custom components that are specific to this project.
-    - **/ui**: Pre-built components from the Shadcn library. These are auto-generated and some where customized as needed. Read the Shadcn docs to learn how to install more. Do not overwrite existing components here.
-  - **/config**: Directory for JSON configuration files that define the app's customizable content (e.g., search engines, apps, links).
-  - **/context**: React contexts that load JSON configuration data and provide it to components using `useContext`. Each major section (Search, Apps, Links) has its own dedicated context.
-  - **/lib**: Utility functions shared across the app. Examples include helper functions for parsing JSON or managing themes.
-  - **App.tsx**: The main application file. It defines the overall structure of the app, including the header and main content areas, and integrates contexts for configuration.
-  - **index.css**: Contains global CSS styles, including theme variables. The theme structure is based on Shadcn's predefined design system. Customization instructions are available in their [theming guide](https://ui.shadcn.com/docs/theming).
-  - **main.tsx**: The entry point for the application. It initializes React and renders the app into the DOM.
 
 ## Contributions
 

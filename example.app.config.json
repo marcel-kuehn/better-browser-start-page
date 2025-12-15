@@ -1,0 +1,128 @@
+{
+  "widgets": [
+    {
+      "type": "search-widget",
+      "elements": [
+        {
+          "url": "https://www.google.com/search?q={query}"
+        },
+        {
+          "url": "https://www.youtube.com/results?search_query={query}"
+        },
+        {
+          "url": "https://chatgpt.com?q={query}"
+        },
+        {
+          "url": "https://open.spotify.com/search/{query}"
+        }
+      ]
+    },
+    {
+      "type": "apps-widget",
+      "elements": [
+        {
+          "url": "https://www.netflix.com/"
+        },
+        {
+          "url": "https://www.youtube.com/"
+        },
+        {
+          "url": "https://www.facebook.com/"
+        },
+        {
+          "url": "https://www.amazon.com/"
+        },
+        {
+          "url": "https://www.reddit.com/"
+        },
+        {
+          "url": "https://www.wikipedia.org/"
+        },
+        {
+          "url": "https://www.pinterest.com/"
+        }
+      ]
+    },
+    {
+      "type": "links-widget",
+      "collections": [
+        {
+          "title": "Development",
+          "elements": [
+            {
+              "label": "Gitlab",
+              "url": "https://gitlab.com/"
+            },
+            {
+              "label": "Stack Overflow",
+              "url": "https://stackoverflow.com/"
+            },
+            {
+              "label": "CodePen",
+              "url": "https://codepen.io/"
+            },
+            {
+              "label": "MDN Web Docs",
+              "url": "https://developer.mozilla.org/"
+            }
+          ]
+        },
+        {
+          "title": "Management",
+          "elements": [
+            {
+              "label": "Trello",
+              "url": "https://trello.com/"
+            },
+            {
+              "label": "Asana",
+              "url": "https://asana.com/"
+            },
+            {
+              "label": "Jira",
+              "url": "https://www.atlassian.com/software/jira"
+            }
+          ]
+        },
+        {
+          "title": "Design",
+          "elements": [
+            {
+              "label": "Adobe XD",
+              "url": "https://www.adobe.com/products/xd.html"
+            },
+            {
+              "label": "Canva",
+              "url": "https://www.canva.com/"
+            },
+            {
+              "label": "Sketch",
+              "url": "https://www.sketch.com/"
+            }
+          ]
+        },
+        {
+          "title": "News & Updates",
+          "elements": [
+            {
+              "label": "Hacker News",
+              "url": "https://news.ycombinator.com/"
+            },
+            {
+              "label": "The Verge",
+              "url": "https://www.theverge.com/"
+            },
+            {
+              "label": "Wired",
+              "url": "https://www.wired.com/"
+            },
+            {
+              "label": "Ars Technica",
+              "url": "https://arstechnica.com/"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
