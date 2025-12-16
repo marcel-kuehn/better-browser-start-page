@@ -15,7 +15,7 @@ export default function View({ children }: { children: React.ReactNode }) {
 
   return (
     <div
-      className="w-screen h-screen bg-cover bg-center flex flex-col items-center justify-center bg-muted p-4"
+      className="w-screen min-h-screen bg-cover bg-center flex flex-col items-center justify-center bg-muted p-4"
       style={{
         backgroundImage: `url(wallpaper-${selectedTheme}.jpg)`,
       }}

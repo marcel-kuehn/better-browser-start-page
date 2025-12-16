@@ -1,13 +1,9 @@
 import { buttonVariants } from "@/components/ui/button";
 import clsx from "clsx";
-import type { LinkCollectionElement } from "./types";
+import type { Link } from "./types";
 import FaviconLoader from "@/components/shared/FaviconLoader";
 
-export default function LinkCollectionElement({
-  label,
-  url,
-  faviconUrl,
-}: LinkCollectionElement) {
+export default function Link({ label, url, faviconUrl }: Link) {
   return (
     <a
       href={url}

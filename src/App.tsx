@@ -1,5 +1,5 @@
 import View from "./components/layouts/DefaultLayout";
-import WidgetRenderer from "./components/shared/WidgetRenderer";
+import BlockRenderer from "./components/shared/BlockRenderer";
 import { ThemeProvider } from "./components/ui/theme-provider";
 import { appConfig } from "./config";
 
@@ -9,7 +9,14 @@ function App() {
       <View>
         <main className="w-full max-w-7xl">
           <div className="flex flex-col gap-4">
-            <WidgetRenderer widgets={appConfig.widgets} />
+            <BlockRenderer
+              blocks={[
+                {
+                  type: "grid",
+                  elements: appConfig.widgets,
+                },
+              ]}
+            />
           </div>
         </main>
       </View>
