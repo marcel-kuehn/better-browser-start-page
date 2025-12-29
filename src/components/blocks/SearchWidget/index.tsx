@@ -9,7 +9,7 @@ import type { SearchWidget } from "./types";
 import { Widget } from "@/components/shared/Widget";
 import FaviconLoader from "@/components/shared/FaviconLoader";
 
-export function SearchWidget({ elements }: SearchWidget) {
+export function SearchWidget({ elements, ...props }: SearchWidget) {
   const [selectedElement, setSelectedElement] = useState<string>(
     elements[0]?.url ?? ""
   );
@@ -32,7 +32,7 @@ export function SearchWidget({ elements }: SearchWidget) {
   if (!hasElements) return null;
 
   return (
-    <Widget className="flex justify-center">
+    <Widget className="flex justify-center" {...props}>
       <form
         className="flex flex-col gap-4 justify-center max-w-xl w-full"
         onSubmit={onSubmit}
