@@ -30,7 +30,10 @@ export function TimeWidget({ ...props }: TimeWidget) {
   }, []);
 
   return (
-    <Widget className="text-center" {...props}>
+    <Widget
+      className="text-center flex justify-center items-center flex-col"
+      {...props}
+    >
       <p className="text-foreground text-7xl font-semibold letter-spacing-wide">
         {time}
       </p>

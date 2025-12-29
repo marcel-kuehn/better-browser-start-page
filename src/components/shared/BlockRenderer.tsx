@@ -9,6 +9,8 @@ import { LinksWidget } from "../blocks/LinksWidget";
 import { TimeWidget } from "../blocks/TimeWidget";
 import { Grid as GridType } from "../blocks/Grid/types";
 import Grid from "../blocks/Grid";
+import { StopWatchWidget as StopWatchWidgetType } from "../blocks/StopWatchWidget/types";
+import StopWatchWidget from "../blocks/StopWatchWidget";
 
 export default function BlockRenderer({ blocks }: { blocks: Block[] }) {
   return (
@@ -17,8 +19,6 @@ export default function BlockRenderer({ blocks }: { blocks: Block[] }) {
         if (block.type === "grid") {
           return <Grid {...(block as GridType)} />;
         }
-
-        if (!block.gridArea) return null;
         if (block.type === "search-widget") {
           return <SearchWidget {...(block as SearchWidgetType)} />;
         }
@@ -30,6 +30,9 @@ export default function BlockRenderer({ blocks }: { blocks: Block[] }) {
         }
         if (block.type === "clock-widget") {
           return <TimeWidget {...(block as TimeWidgetType)} />;
+        }
+        if (block.type === "stopwatch-widget") {
+          return <StopWatchWidget {...(block as StopWatchWidgetType)} />;
         }
         return null;
       })}
