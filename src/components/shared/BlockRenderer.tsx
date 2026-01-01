@@ -2,11 +2,11 @@ import { Block } from "@/types";
 import { SearchWidget as SearchWidgetType } from "../blocks/SearchWidget/types";
 import { AppsWidget as AppsWidgetType } from "../blocks/AppsWidget/types";
 import { LinksWidget as LinksWidgetType } from "../blocks/LinksWidget/types";
-import { TimeWidget as TimeWidgetType } from "../blocks/TimeWidget/types";
+import { ClockWidget as ClockWidgetType } from "../blocks/ClockWidget/types";
 import { SearchWidget } from "../blocks/SearchWidget";
 import { AppsWidget } from "../blocks/AppsWidget";
 import { LinksWidget } from "../blocks/LinksWidget";
-import { TimeWidget } from "../blocks/TimeWidget";
+import { ClockWidget } from "../blocks/ClockWidget";
 import { Grid as GridType } from "../blocks/Grid/types";
 import Grid from "../blocks/Grid";
 import { StopWatchWidget as StopWatchWidgetType } from "../blocks/StopWatchWidget/types";
@@ -29,7 +29,7 @@ export default function BlockRenderer({ blocks }: { blocks: Block[] }) {
           return <LinksWidget {...(block as LinksWidgetType)} />;
         }
         if (block.type === "clock-widget") {
-          return <TimeWidget {...(block as TimeWidgetType)} />;
+          return <ClockWidget {...(block as ClockWidgetType)} />;
         }
         if (block.type === "stopwatch-widget") {
           return <StopWatchWidget {...(block as StopWatchWidgetType)} />;

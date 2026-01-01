@@ -1,5 +1,5 @@
 import { Widget } from "@/types";
 
-export interface TimeWidget extends Widget {
+export interface ClockWidget extends Widget {
   type: "clock-widget";
 }

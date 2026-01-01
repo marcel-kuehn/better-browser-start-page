@@ -1,11 +1,9 @@
 import fs from "fs";
 import path from "path";
 
-const configDir = path.join("src", "config");
+const configDir = path.resolve();
 const files = [
-  "example.apps.json",
-  "example.links.json",
-  "example.search.json",
+  "example.app.config.json",
 ];
 
 files.forEach((file) => {

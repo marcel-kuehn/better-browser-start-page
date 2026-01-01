@@ -27,5 +27,3 @@ dist-ssr
 app.config.json
 
 .npmrc
-
-package-lock.json

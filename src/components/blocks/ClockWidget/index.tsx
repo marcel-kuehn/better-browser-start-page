@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { TimeWidget } from "./types";
+import type { ClockWidget } from "./types";
 import { Widget } from "@/components/shared/Widget";
 
 const getTime = (): string => {
@@ -17,7 +17,7 @@ const getDate = (): string => {
   });
 };
 
-export function TimeWidget({ ...props }: TimeWidget) {
+export function ClockWidget({ ...props }: ClockWidget) {
   const [time, setTime] = useState(getTime());
   const [date, setDate] = useState(getDate());
 
