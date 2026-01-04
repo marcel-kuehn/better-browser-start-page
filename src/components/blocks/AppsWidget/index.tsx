@@ -8,13 +8,12 @@ export function AppsWidget({ elements, ...props }: AppsWidget) {
   if (!hasElements) return null;
 
   return (
-    <Widget
-      className="flex gap-4 justify-center max-w-full overflow-hidden flex-wrap"
-      {...props}
-    >
-      {elements.map((element) => (
-        <AppLink key={element.url} {...element} />
-      ))}
+    <Widget className="max-w-full flex items-center" {...props}>
+      <div className="flex gap-4 justify-center items-center flex-wrap">
+        {elements.map((element) => (
+          <AppLink key={element.url} {...element} />
+        ))}
+      </div>
     </Widget>
   );
 }

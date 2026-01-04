@@ -6,6 +6,7 @@ export interface Block {
 }
 
 export interface Widget extends Block {
+  hidden?: boolean;
   gridArea: {
     rowStart: number;
     rowEnd: number;

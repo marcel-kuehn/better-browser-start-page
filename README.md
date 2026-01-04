@@ -13,6 +13,8 @@ You can make it look the way you like using themes. It supports both dark- and l
 
 ![Light Mode Screenshot](./docs/light-mode-screenshot.png)
 ![Dark Mode Screenshot](./docs/dark-mode-screenshot.png)
+![Light Mode Screenshot](./docs/light-mode-screenshot-2.png)
+![Dark Mode Screenshot](./docs/dark-mode-screenshot-2.png)
 
 ## Setup
 
@@ -220,3 +222,7 @@ To get started with contributing:
 5. Submit a pull request
 
 Please ensure your code passes linting and adheres to the project structure.
+
+## Credit
+
+Wallpapers are by <a href="https://www.freepik.com/free-vector/abstract-paper-cut-shape-wave-background_302899580.htm#fromView=author&page=1&position=0&uuid=954b92a6-99ce-456b-817b-ead37a14a4d4">soepratman on Freepik</a>

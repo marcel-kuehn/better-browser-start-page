@@ -13,7 +13,7 @@ function App() {
               blocks={[
                 {
                   type: "grid",
-                  elements: appConfig.widgets,
+                  elements: appConfig.widgets.filter((b) => !b.hidden),
                 },
               ]}
             />
