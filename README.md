@@ -11,10 +11,10 @@ You can make it look the way you like using themes. It supports both dark- and l
 
 ## Example Gallery
 
-![Light Mode Screenshot](./docs/light-mode-screenshot.png)
-![Dark Mode Screenshot](./docs/dark-mode-screenshot.png)
 ![Light Mode Screenshot](./docs/light-mode-screenshot-2.png)
 ![Dark Mode Screenshot](./docs/dark-mode-screenshot-2.png)
+![Light Mode Screenshot](./docs/light-mode-screenshot.png)
+![Dark Mode Screenshot](./docs/dark-mode-screenshot.png)
 
 ## Setup
 
