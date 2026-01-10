@@ -7,7 +7,6 @@ interface WidgetProps extends Widget {
 }
 
 export function Widget({ children, className, gridArea }: WidgetProps) {
-  console.log(gridArea);
   return (
     <Card
       className={`w-full px-4 py-6 bg-card/50 backdrop-blur-lg border-border/20 ${

@@ -16,5 +16,6 @@ export interface Widget extends Block {
 }
 
 export interface AppConfig {
-  widgets: Block[];
+  elements: Block[];
+  _v: string;
 }
