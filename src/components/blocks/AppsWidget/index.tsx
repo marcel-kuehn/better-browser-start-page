@@ -9,7 +9,7 @@ export function AppsWidget({ elements, ...props }: AppsWidget) {
 
   return (
     <Widget className="max-w-full flex items-center" {...props}>
-      <div className="flex gap-4 justify-center items-center flex-wrap">
+      <div className="flex gap-4 justify-center items-center flex-wrap w-full">
         {elements.map((element) => (
           <AppLink key={element.url} {...element} />
         ))}
