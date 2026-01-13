@@ -15,6 +15,8 @@ function App() {
     ? [
         {
           type: "grid",
+          columns: 4,
+          rows: 1,
           elements: [
             {
               type: "migration-widget",

@@ -1,179 +1,187 @@
 {
-  "widgets": [
+  "_v": "0.0.1",
+  "elements": [
     {
-      "type": "clock-widget",
-      "gridArea": {
-        "rowStart": 1,
-        "rowEnd": 2,
-        "columnStart": 1,
-        "columnEnd": 2
-      }
-    },
-    {
-      "type": "search-widget",
-      "gridArea": {
-        "rowStart": 1,
-        "rowEnd": 2,
-        "columnStart": 2,
-        "columnEnd": 4
-      },
+      "type": "grid",
+      "columns": 4,
+      "rows": 4,
       "elements": [
         {
-          "url": "https://www.google.com/search?q={query}"
+          "type": "clock-widget",
+          "gridArea": {
+            "rowStart": 1,
+            "rowEnd": 2,
+            "columnStart": 1,
+            "columnEnd": 2
+          }
         },
         {
-          "url": "https://www.youtube.com/results?search_query={query}"
+          "type": "search-widget",
+          "gridArea": {
+            "rowStart": 1,
+            "rowEnd": 2,
+            "columnStart": 2,
+            "columnEnd": 4
+          },
+          "elements": [
+            {
+              "url": "https://www.google.com/search?q={query}"
+            },
+            {
+              "url": "https://www.youtube.com/results?search_query={query}"
+            },
+            {
+              "url": "https://chatgpt.com?q={query}"
+            },
+            {
+              "url": "https://open.spotify.com/search/{query}"
+            }
+          ]
         },
         {
-          "url": "https://chatgpt.com?q={query}"
+          "type": "stopwatch-widget",
+          "gridArea": {
+            "rowStart": 1,
+            "rowEnd": 2,
+            "columnStart": 4,
+            "columnEnd": 5
+          }
         },
         {
-          "url": "https://open.spotify.com/search/{query}"
-        }
-      ]
-    },
-    {
-      "type": "stopwatch-widget",
-      "gridArea": {
-        "rowStart": 1,
-        "rowEnd": 2,
-        "columnStart": 4,
-        "columnEnd": 5
-      }
-    },
-    {
-      "type": "apps-widget",
-      "gridArea": {
-        "rowStart": 2,
-        "rowEnd": 3,
-        "columnStart": 1,
-        "columnEnd": 5
-      },
-      "elements": [
-        {
-          "url": "https://www.netflix.com/"
+          "type": "apps-widget",
+          "gridArea": {
+            "rowStart": 2,
+            "rowEnd": 3,
+            "columnStart": 1,
+            "columnEnd": 5
+          },
+          "elements": [
+            {
+              "url": "https://www.netflix.com/"
+            },
+            {
+              "url": "https://www.youtube.com/"
+            },
+            {
+              "url": "https://www.facebook.com/"
+            },
+            {
+              "url": "https://www.amazon.com/"
+            },
+            {
+              "url": "https://www.reddit.com/"
+            },
+            {
+              "url": "https://www.wikipedia.org/"
+            },
+            {
+              "url": "https://www.pinterest.com/"
+            }
+          ]
         },
         {
-          "url": "https://www.youtube.com/"
+          "type": "links-widget",
+          "gridArea": {
+            "rowStart": 3,
+            "rowEnd": 5,
+            "columnStart": 1,
+            "columnEnd": 2
+          },
+          "title": "Development",
+          "elements": [
+            {
+              "label": "Gitlab",
+              "url": "https://gitlab.com/"
+            },
+            {
+              "label": "Stack Overflow",
+              "url": "https://stackoverflow.com/"
+            },
+            {
+              "label": "CodePen",
+              "url": "https://codepen.io/"
+            },
+            {
+              "label": "MDN Web Docs",
+              "url": "https://developer.mozilla.org/"
+            }
+          ]
         },
         {
-          "url": "https://www.facebook.com/"
+          "type": "links-widget",
+          "gridArea": {
+            "rowStart": 3,
+            "rowEnd": 5,
+            "columnStart": 2,
+            "columnEnd": 3
+          },
+          "title": "Management",
+          "elements": [
+            {
+              "label": "Trello",
+              "url": "https://trello.com/"
+            },
+            {
+              "label": "Asana",
+              "url": "https://asana.com/"
+            },
+            {
+              "label": "Jira",
+              "url": "https://www.atlassian.com/software/jira"
+            }
+          ]
         },
         {
-          "url": "https://www.amazon.com/"
+          "type": "links-widget",
+          "gridArea": {
+            "rowStart": 3,
+            "rowEnd": 5,
+            "columnStart": 3,
+            "columnEnd": 4
+          },
+          "title": "Design",
+          "elements": [
+            {
+              "label": "Adobe XD",
+              "url": "https://www.adobe.com/products/xd.html"
+            },
+            {
+              "label": "Canva",
+              "url": "https://www.canva.com/"
+            },
+            {
+              "label": "Sketch",
+              "url": "https://www.sketch.com/"
+            }
+          ]
         },
         {
-          "url": "https://www.reddit.com/"
-        },
-        {
-          "url": "https://www.wikipedia.org/"
-        },
-        {
-          "url": "https://www.pinterest.com/"
-        }
-      ]
-    },
-    {
-      "type": "links-widget",
-      "gridArea": {
-        "rowStart": 3,
-        "rowEnd": 5,
-        "columnStart": 1,
-        "columnEnd": 2
-      },
-      "title": "Development",
-      "elements": [
-        {
-          "label": "Gitlab",
-          "url": "https://gitlab.com/"
-        },
-        {
-          "label": "Stack Overflow",
-          "url": "https://stackoverflow.com/"
-        },
-        {
-          "label": "CodePen",
-          "url": "https://codepen.io/"
-        },
-        {
-          "label": "MDN Web Docs",
-          "url": "https://developer.mozilla.org/"
-        }
-      ]
-    },
-    {
-      "type": "links-widget",
-      "gridArea": {
-        "rowStart": 3,
-        "rowEnd": 5,
-        "columnStart": 2,
-        "columnEnd": 3
-      },
-      "title": "Management",
-      "elements": [
-        {
-          "label": "Trello",
-          "url": "https://trello.com/"
-        },
-        {
-          "label": "Asana",
-          "url": "https://asana.com/"
-        },
-        {
-          "label": "Jira",
-          "url": "https://www.atlassian.com/software/jira"
-        }
-      ]
-    },
-    {
-      "type": "links-widget",
-      "gridArea": {
-        "rowStart": 3,
-        "rowEnd": 5,
-        "columnStart": 3,
-        "columnEnd": 4
-      },
-      "title": "Design",
-      "elements": [
-        {
-          "label": "Adobe XD",
-          "url": "https://www.adobe.com/products/xd.html"
-        },
-        {
-          "label": "Canva",
-          "url": "https://www.canva.com/"
-        },
-        {
-          "label": "Sketch",
-          "url": "https://www.sketch.com/"
-        }
-      ]
-    },
-    {
-      "type": "links-widget",
-      "gridArea": {
-        "rowStart": 3,
-        "rowEnd": 5,
-        "columnStart": 4,
-        "columnEnd": 5
-      },
-      "title": "News & Updates",
-      "elements": [
-        {
-          "label": "Hacker News",
-          "url": "https://news.ycombinator.com/"
-        },
-        {
-          "label": "The Verge",
-          "url": "https://www.theverge.com/"
-        },
-        {
-          "label": "Wired",
-          "url": "https://www.wired.com/"
-        },
-        {
-          "label": "Ars Technica",
-          "url": "https://arstechnica.com/"
+          "type": "links-widget",
+          "gridArea": {
+            "rowStart": 3,
+            "rowEnd": 5,
+            "columnStart": 4,
+            "columnEnd": 5
+          },
+          "title": "News & Updates",
+          "elements": [
+            {
+              "label": "Hacker News",
+              "url": "https://news.ycombinator.com/"
+            },
+            {
+              "label": "The Verge",
+              "url": "https://www.theverge.com/"
+            },
+            {
+              "label": "Wired",
+              "url": "https://www.wired.com/"
+            },
+            {
+              "label": "Ars Technica",
+              "url": "https://arstechnica.com/"
+            }
+          ]
         }
       ]
     }
