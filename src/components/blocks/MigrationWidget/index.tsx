@@ -45,7 +45,7 @@ export function MigrationWidget({ config, ...props }: MigrationWidget) {
           </p>
           <Button className="mt-4" onClick={handleMigrate}>
             <CogIcon />
-            Migrate to latest version
+            Migrate to the latest version
           </Button>
         </>
       )}

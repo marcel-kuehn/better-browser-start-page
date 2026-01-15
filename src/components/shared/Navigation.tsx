@@ -1,5 +1,6 @@
 import { PencilIcon, SettingsIcon } from "lucide-react";
 import { Button } from "../ui/button";
+import Sidebar from "./Sidebar";
 
 export default function Navigation() {
   return (
@@ -10,9 +11,7 @@ export default function Navigation() {
           <Button variant="ghost" size="icon">
             <PencilIcon aria-label="Edit" />
           </Button>
-          <Button variant="ghost" size="icon">
-            <SettingsIcon aria-label="Settings" />
-          </Button>
+          <Sidebar></Sidebar>
         </div>
       </div>
     </nav>
