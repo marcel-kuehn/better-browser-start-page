@@ -15,7 +15,14 @@ export interface Widget extends Block {
   };
 }
 
+export type Theme = "glassmorphism" | "glassmorphism-dark";
+
+export interface Settings {
+  theme: Theme;
+}
+
 export interface AppConfig {
   elements: Block[];
-  _v: string;
+  settings: Settings;
+  _v: "0.0.2";
 }

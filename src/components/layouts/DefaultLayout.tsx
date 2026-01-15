@@ -1,23 +1,20 @@
-import { useMemo } from "react";
-import { useTheme } from "@/components/ui/theme-provider";
-import { getSystemTheme } from "@/lib/theme";
+import { useAppConfig } from "@/contexts/AppConfig/useAppConfig";
+import clsx from "clsx";
 
 export default function View({ children }: { children: React.ReactNode }) {
-  const { theme } = useTheme();
+  const { getTheme } = useAppConfig();
+  const theme = getTheme();
 
-  const selectedTheme = useMemo(() => {
-    if (theme === "system") {
-      return getSystemTheme();
-    }
-
-    return theme;
-  }, [theme]);
+  const htmlDomElement = document.getElementsByTagName("html")[0];
+  htmlDomElement.className = theme;
 
   return (
     <div
-      className="w-screen min-h-screen bg-cover bg-center flex flex-col items-center justify-center bg-muted p-4"
+      className={clsx(
+        "w-screen min-h-screen bg-cover bg-center flex flex-col items-center justify-center bg-muted p-4"
+      )}
       style={{
-        backgroundImage: `url(wallpaper-${selectedTheme}.jpg)`,
+        backgroundImage: `url(wallpaper-${theme}.jpg)`,
       }}
     >
       {children}

@@ -18,18 +18,23 @@ export const migrateConfig: MigrationFunction = (oldConfig) => {
   console.log(oldConfig, configVersion);
 
   if (isLatestConfigVersion(configVersion as string)) {
+    console.log("isLatest");
     return oldConfig;
   }
 
   const nextVersion = getNextConfigVersion(configVersion as string);
   if (!nextVersion) {
+    console.log("hasNoNextVersion");
     return oldConfig;
   }
 
   const nextVersionMigration = CONFIG_VERSION_MIGRATIONS[nextVersion];
   if (!nextVersionMigration) {
+    console.log("hasNotNextVersionMigration");
     return oldConfig;
   }
+
+  console.log("migrating to", nextVersion, nextVersionMigration);
 
   return nextVersionMigration(oldConfig, migrateConfig);
 };
