@@ -9,14 +9,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
-import { Label } from "../ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
+import Settings from "./Settings";
 
 export default function Sidebar() {
   return (
@@ -32,24 +25,7 @@ export default function Sidebar() {
           <SheetTitle>Settings</SheetTitle>
         </SheetHeader>
 
-        <div className="grid flex-1 auto-rows-min gap-6">
-          <div className="grid gap-3">
-            <Label htmlFor="sheet-demo-name">Theme</Label>
-            <Select defaultValue="glassmorphism">
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="glassmorphism">
-                  Glassmorphism (default)
-                </SelectItem>
-                <SelectItem value="glassmorphism-dark">
-                  Glassmorphism Dark
-                </SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
+        <Settings />
 
         <SheetFooter>
           <SheetClose asChild>

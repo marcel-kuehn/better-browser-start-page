@@ -11,8 +11,6 @@ import { Grid as GridType } from "../blocks/Grid/types";
 import Grid from "../blocks/Grid";
 import { StopWatchWidget as StopWatchWidgetType } from "../blocks/StopWatchWidget/types";
 import StopWatchWidget from "../blocks/StopWatchWidget";
-import { MigrationWidget } from "../blocks/MigrationWidget";
-import { MigrationWidget as MigrationWidgetType } from "../blocks/MigrationWidget/types";
 
 export default function BlockRenderer({ blocks }: { blocks: Block[] }) {
   return (
@@ -37,11 +35,6 @@ export default function BlockRenderer({ blocks }: { blocks: Block[] }) {
           }
           if (block.type === "stopwatch-widget") {
             return <StopWatchWidget {...(block as StopWatchWidgetType)} />;
-          }
-          if (block.type === "migration-widget") {
-            return (
-              <MigrationWidget {...(block as unknown as MigrationWidgetType)} />
-            );
           }
           return null;
         })}
