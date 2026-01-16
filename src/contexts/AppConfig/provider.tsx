@@ -66,20 +66,15 @@ export const AppConfigProvider = ({ children }: { children: ReactNode }) => {
   const updateElementById = (id: string, updatedData: Partial<Block>) => {
     const updateRecursive = (blocks: Block[]): Block[] => {
       return blocks.map((block) => {
-        // 1. If we found the match, apply the update
         if (block.id === id) {
           return { ...block, ...updatedData };
         }
-
-        // 2. Look for children in the 'elements' property
-        // We check if it exists and is an array to handle nested grids/widgets
         if (block.elements && Array.isArray(block.elements)) {
           return {
             ...block,
             elements: updateRecursive(block.elements as Block[]),
           };
         }
-
         return block;
       });
     };
@@ -87,6 +82,33 @@ export const AppConfigProvider = ({ children }: { children: ReactNode }) => {
     setConfig((prev) => ({
       ...prev,
       elements: updateRecursive(prev.elements),
+    }));
+  };
+
+  /**
+   * Recursive function to remove a block by its ID.
+   * It filters the current array and then maps through the remaining blocks
+   * to check their children.
+   */
+  const removeElementById = (id: string) => {
+    const removeRecursive = (blocks: Block[]): Block[] => {
+      return blocks
+        .filter((block) => block.id !== id) // Remove the block if found
+        .map((block) => {
+          // If the block has children, search and remove within them too
+          if (block.elements && Array.isArray(block.elements)) {
+            return {
+              ...block,
+              elements: removeRecursive(block.elements as Block[]),
+            };
+          }
+          return block;
+        });
+    };
+
+    setConfig((prev) => ({
+      ...prev,
+      elements: removeRecursive(prev.elements),
     }));
   };
 
@@ -100,6 +122,7 @@ export const AppConfigProvider = ({ children }: { children: ReactNode }) => {
         updateTheme,
         getTheme,
         updateElementById,
+        removeElementById,
       }}
     >
       {children}
