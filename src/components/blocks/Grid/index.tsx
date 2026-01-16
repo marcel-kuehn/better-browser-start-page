@@ -15,7 +15,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
   ClockIcon,
   LayoutGridIcon,
@@ -55,32 +54,63 @@ const WIDGET_OPTIONS = [
   {
     type: "search-widget",
     label: "Search Bar",
-    description: "Search Google, YouTube, and more.",
+    description: "Multi-engine search interface.",
     icon: SearchIcon,
+    variants: [
+      { w: 2, h: 1 },
+      { w: 3, h: 1 },
+      { w: 4, h: 1 },
+    ],
+  },
+  {
+    type: "apps-widget",
+    label: "Apps Grid",
+    description: "Pinned shortcuts and bookmarks.",
+    icon: LayoutGridIcon,
+    variants: [
+      { w: 1, h: 1 },
+      { w: 1, h: 2 },
+      { w: 1, h: 3 },
+      { w: 1, h: 4 },
+      { w: 2, h: 1 },
+      { w: 2, h: 2 },
+      { w: 2, h: 3 },
+      { w: 2, h: 4 },
+      { w: 3, h: 1 },
+      { w: 3, h: 2 },
+      { w: 3, h: 3 },
+      { w: 3, h: 4 },
+      { w: 4, h: 1 },
+      { w: 4, h: 2 },
+      { w: 4, h: 3 },
+      { w: 4, h: 4 },
+    ],
+  },
+  {
+    type: "links-widget",
+    label: "Link List",
+    description: "Grouped vertical lists.",
+    icon: LinkIcon,
+    variants: [
+      { w: 1, h: 1 },
+      { w: 1, h: 2 },
+      { w: 1, h: 3 },
+      { w: 1, h: 4 },
+    ],
   },
   {
     type: "clock-widget",
     label: "Clock",
-    description: "Display current time and date.",
+    description: "Time and date display.",
     icon: ClockIcon,
-  },
-  {
-    type: "apps-widget",
-    label: "Apps",
-    description: "Pinned shortcuts to your favorite apps.",
-    icon: LayoutGridIcon,
-  },
-  {
-    type: "links-widget",
-    label: "Links",
-    description: "Grouped list of links.",
-    icon: LinkIcon,
+    variants: [{ w: 1, h: 1 }],
   },
   {
     type: "stopwatch-widget",
     label: "Stopwatch",
-    description: "Track time for tasks and productivity.",
+    description: "Productivity timer.",
     icon: TimerIcon,
+    variants: [{ w: 1, h: 1 }],
   },
 ];
 
@@ -106,9 +136,6 @@ export default function Grid({ columns, rows, elements, id }: GridProps) {
     right: !elements.some((el) => el.gridArea.columnEnd === columns + 1),
   };
 
-  /**
-   * Checks if two grid areas overlap.
-   */
   const checkCollision = (areaA: GridArea, areaB: GridArea) => {
     return (
       areaA.columnStart < areaB.columnEnd &&
@@ -118,24 +145,6 @@ export default function Grid({ columns, rows, elements, id }: GridProps) {
     );
   };
 
-  /**
-   * Defines the static default width and height for widget types.
-   */
-  const getWidgetSize = (type: string) => {
-    let w = 1;
-    let h = 1;
-
-    if (type === "search-widget") w = 2;
-    if (type === "apps-widget") w = 4;
-    if (type === "links-widget") h = 2;
-
-    return { w, h };
-  };
-
-  const addWidget = (row: number, col: number) => {
-    setSelectedCell({ r: row, c: col });
-  };
-
   const isCellOccupied = (r: number, c: number) => {
     return elements.some((el) => {
       const { rowStart, rowEnd, columnStart, columnEnd } = el.gridArea;
@@ -143,46 +152,33 @@ export default function Grid({ columns, rows, elements, id }: GridProps) {
     });
   };
 
-  const handleSelectWidget = (type: string) => {
+  const handleSelectWidget = (type: string, w: number, h: number) => {
     if (!selectedCell) return;
     const baseConfig = DEFAULT_WIDGET_CONFIGS[type] || {};
-    const size = getWidgetSize(type);
 
     const targetArea: GridArea = {
       rowStart: selectedCell.r,
-      rowEnd: selectedCell.r + size.h,
+      rowEnd: selectedCell.r + h,
       columnStart: selectedCell.c,
-      columnEnd: selectedCell.c + size.w,
+      columnEnd: selectedCell.c + w,
     };
 
-    // 1. Out of Bounds Check
-    const isOutOfBounds =
-      targetArea.columnEnd > columns + 1 || targetArea.rowEnd > rows + 1;
-
-    if (isOutOfBounds) {
-      alert("This widget is too large to fit here (out of bounds).");
+    if (targetArea.columnEnd > columns + 1 || targetArea.rowEnd > rows + 1) {
+      alert("Not enough space to the right or bottom!");
       return;
     }
 
-    // 2. Collision Check
-    const isAreaBlocked = elements.some((el) =>
-      checkCollision(targetArea, el.gridArea)
-    );
-
-    if (isAreaBlocked) {
-      alert("This space is too crowded for this widget.");
+    if (elements.some((el) => checkCollision(targetArea, el.gridArea))) {
+      alert("This area overlaps with an existing widget.");
       return;
     }
 
-    // 3. Success: Add the widget
-    const newWidget = {
-      ...baseConfig,
-      id: crypto.randomUUID(),
-      type,
-      gridArea: targetArea,
-    };
-
-    updateElementById(id, { elements: [...elements, newWidget] });
+    updateElementById(id, {
+      elements: [
+        ...elements,
+        { ...baseConfig, id: crypto.randomUUID(), type, gridArea: targetArea },
+      ],
+    });
     setSelectedCell(null);
   };
 
@@ -218,12 +214,11 @@ export default function Grid({ columns, rows, elements, id }: GridProps) {
                   key={`cell-${r}-${c}`}
                   row={r}
                   col={c}
-                  onClick={addWidget}
+                  onClick={(row, col) => setSelectedCell({ r: row, c: col })}
                 />
               );
             });
           })}
-
         <BlockRenderer blocks={elements} />
       </div>
 
@@ -231,45 +226,95 @@ export default function Grid({ columns, rows, elements, id }: GridProps) {
         open={!!selectedCell}
         onOpenChange={(open) => !open && setSelectedCell(null)}
       >
-        <DialogContent className="sm:max-w-[400px]">
+        <DialogContent className="sm:max-w-[420px]">
           <DialogHeader>
-            <DialogTitle>Widgets</DialogTitle>
-            <DialogDescription>Please select a widget.</DialogDescription>
+            <DialogTitle className="text-foreground">Add Widget</DialogTitle>
+            <DialogDescription>
+              Pick a widget to add to your grid.
+            </DialogDescription>
           </DialogHeader>
 
-          <div className="flex flex-col gap-2 py-2">
+          <div className="flex flex-col gap-3 overflow-y-auto max-h-[60vh] pr-1">
             {WIDGET_OPTIONS.map((option) => {
               const Icon = option.icon;
-              const widgetSize = getWidgetSize(option.type);
-              const sizeLabel = `${widgetSize.w}x${widgetSize.h}`;
+              const hasMultiple = option.variants.length > 1;
+              const singleVariant = option.variants[0];
 
-              return (
-                <Button
-                  key={option.type}
-                  variant="outline"
-                  className="text-start flex items-center justify-start gap-4 h-auto py-3 px-4 hover:bg-accent transition-colors group relative"
-                  onClick={() => handleSelectWidget(option.type)}
-                >
-                  <div className="flex-shrink-0 p-2 bg-primary rounded-md">
-                    <Icon className="h-5 w-5 text-primary-foreground" />
-                  </div>
-                  <div className="flex flex-col items-start overflow-hidden flex-1">
-                    <div className="flex items-center gap-2 w-full">
-                      <span className="font-semibold text-sm">
+              const isFit = (w: number, h: number) =>
+                selectedCell &&
+                selectedCell.c + w <= columns + 1 &&
+                selectedCell.r + h <= rows + 1;
+
+              if (!hasMultiple) {
+                const canFit = isFit(singleVariant.w, singleVariant.h);
+                return (
+                  <Button
+                    key={option.type}
+                    variant="outline"
+                    disabled={!canFit}
+                    className="flex items-center justify-start gap-4 h-auto p-4 bg-muted/50"
+                    onClick={() =>
+                      handleSelectWidget(
+                        option.type,
+                        singleVariant.w,
+                        singleVariant.h
+                      )
+                    }
+                  >
+                    <div className="p-2 bg-primary rounded-lg transition-transform">
+                      <Icon className="h-5 w-5 text-primary-foreground" />
+                    </div>
+                    <div className="flex flex-col items-start">
+                      <span className="text-foreground font-bold text-sm leading-none mb-1">
                         {option.label}
                       </span>
-                      <Badge
-                        variant="secondary"
-                        className="text-[10px] px-1.5 py-0 h-4 ml-auto"
-                      >
-                        {sizeLabel}
-                      </Badge>
+                      <span className="text-xs text-muted-foreground">
+                        {option.description}
+                      </span>
                     </div>
-                    <span className="text-xs text-muted-foreground truncate w-full">
-                      {option.description}
-                    </span>
+                  </Button>
+                );
+              }
+
+              return (
+                <div
+                  key={option.type}
+                  className="flex flex-col gap-3 p-4 border border-input rounded-xl bg-muted/50"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="p-2 bg-primary rounded-lg">
+                      <Icon className="h-5 w-5 text-primary-foreground" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-foreground font-bold text-sm leading-none mb-1">
+                        {option.label}
+                      </span>
+                      <span className="text-xs text-muted-foreground line-clamp-1">
+                        {option.description}
+                      </span>
+                    </div>
                   </div>
-                </Button>
+                  <div className="flex flex-wrap gap-2 pt-1 mt-1">
+                    {option.variants.map((v) => {
+                      const canFit = isFit(v.w, v.h);
+                      const sizeLabel = `${v.w}x${v.h}`;
+                      return (
+                        <Button
+                          key={sizeLabel}
+                          variant="outline"
+                          size="sm"
+                          disabled={!canFit}
+                          className="h-8 px-3"
+                          onClick={() =>
+                            handleSelectWidget(option.type, v.w, v.h)
+                          }
+                        >
+                          {sizeLabel}
+                        </Button>
+                      );
+                    })}
+                  </div>
+                </div>
               );
             })}
           </div>
