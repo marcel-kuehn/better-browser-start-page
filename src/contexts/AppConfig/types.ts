@@ -7,5 +7,6 @@ export interface AppConfigContextType {
   updateTheme: (theme: Theme) => void;
   updateEditMode: (isInEditMode: boolean) => void;
   updateElementById: (id: string, element: Partial<Block>) => void;
+  removeElementById: (id: string) => void;
   getTheme: () => Theme;
 }
