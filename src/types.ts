@@ -6,14 +6,15 @@ export interface Block {
   [key: string]: unknown;
 }
 
+export interface GridArea {
+  rowStart: number;
+  rowEnd: number;
+  columnStart: number;
+  columnEnd: number;
+}
+
 export interface Widget extends Block {
-  hidden?: boolean;
-  gridArea: {
-    rowStart: number;
-    rowEnd: number;
-    columnStart: number;
-    columnEnd: number;
-  };
+  gridArea: GridArea;
 }
 
 export type Theme = "glassmorphism" | "glassmorphism-dark";
