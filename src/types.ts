@@ -1,6 +1,7 @@
 import { Widget } from "./components/shared/Widget";
 
 export interface Block {
+  id: string;
   type: string;
   [key: string]: unknown;
 }

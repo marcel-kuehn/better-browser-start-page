@@ -1,6 +1,7 @@
 import { Widget } from "@/types";
 
 export interface AppLink {
+  id: string;
   url: string;
   faviconUrl?: string;
 }

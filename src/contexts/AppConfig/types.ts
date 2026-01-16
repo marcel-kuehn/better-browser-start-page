@@ -1,8 +1,11 @@
-import { AppConfig, Theme } from "@/types";
+import { AppConfig, Block, Theme } from "@/types";
 
 export interface AppConfigContextType {
   config: AppConfig;
-  updateConfig: (updates: Partial<AppConfig>) => void;
+  isInEditMode: boolean;
+  updateConfig: (config: AppConfig | Record<string, unknown>) => void;
   updateTheme: (theme: Theme) => void;
+  updateEditMode: (isInEditMode: boolean) => void;
+  updateElementById: (id: string, element: Partial<Block>) => void;
   getTheme: () => Theme;
 }

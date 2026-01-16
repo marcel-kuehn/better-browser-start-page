@@ -1,5 +1,5 @@
 {
-  "_v": "0.0.1",
+  "_v": "0.0.2",
   "elements": [
     {
       "type": "grid",
@@ -13,7 +13,8 @@
             "rowEnd": 2,
             "columnStart": 1,
             "columnEnd": 2
-          }
+          },
+          "id": "4b662397-a349-45b3-9bdc-7a9f9b420ef2"
         },
         {
           "type": "search-widget",
@@ -25,18 +26,23 @@
           },
           "elements": [
             {
-              "url": "https://www.google.com/search?q={query}"
+              "url": "https://www.google.com/search?q={query}",
+              "id": "966c8667-9251-44c3-91b4-9502dd5e1edb"
             },
             {
-              "url": "https://www.youtube.com/results?search_query={query}"
+              "url": "https://www.youtube.com/results?search_query={query}",
+              "id": "94da0c19-7d9b-410c-9ecb-a5e4651aa356"
             },
             {
-              "url": "https://chatgpt.com?q={query}"
+              "url": "https://chatgpt.com?q={query}",
+              "id": "9a67594f-ceda-4818-8c8e-05a8ab3595a6"
             },
             {
-              "url": "https://open.spotify.com/search/{query}"
+              "url": "https://open.spotify.com/search/{query}",
+              "id": "e146a110-a2fe-4ac4-b6a4-a9f8f833d7d6"
             }
-          ]
+          ],
+          "id": "58f4e798-1796-488c-ab53-2373cf95be9b"
         },
         {
           "type": "stopwatch-widget",
@@ -45,7 +51,8 @@
             "rowEnd": 2,
             "columnStart": 4,
             "columnEnd": 5
-          }
+          },
+          "id": "4a42461d-c6a5-4acd-a89e-f95bab158ba2"
         },
         {
           "type": "apps-widget",
@@ -57,27 +64,35 @@
           },
           "elements": [
             {
-              "url": "https://www.netflix.com/"
+              "url": "https://www.netflix.com/",
+              "id": "ea3ea0c1-97e3-47c9-b8e9-fa460549ddc0"
             },
             {
-              "url": "https://www.youtube.com/"
+              "url": "https://www.youtube.com/",
+              "id": "7d86a280-0f07-45d2-ad67-f06e4743523c"
             },
             {
-              "url": "https://www.facebook.com/"
+              "url": "https://www.facebook.com/",
+              "id": "95b0f179-e312-45fe-8e91-5120b6302f72"
             },
             {
-              "url": "https://www.amazon.com/"
+              "url": "https://www.amazon.com/",
+              "id": "0c97eb7b-e5f0-46e8-9dd8-fc0d20c271da"
             },
             {
-              "url": "https://www.reddit.com/"
+              "url": "https://www.reddit.com/",
+              "id": "b4806d4d-547b-4f64-b1fd-878393313abe"
             },
             {
-              "url": "https://www.wikipedia.org/"
+              "url": "https://www.wikipedia.org/",
+              "id": "0d4532ac-f975-42be-b6ca-7c04d8a773aa"
             },
             {
-              "url": "https://www.pinterest.com/"
+              "url": "https://www.pinterest.com/",
+              "id": "ed57a20e-5e3a-4eea-aebe-987ac289242d"
             }
-          ]
+          ],
+          "id": "b97109c8-cef9-47b9-8863-038f3a04910e"
         },
         {
           "type": "links-widget",
@@ -91,21 +106,26 @@
           "elements": [
             {
               "label": "Gitlab",
-              "url": "https://gitlab.com/"
+              "url": "https://gitlab.com/",
+              "id": "8de23f34-2284-4bde-9b2a-f4bdb3a784d1"
             },
             {
               "label": "Stack Overflow",
-              "url": "https://stackoverflow.com/"
+              "url": "https://stackoverflow.com/",
+              "id": "b218fc7c-8f24-4f8f-a33f-6949ce261e56"
             },
             {
               "label": "CodePen",
-              "url": "https://codepen.io/"
+              "url": "https://codepen.io/",
+              "id": "2ac7c081-4bfd-4fac-a23a-f2bd3644599f"
             },
             {
               "label": "MDN Web Docs",
-              "url": "https://developer.mozilla.org/"
+              "url": "https://developer.mozilla.org/",
+              "id": "ed11c783-0b25-4828-8ee5-0b5d8d4a61df"
             }
-          ]
+          ],
+          "id": "9db4ed06-09b9-47fe-82b5-0b158fe7c7a8"
         },
         {
           "type": "links-widget",
@@ -119,17 +139,21 @@
           "elements": [
             {
               "label": "Trello",
-              "url": "https://trello.com/"
+              "url": "https://trello.com/",
+              "id": "b6230b0e-9a9a-4ecd-b584-d1215455cbd0"
             },
             {
               "label": "Asana",
-              "url": "https://asana.com/"
+              "url": "https://asana.com/",
+              "id": "a7010349-716d-4b18-a698-19503777cf11"
             },
             {
               "label": "Jira",
-              "url": "https://www.atlassian.com/software/jira"
+              "url": "https://www.atlassian.com/software/jira",
+              "id": "ebb4c2b6-d55b-4891-a30e-6d8b84aae1a0"
             }
-          ]
+          ],
+          "id": "921db287-36ea-417f-a381-a99e1033e37a"
         },
         {
           "type": "links-widget",
@@ -143,17 +167,21 @@
           "elements": [
             {
               "label": "Adobe XD",
-              "url": "https://www.adobe.com/products/xd.html"
+              "url": "https://www.adobe.com/products/xd.html",
+              "id": "ba970a32-bb3d-4a49-93a9-5e3084745a7f"
             },
             {
               "label": "Canva",
-              "url": "https://www.canva.com/"
+              "url": "https://www.canva.com/",
+              "id": "ba0107c1-0122-40f9-a23f-0578e009ae76"
             },
             {
               "label": "Sketch",
-              "url": "https://www.sketch.com/"
+              "url": "https://www.sketch.com/",
+              "id": "c1ecc4d1-cca1-442c-89dc-dcac161383e3"
             }
-          ]
+          ],
+          "id": "ac541d1b-54d0-4245-9a80-b9280ab46ab9"
         },
         {
           "type": "links-widget",
@@ -167,23 +195,32 @@
           "elements": [
             {
               "label": "Hacker News",
-              "url": "https://news.ycombinator.com/"
+              "url": "https://news.ycombinator.com/",
+              "id": "1b885ec5-1c72-4a6a-9c86-b6183ae192cf"
             },
             {
               "label": "The Verge",
-              "url": "https://www.theverge.com/"
+              "url": "https://www.theverge.com/",
+              "id": "c413f5e6-9efb-4363-8f95-76340b845bb6"
             },
             {
               "label": "Wired",
-              "url": "https://www.wired.com/"
+              "url": "https://www.wired.com/",
+              "id": "a3273ce5-9b23-4f3b-b23a-b5aab4d1886d"
             },
             {
               "label": "Ars Technica",
-              "url": "https://arstechnica.com/"
+              "url": "https://arstechnica.com/",
+              "id": "ba84bbcb-2a1e-484c-9bbe-de9049ceceeb"
             }
-          ]
+          ],
+          "id": "0979a429-2164-447d-be05-7bf1f46f1ec7"
         }
-      ]
+      ],
+      "id": "ec7f5bb8-2a79-4c3c-9e55-85435fb77118"
     }
-  ]
+  ],
+  "settings": {
+    "theme": "glassmorphism"
+  }
 }
