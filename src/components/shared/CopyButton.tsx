@@ -17,7 +17,7 @@ export const CopyButton = ({
   };
 
   return (
-    <Button className="mt-4" onClick={copyToClipboard}>
+    <Button onClick={copyToClipboard}>
       {hasCopied ? <CheckIcon /> : <CopyIcon />}
       {children}
     </Button>

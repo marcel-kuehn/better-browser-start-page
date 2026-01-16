@@ -1,6 +1,7 @@
 import { Widget } from "@/types";
 
 export interface SearchElement {
+  id: string;
   url: string;
   faviconUrl?: string;
 }
