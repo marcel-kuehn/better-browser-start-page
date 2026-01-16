@@ -83,7 +83,7 @@ export default function StopWatchWidget(props: StopWatchWidget) {
       {...props}
       className="flex flex-col items-center justify-center text-center gap-2"
     >
-      <p className="text-foreground text-7xl font-semibold letter-spacing-wide">
+      <p className="text-foreground text-6xl font-semibold letter-spacing-wide">
         {elapsedTime !== null ? formatElapsedTime(elapsedTime) : "00:00"}
       </p>
       <div className="flex gap-2">{getActionButtons()}</div>

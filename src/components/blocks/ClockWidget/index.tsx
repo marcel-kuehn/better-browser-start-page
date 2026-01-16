@@ -34,7 +34,7 @@ export function ClockWidget({ ...props }: ClockWidget) {
       className="text-center flex justify-center items-center flex-col"
       {...props}
     >
-      <p className="text-foreground text-7xl font-semibold letter-spacing-wide">
+      <p className="text-foreground text-6xl font-semibold letter-spacing-wide">
         {time}
       </p>
       <p className="text-muted-foreground text-lg">{date}</p>

@@ -14,7 +14,7 @@ export function Widget({ children, className, gridArea, id }: WidgetProps) {
 
   return (
     <Card
-      className={`relative w-full px-4 py-6 bg-card/50 backdrop-blur-lg border-border/20 group ${
+      className={`relative w-full px-4 py-6 bg-card/70 backdrop-blur-xl border-border/30 group ${
         className ?? ""
       }`}
       style={{
