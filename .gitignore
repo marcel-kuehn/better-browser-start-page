@@ -27,3 +27,13 @@ dist-ssr
 app.config.json
 
 .npmrc
+
+# Testing
+coverage
+.nyc_output
+playwright-report
+test-results
+playwright/.cache
+
+# Husky
+.husky/_
