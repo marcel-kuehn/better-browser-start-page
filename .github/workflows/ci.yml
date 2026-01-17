@@ -118,11 +118,11 @@ jobs:
               if [ "$HIGH" -gt 0 ]; then
                 echo "::warning::$HIGH high severity vulnerability/vulnerabilities found!"
               fi
+              exit 1
             else
               echo "No vulnerabilities found."
             fi
           fi
-        continue-on-error: true
 
   check-outdated:
     name: Check Outdated Packages
@@ -137,12 +137,12 @@ jobs:
       - run: npm ci
       - name: Check for outdated packages
         run: |
-          OUTDATED=$(npm outdated --json || true)
+          OUTDATED=$(npm outdated --json 2>/dev/null || echo "{}")
           if [ -n "$OUTDATED" ] && [ "$OUTDATED" != "{}" ]; then
             echo "::warning::Some packages are outdated. Consider updating them."
             echo "$OUTDATED" | jq -r 'to_entries[] | "::warning::\(.key): current=\(.value.current // "unknown"), wanted=\(.value.wanted // "unknown"), latest=\(.value.latest // "unknown")"' || true
+            exit 1
           else
             echo "All packages are up to date."
           fi
-        continue-on-error: true
 
