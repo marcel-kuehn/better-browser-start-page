@@ -1,10 +1,10 @@
-import { Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Plus } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 interface AddWidgetButtonProps {
-  row: number;
-  col: number;
-  onClick: (row: number, col: number) => void;
+  row: number
+  col: number
+  onClick: (row: number, col: number) => void
 }
 
 export function AddWidgetButton({ row, col, onClick }: AddWidgetButtonProps) {
@@ -18,5 +18,5 @@ export function AddWidgetButton({ row, col, onClick }: AddWidgetButtonProps) {
     >
       <Plus className="text-foreground" />
     </Button>
-  );
+  )
 }
