@@ -91,3 +91,58 @@ jobs:
       - run: npm ci
       - run: npm run build
 
+  security-audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - name: Run security audit
+        id: audit
+        run: |
+          npm audit --audit-level=moderate --json > audit-results.json 2>&1 || true
+          if [ -s audit-results.json ]; then
+            VULN_COUNT=$(cat audit-results.json | jq -r '.metadata.vulnerabilities.total // 0' 2>/dev/null || echo "0")
+            if [ "$VULN_COUNT" -gt 0 ]; then
+              echo "::warning::Found $VULN_COUNT vulnerability/vulnerabilities in dependencies. Run 'npm audit' for details."
+              HIGH=$(cat audit-results.json | jq -r '.metadata.vulnerabilities.high // 0' 2>/dev/null || echo "0")
+              CRITICAL=$(cat audit-results.json | jq -r '.metadata.vulnerabilities.critical // 0' 2>/dev/null || echo "0")
+              if [ "$CRITICAL" -gt 0 ]; then
+                echo "::warning::$CRITICAL critical vulnerability/vulnerabilities found!"
+              fi
+              if [ "$HIGH" -gt 0 ]; then
+                echo "::warning::$HIGH high severity vulnerability/vulnerabilities found!"
+              fi
+            else
+              echo "No vulnerabilities found."
+            fi
+          fi
+        continue-on-error: true
+
+  check-outdated:
+    name: Check Outdated Packages
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - name: Check for outdated packages
+        run: |
+          OUTDATED=$(npm outdated --json || true)
+          if [ -n "$OUTDATED" ] && [ "$OUTDATED" != "{}" ]; then
+            echo "::warning::Some packages are outdated. Consider updating them."
+            echo "$OUTDATED" | jq -r 'to_entries[] | "::warning::\(.key): current=\(.value.current // "unknown"), wanted=\(.value.wanted // "unknown"), latest=\(.value.latest // "unknown")"' || true
+          else
+            echo "All packages are up to date."
+          fi
+        continue-on-error: true
+
