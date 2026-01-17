@@ -1,0 +1,26 @@
+# Dependencies
+node_modules
+package-lock.json
+
+# Build outputs
+dist
+dist-ssr
+*.tsbuildinfo
+
+# Generated files
+coverage
+.nyc_output
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+
+# IDE
+.vscode
+.idea
+
+# Config files that shouldn't be formatted
+app.config.json
+
