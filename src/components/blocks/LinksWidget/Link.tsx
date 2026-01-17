@@ -1,7 +1,7 @@
-import { buttonVariants } from "@/components/ui/button";
-import clsx from "clsx";
-import type { Link } from "./types";
-import FaviconLoader from "@/components/shared/FaviconLoader";
+import { buttonVariants } from '@/components/ui/button'
+import clsx from 'clsx'
+import type { Link } from './types'
+import FaviconLoader from '@/components/shared/FaviconLoader'
 
 export default function Link({ label, url, faviconUrl }: Link) {
   return (
@@ -10,9 +10,9 @@ export default function Link({ label, url, faviconUrl }: Link) {
       rel="noopener noreferrer"
       className={clsx(
         buttonVariants({
-          variant: "ghost",
-          size: "sm",
-          className: "w-full !justify-start",
+          variant: 'ghost',
+          size: 'sm',
+          className: 'w-full !justify-start',
         })
       )}
     >
@@ -20,5 +20,5 @@ export default function Link({ label, url, faviconUrl }: Link) {
 
       <span className="leading-none text-sm text-card-foreground">{label}</span>
     </a>
-  );
+  )
 }

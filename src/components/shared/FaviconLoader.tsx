@@ -1,33 +1,33 @@
-import { getDomain, getFaviconUrl } from "@/lib/url";
-import clsx from "clsx";
-import { GlobeIcon } from "lucide-react";
-import { useState } from "react";
+import { getDomain, getFaviconUrl } from '@/lib/url'
+import clsx from 'clsx'
+import { GlobeIcon } from 'lucide-react'
+import { useState } from 'react'
 
 export default function FaviconLoader({
   url,
   faviconUrl,
   className,
 }: {
-  url: string;
-  faviconUrl?: string;
-  className?: string;
+  url: string
+  faviconUrl?: string
+  className?: string
 }) {
-  const src = faviconUrl ?? getFaviconUrl(url);
-  const [hasError, setHasError] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const src = faviconUrl ?? getFaviconUrl(url)
+  const [hasError, setHasError] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   return (
     <span>
       {(isLoading || hasError) && (
         <GlobeIcon
-          className={clsx(["size-4 text-muted-foreground", className])}
+          className={clsx(['size-4 text-muted-foreground', className])}
           aria-label="Globe Icon"
         />
       )}
 
       {!hasError && (
         <img
-          className={clsx(["size-4", isLoading ? "hidden" : "", className])}
+          className={clsx(['size-4', isLoading ? 'hidden' : '', className])}
           src={src}
           alt={`Favicon of ${getDomain(src)}`}
           onError={() => setHasError(true)}
@@ -35,5 +35,5 @@ export default function FaviconLoader({
         />
       )}
     </span>
-  );
+  )
 }

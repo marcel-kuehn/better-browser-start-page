@@ -1,21 +1,21 @@
-import { Card } from "@/components/ui/card";
-import type { Widget as WidgetType } from "@/types";
-import { useAppConfig } from "@/contexts/AppConfig/useAppConfig";
-import { X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Card } from '@/components/ui/card'
+import type { Widget as WidgetType } from '@/types'
+import { useAppConfig } from '@/contexts/AppConfig/useAppConfig'
+import { X } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 interface WidgetProps extends WidgetType {
-  children?: React.ReactNode;
-  className?: string;
+  children?: React.ReactNode
+  className?: string
 }
 
 export function Widget({ children, className, gridArea, id }: WidgetProps) {
-  const { isInEditMode, removeElementById } = useAppConfig();
+  const { isInEditMode, removeElementById } = useAppConfig()
 
   return (
     <Card
       className={`relative w-full px-4 py-6 bg-card/70 backdrop-blur-xl border-border/30 group ${
-        className ?? ""
+        className ?? ''
       }`}
       style={{
         gridArea: `${gridArea.rowStart} / ${gridArea.columnStart} / ${gridArea.rowEnd} / ${gridArea.columnEnd}`,
@@ -33,5 +33,5 @@ export function Widget({ children, className, gridArea, id }: WidgetProps) {
       )}
       {children}
     </Card>
-  );
+  )
 }

@@ -1,6 +1,6 @@
-import { Widget } from "@/components/shared/Widget";
-import type { LinksWidget } from "./types";
-import Link from "./Link";
+import { Widget } from '@/components/shared/Widget'
+import type { LinksWidget } from './types'
+import Link from './Link'
 
 export function LinksWidget({ title, elements, ...props }: LinksWidget) {
   return (
@@ -9,12 +9,12 @@ export function LinksWidget({ title, elements, ...props }: LinksWidget) {
         {title}
       </h3>
       <ul className="flex flex-col -mx-2">
-        {elements.map((element) => (
+        {elements.map(element => (
           <li key={element.url}>
             <Link {...element} />
           </li>
         ))}
       </ul>
     </Widget>
-  );
+  )
 }

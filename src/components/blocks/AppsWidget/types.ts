@@ -1,12 +1,12 @@
-import { Widget } from "@/types";
+import { Widget } from '@/types'
 
 export interface AppLink {
-  id: string;
-  url: string;
-  faviconUrl?: string;
+  id: string
+  url: string
+  faviconUrl?: string
 }
 
 export interface AppsWidget extends Widget {
-  elements: AppLink[];
-  type: "apps-widget";
+  elements: AppLink[]
+  type: 'apps-widget'
 }
