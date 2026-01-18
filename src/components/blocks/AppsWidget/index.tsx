@@ -1,19 +1,19 @@
-import { Widget } from '@/components/shared/Widget'
-import type { AppsWidget } from './types'
-import AppLink from './AppLink'
+import { Widget } from '@/components/shared/Widget';
+import type { AppsWidget } from './types';
+import AppLink from './AppLink';
 
 export function AppsWidget({ elements, ...props }: AppsWidget) {
-  const hasElements = elements.length > 0
+  const hasElements = elements.length > 0;
 
-  if (!hasElements) return null
+  if (!hasElements) return null;
 
   return (
-    <Widget className="max-w-full flex items-center" {...props}>
-      <div className="flex gap-4 justify-center items-center flex-wrap w-full">
+    <Widget className="flex max-w-full items-center" {...props}>
+      <div className="flex w-full flex-wrap items-center justify-center gap-4">
         {elements.map(element => (
           <AppLink key={element.url} {...element} />
         ))}
       </div>
     </Widget>
-  )
+  );
 }

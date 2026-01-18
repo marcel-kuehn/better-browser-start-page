@@ -1,4 +1,4 @@
-import { MigrationFunction } from '../types'
+import { MigrationFunction } from '../types';
 
 export const migrateToVersion_0_0_1: MigrationFunction = (
   oldConfig: Record<string, unknown>,
@@ -19,7 +19,7 @@ export const migrateToVersion_0_0_1: MigrationFunction = (
         elements: oldConfig.widgets,
       },
     ],
-  }
+  };
 
-  return cb ? cb(newConfig) : newConfig
-}
+  return cb ? cb(newConfig) : newConfig;
+};
