@@ -1,13 +1,13 @@
-import { Button } from '@/components/ui/button'
-import { MinusCircle, PlusCircle } from 'lucide-react'
-import clsx from 'clsx'
+import { Button } from '@/components/ui/button';
+import { MinusCircle, PlusCircle } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
-type Direction = 'top' | 'bottom' | 'left' | 'right'
+type Direction = 'top' | 'bottom' | 'left' | 'right';
 
 interface GridControlsProps {
-  onExpand: (d: Direction) => void
-  onContract: (d: Direction) => void
-  canContract: Record<Direction, boolean>
+  onExpand: (d: Direction) => void;
+  onContract: (d: Direction) => void;
+  canContract: Record<Direction, boolean>;
 }
 
 const DIRECTIONS: { id: Direction; class: string }[] = [
@@ -15,13 +15,13 @@ const DIRECTIONS: { id: Direction; class: string }[] = [
   { id: 'bottom', class: '-bottom-1 left-0 right-0 flex-row justify-center' },
   { id: 'left', class: '-left-1 top-0 bottom-0 flex-col justify-center' },
   { id: 'right', class: '-right-1 top-0 bottom-0 flex-col justify-center' },
-]
+];
 
 export function GridControls({ onExpand, onContract, canContract }: GridControlsProps) {
   return (
     <>
       {DIRECTIONS.map(({ id, class: positionClass }) => (
-        <div key={id} className={clsx('absolute flex gap-1 items-center z-20', positionClass)}>
+        <div key={id} className={cn('absolute z-20 flex items-center gap-1', positionClass)}>
           <Button
             variant="ghost"
             size="icon"
@@ -44,5 +44,5 @@ export function GridControls({ onExpand, onContract, canContract }: GridControls
         </div>
       ))}
     </>
-  )
+  );
 }

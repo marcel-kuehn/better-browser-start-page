@@ -1,13 +1,13 @@
-import { useAppConfig } from '@/contexts/AppConfig/useAppConfig'
-import { Label } from '../ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
-import { Theme } from '@/types'
+import { useAppConfig } from '@/contexts/AppConfig/useAppConfig';
+import { Label } from '../ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { Theme } from '@/types';
 
 export default function ThemeSettings() {
-  const { getTheme, updateTheme } = useAppConfig()
+  const { getTheme, updateTheme } = useAppConfig();
 
-  const theme = getTheme()
-  const themeSelectId = 'theme'
+  const theme = getTheme();
+  const themeSelectId = 'theme';
 
   return (
     <div className="grid gap-3">
@@ -16,7 +16,7 @@ export default function ThemeSettings() {
         name={themeSelectId}
         value={theme}
         onValueChange={value => {
-          updateTheme(value as Theme)
+          updateTheme(value as Theme);
         }}
       >
         <SelectTrigger>
@@ -28,5 +28,5 @@ export default function ThemeSettings() {
         </SelectContent>
       </Select>
     </div>
-  )
+  );
 }

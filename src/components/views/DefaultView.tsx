@@ -1,10 +1,10 @@
-import { useAppConfig } from '@/contexts/AppConfig/useAppConfig'
-import DefaultLayout from '../layouts/DefaultLayout'
-import BlockRenderer from '../shared/BlockRenderer'
-import Navigation from '../shared/Navigation'
+import { useAppConfig } from '@/contexts/AppConfig/useAppConfig';
+import DefaultLayout from '../layouts/DefaultLayout';
+import BlockRenderer from '../shared/BlockRenderer';
+import Navigation from '../shared/Navigation';
 
 export default function DefaultView() {
-  const { config } = useAppConfig()
+  const { config } = useAppConfig();
 
   return (
     <DefaultLayout>
@@ -15,5 +15,5 @@ export default function DefaultView() {
         </div>
       </main>
     </DefaultLayout>
-  )
+  );
 }

@@ -1,4 +1,4 @@
-import { AppConfig } from '@/types'
+import { AppConfig } from '@/types';
 
 export const INITIAL_CONFIG: AppConfig = {
   _v: '0.0.2',
@@ -31,4 +31,4 @@ export const INITIAL_CONFIG: AppConfig = {
       ],
     },
   ],
-}
+};
