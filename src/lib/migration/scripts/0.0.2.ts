@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { MigrationFunction } from '../types';
+import { DEFAULT_THEME } from '@/constants/themes';
 
 /**
  * Recursively adds a unique ID to a block and all its nested elements.
@@ -33,7 +34,7 @@ export const migrateToVersion_0_0_2: MigrationFunction = (
     _v: '0.0.2',
     elements, // Now contains IDs at every level
     settings: {
-      theme: (oldConfig.settings as any)?.theme ?? 'glassmorphism',
+      theme: (oldConfig.settings as any)?.theme ?? DEFAULT_THEME,
     },
   };
 

@@ -1,4 +1,5 @@
 import { useAppConfig } from '@/contexts/AppConfig/useAppConfig';
+import { WALLPAPER_PREFIX } from '@/constants/themes';
 
 export default function View({ children }: { children: React.ReactNode }) {
   const { getTheme } = useAppConfig();
@@ -13,7 +14,7 @@ export default function View({ children }: { children: React.ReactNode }) {
         'bg-muted flex min-h-screen w-screen flex-col items-center justify-center bg-cover bg-center p-4'
       }
       style={{
-        backgroundImage: `url(wallpaper-${theme}.jpg)`,
+        backgroundImage: `url(${WALLPAPER_PREFIX}${theme}.jpg)`,
       }}
     >
       {children}

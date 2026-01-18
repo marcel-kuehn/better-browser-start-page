@@ -1,4 +1,12 @@
 import { Block } from '@/types';
+import {
+  WIDGET_TYPE_GRID,
+  WIDGET_TYPE_SEARCH,
+  WIDGET_TYPE_APPS,
+  WIDGET_TYPE_LINKS,
+  WIDGET_TYPE_CLOCK,
+  WIDGET_TYPE_STOPWATCH,
+} from '@/constants/widgetTypes';
 import { SearchWidget as SearchWidgetType } from '../blocks/SearchWidget/types';
 import { AppsWidget as AppsWidgetType } from '../blocks/AppsWidget/types';
 import { LinksWidget as LinksWidgetType } from '../blocks/LinksWidget/types';
@@ -18,22 +26,22 @@ export default function BlockRenderer({ blocks }: { blocks: Block[] }) {
       {blocks
         .filter(block => !block.hidden)
         .map(block => {
-          if (block.type === 'grid') {
+          if (block.type === WIDGET_TYPE_GRID) {
             return <Grid {...(block as GridType)} />;
           }
-          if (block.type === 'search-widget') {
+          if (block.type === WIDGET_TYPE_SEARCH) {
             return <SearchWidget {...(block as SearchWidgetType)} />;
           }
-          if (block.type === 'apps-widget') {
+          if (block.type === WIDGET_TYPE_APPS) {
             return <AppsWidget {...(block as AppsWidgetType)} />;
           }
-          if (block.type === 'links-widget') {
+          if (block.type === WIDGET_TYPE_LINKS) {
             return <LinksWidget {...(block as LinksWidgetType)} />;
           }
-          if (block.type === 'clock-widget') {
+          if (block.type === WIDGET_TYPE_CLOCK) {
             return <ClockWidget {...(block as ClockWidgetType)} />;
           }
-          if (block.type === 'stopwatch-widget') {
+          if (block.type === WIDGET_TYPE_STOPWATCH) {
             return <StopWatchWidget {...(block as StopWatchWidgetType)} />;
           }
           return null;

@@ -1,4 +1,5 @@
 import { MigrationFunction } from '../types';
+import { WIDGET_TYPE_GRID } from '@/constants/widgetTypes';
 
 export const migrateToVersion_0_0_1: MigrationFunction = (
   oldConfig: Record<string, unknown>,
@@ -8,7 +9,7 @@ export const migrateToVersion_0_0_1: MigrationFunction = (
     _v: '0.0.1',
     elements: [
       {
-        type: 'grid',
+        type: WIDGET_TYPE_GRID,
         columns: 4,
         rows:
           Math.max(

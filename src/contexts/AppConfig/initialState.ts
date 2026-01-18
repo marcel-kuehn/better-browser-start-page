@@ -1,20 +1,25 @@
 import { AppConfig } from '@/types';
+import { DEFAULT_CONFIG_VERSION } from '@/constants/config';
+import { DEFAULT_THEME } from '@/constants/themes';
+import { WIDGET_TYPE_GRID, WIDGET_TYPE_SEARCH } from '@/constants/widgetTypes';
+import { DEFAULT_GRID_COLUMNS, DEFAULT_GRID_ROWS } from '@/constants/grid';
+import { DEFAULT_SEARCH_URL } from '@/constants/urls';
 
 export const INITIAL_CONFIG: AppConfig = {
-  _v: '0.0.2',
+  _v: DEFAULT_CONFIG_VERSION,
   settings: {
-    theme: 'glassmorphism',
+    theme: DEFAULT_THEME,
   },
   elements: [
     {
       id: crypto.randomUUID(),
-      type: 'grid',
-      columns: 4,
-      rows: 1,
+      type: WIDGET_TYPE_GRID,
+      columns: DEFAULT_GRID_COLUMNS,
+      rows: DEFAULT_GRID_ROWS,
       elements: [
         {
           id: crypto.randomUUID(),
-          type: 'search-widget',
+          type: WIDGET_TYPE_SEARCH,
           gridArea: {
             rowStart: 1,
             rowEnd: 2,
@@ -24,7 +29,7 @@ export const INITIAL_CONFIG: AppConfig = {
           elements: [
             {
               id: crypto.randomUUID(),
-              url: 'https://www.google.com/search?q={query}',
+              url: DEFAULT_SEARCH_URL,
             },
           ],
         },
