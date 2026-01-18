@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import BlockRenderer from '@/components/shared/BlockRenderer';
 import type { Grid as GridProps } from './types';
 import { cn } from '@/lib/utils';
@@ -6,6 +7,8 @@ import { useAppConfig } from '@/contexts/AppConfig/useAppConfig';
 import { GridControls } from './GridControls';
 import { AddWidgetButton } from './AddWidgetButton';
 import { useGridEditor } from './useGridEditor';
+import { createDefaultWidgetConfigs, getWidgetOptions } from '@/constants/widgets';
+import { GRID_ROW_MIN_HEIGHT } from '@/constants/grid';
 
 import {
   Dialog,
@@ -15,105 +18,18 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { ClockIcon, LayoutGridIcon, LinkIcon, SearchIcon, TimerIcon } from 'lucide-react';
 import { GridArea } from '@/types';
 
-const DEFAULT_WIDGET_CONFIGS: Record<string, unknown> = {
-  'search-widget': {
-    elements: [
-      {
-        id: crypto.randomUUID(),
-        url: 'https://www.google.com/search?q={query}',
-      },
-    ],
-  },
-  'apps-widget': {
-    elements: [{ id: crypto.randomUUID(), url: 'https://example.com/' }],
-  },
-  'links-widget': {
-    title: 'New Category',
-    elements: [
-      {
-        id: crypto.randomUUID(),
-        label: 'Example Link',
-        url: 'https://example.com',
-      },
-    ],
-  },
-  'clock-widget': {},
-  'stopwatch-widget': {},
-};
-
-const WIDGET_OPTIONS = [
-  {
-    type: 'search-widget',
-    label: 'Search Bar',
-    description: 'Multi-engine search interface.',
-    icon: SearchIcon,
-    variants: [
-      { w: 2, h: 1 },
-      { w: 3, h: 1 },
-      { w: 4, h: 1 },
-    ],
-  },
-  {
-    type: 'apps-widget',
-    label: 'Apps Grid',
-    description: 'Pinned shortcuts and bookmarks.',
-    icon: LayoutGridIcon,
-    variants: [
-      { w: 1, h: 1 },
-      { w: 1, h: 2 },
-      { w: 1, h: 3 },
-      { w: 1, h: 4 },
-      { w: 2, h: 1 },
-      { w: 2, h: 2 },
-      { w: 2, h: 3 },
-      { w: 2, h: 4 },
-      { w: 3, h: 1 },
-      { w: 3, h: 2 },
-      { w: 3, h: 3 },
-      { w: 3, h: 4 },
-      { w: 4, h: 1 },
-      { w: 4, h: 2 },
-      { w: 4, h: 3 },
-      { w: 4, h: 4 },
-    ],
-  },
-  {
-    type: 'links-widget',
-    label: 'Link List',
-    description: 'Grouped vertical lists.',
-    icon: LinkIcon,
-    variants: [
-      { w: 1, h: 1 },
-      { w: 1, h: 2 },
-      { w: 1, h: 3 },
-      { w: 1, h: 4 },
-    ],
-  },
-  {
-    type: 'clock-widget',
-    label: 'Clock',
-    description: 'Time and date display.',
-    icon: ClockIcon,
-    variants: [{ w: 1, h: 1 }],
-  },
-  {
-    type: 'stopwatch-widget',
-    label: 'Stopwatch',
-    description: 'Productivity timer.',
-    icon: TimerIcon,
-    variants: [{ w: 1, h: 1 }],
-  },
-];
-
 export default function Grid({ columns, rows, elements, id }: GridProps) {
+  const { t } = useTranslation();
   const { isInEditMode, updateElementById } = useAppConfig();
   const [selectedCell, setSelectedCell] = useState<{
     r: number;
     c: number;
   } | null>(null);
+
+  const DEFAULT_WIDGET_CONFIGS = createDefaultWidgetConfigs(t);
+  const WIDGET_OPTIONS = getWidgetOptions(t);
 
   const { expandGrid, contractGrid } = useGridEditor(
     id,
@@ -158,12 +74,12 @@ export default function Grid({ columns, rows, elements, id }: GridProps) {
     };
 
     if (targetArea.columnEnd > columns + 1 || targetArea.rowEnd > rows + 1) {
-      alert('Not enough space to the right or bottom!');
+      alert(t('errors.notEnoughSpace'));
       return;
     }
 
     if (elements.some(el => checkCollision(targetArea, el.gridArea))) {
-      alert('This area overlaps with an existing widget.');
+      alert(t('errors.overlapError'));
       return;
     }
 
@@ -189,7 +105,7 @@ export default function Grid({ columns, rows, elements, id }: GridProps) {
         )}
         style={{
           gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
-          gridTemplateRows: `repeat(${rows}, minmax(80px, auto))`,
+          gridTemplateRows: `repeat(${rows}, minmax(${GRID_ROW_MIN_HEIGHT}, auto))`,
         }}
       >
         {isInEditMode &&
@@ -214,8 +130,8 @@ export default function Grid({ columns, rows, elements, id }: GridProps) {
       <Dialog open={!!selectedCell} onOpenChange={open => !open && setSelectedCell(null)}>
         <DialogContent className="sm:max-w-[420px]">
           <DialogHeader>
-            <DialogTitle className="text-foreground">Add Widget</DialogTitle>
-            <DialogDescription>Pick a widget to add to your grid.</DialogDescription>
+            <DialogTitle className="text-foreground">{t('ui.addWidget')}</DialogTitle>
+            <DialogDescription>{t('ui.pickWidget')}</DialogDescription>
           </DialogHeader>
 
           <div className="flex max-h-[60vh] flex-col gap-3 overflow-y-auto pr-1">

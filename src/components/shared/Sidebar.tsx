@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { SettingsIcon } from 'lucide-react';
 import { Button } from '../ui/button';
 import {
@@ -12,24 +13,26 @@ import {
 import Settings from './Settings';
 
 export default function Sidebar() {
+  const { t } = useTranslation();
+
   return (
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon">
-          <SettingsIcon aria-label="Settings" />
+          <SettingsIcon aria-label={t('ui.settings')} />
         </Button>
       </SheetTrigger>
 
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Settings</SheetTitle>
+          <SheetTitle>{t('ui.settings')}</SheetTitle>
         </SheetHeader>
 
         <Settings />
 
         <SheetFooter>
           <SheetClose asChild>
-            <Button variant="outline">Close</Button>
+            <Button variant="outline">{t('ui.close')}</Button>
           </SheetClose>
         </SheetFooter>
       </SheetContent>

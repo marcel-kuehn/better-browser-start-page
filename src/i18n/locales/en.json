@@ -1,0 +1,48 @@
+{
+  "widgets": {
+    "search": {
+      "label": "Search Bar",
+      "description": "Multi-engine search interface."
+    },
+    "apps": {
+      "label": "Apps Grid",
+      "description": "Pinned shortcuts and bookmarks."
+    },
+    "links": {
+      "label": "Link List",
+      "description": "Grouped vertical lists."
+    },
+    "clock": {
+      "label": "Clock",
+      "description": "Time and date display."
+    },
+    "stopwatch": {
+      "label": "Stopwatch",
+      "description": "Productivity timer."
+    }
+  },
+  "ui": {
+    "addWidget": "Add Widget",
+    "pickWidget": "Pick a widget to add to your grid.",
+    "newCategory": "New Category",
+    "exampleLink": "Example Link",
+    "edit": "Edit",
+    "stopEditing": "Stop editing",
+    "settings": "Settings",
+    "close": "Close",
+    "exportConfig": "Export configuration",
+    "copyConfig": "Copy current config",
+    "importConfig": "Import configuration",
+    "replaceConfig": "Replace current config with uploaded config",
+    "theme": "Theme"
+  },
+  "errors": {
+    "notEnoughSpace": "Not enough space to the right or bottom!",
+    "overlapError": "This area overlaps with an existing widget.",
+    "parseConfigFailed": "Failed to parse config. Please upload a valid JSON file."
+  },
+  "themes": {
+    "glassmorphism": "Glassmorphism (default)",
+    "glassmorphismDark": "Glassmorphism Dark"
+  }
+}

@@ -1,9 +1,11 @@
+import { useTranslation } from 'react-i18next';
 import { PencilIcon, PencilOffIcon } from 'lucide-react';
 import { Button } from '../ui/button';
 import Sidebar from './Sidebar';
 import { useAppConfig } from '@/contexts/AppConfig/useAppConfig';
 
 export default function Navigation() {
+  const { t } = useTranslation();
   const { isInEditMode, updateEditMode } = useAppConfig();
 
   return (
@@ -13,9 +15,9 @@ export default function Navigation() {
         <div className="flex gap-1">
           <Button variant="ghost" size="icon" onClick={() => updateEditMode(!isInEditMode)}>
             {isInEditMode ? (
-              <PencilOffIcon aria-label="Stop editing" />
+              <PencilOffIcon aria-label={t('ui.stopEditing')} />
             ) : (
-              <PencilIcon aria-label="Edit" />
+              <PencilIcon aria-label={t('ui.edit')} />
             )}
           </Button>
           <Sidebar />

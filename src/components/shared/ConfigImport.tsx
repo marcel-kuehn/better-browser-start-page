@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useAppConfig } from '@/contexts/AppConfig/useAppConfig';
 import { Button } from '../ui/button';
 import { Label } from '../ui/label';
@@ -5,6 +6,7 @@ import { Input } from '../ui/input';
 import { useState, ChangeEvent } from 'react';
 
 export default function ConfigImportSettings() {
+  const { t } = useTranslation();
   const { updateConfig } = useAppConfig();
   // We store the parsed object or null
   const [uploadedConfig, setUploadedConfig] = useState<Record<string, unknown> | null>(null);
@@ -21,7 +23,7 @@ export default function ConfigImportSettings() {
         setUploadedConfig(json);
       } catch (error) {
         console.error('Invalid JSON file', error);
-        alert('Failed to parse config. Please upload a valid JSON file.');
+        alert(t('errors.parseConfigFailed'));
         setUploadedConfig(null);
       }
     };
@@ -38,7 +40,7 @@ export default function ConfigImportSettings() {
   return (
     <div className="grid gap-3">
       <Label htmlFor={fileUploadId} className="font-medium">
-        Import configuration
+        {t('ui.importConfig')}
       </Label>
       <Input id={fileUploadId} type="file" accept=".json" onChange={handleFileChange} />
       <Button
@@ -47,7 +49,7 @@ export default function ConfigImportSettings() {
         disabled={!uploadedConfig}
         className="w-full"
       >
-        Replace current config with uploaded config
+        {t('ui.replaceConfig')}
       </Button>
     </div>
   );
