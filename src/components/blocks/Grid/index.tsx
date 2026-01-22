@@ -29,12 +29,11 @@ export default function Grid({ span, elements, id }: GridProps) {
 
   const { expandGrid, contractGrid } = useGridEditor(id, span, elements, updateElementById);
 
-  const handleSelectWidget = (type: string, span: GridSpan) => {
+  const handleSelectWidget = (type: string, widgetSpan: GridSpan) => {
     if (!selectedCell) return;
 
     const baseConfig = DEFAULT_WIDGET_CONFIGS[type] || {};
-    const targetArea = getTargetArea(selectedCell, span);
-    console.log('targetArea', targetArea);
+    const targetArea = getTargetArea(selectedCell, widgetSpan);
     if (!targetArea) return;
 
     if (!canFitWidget(elements, targetArea, span)) {
