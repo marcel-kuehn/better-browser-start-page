@@ -21,9 +21,3 @@ export const getDomain = (url: string | undefined): string => {
 export const getFaviconUrl = (url: string | undefined): string => {
   return `${normalizeUrl(url)}/favicon.ico`;
 };
-
-export const openUrl = (url: string | undefined) => {
-  if (!url) return;
-
-  window.open(url, '_self', 'noopener,noreferrer');
-};

@@ -6,9 +6,10 @@ import {
   WIDGET_TYPE_LINKS,
   WIDGET_TYPE_CLOCK,
   WIDGET_TYPE_STOPWATCH,
-} from './widgetTypes';
-import { DEFAULT_SEARCH_URL, EXAMPLE_URL, EXAMPLE_URL_WITH_TRAILING_SLASH } from './urls';
-import { WidgetOption } from '@/components/shared/WidgetSelectionDialog/types';
+} from '@/constants/widgetTypes';
+import { DEFAULT_SEARCH_URL } from '@/components/blocks/SearchWidget/constants';
+import { EXAMPLE_URL, EXAMPLE_URL_WITH_TRAILING_SLASH } from '@/constants/urls';
+import { WidgetOption } from './types';
 
 export const createDefaultWidgetConfigs = (t: TFunction): Record<string, unknown> => ({
   [WIDGET_TYPE_SEARCH]: {

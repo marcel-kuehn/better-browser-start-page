@@ -2,7 +2,7 @@ import { Widget } from '@/components/shared/Widget';
 import type { StopWatchWidget } from './types';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { formatElapsedTime } from './helper';
+import { formatElapsedTime } from './helpers';
 import { PauseIcon, PlayIcon, RotateCcwIcon } from 'lucide-react';
 
 export default function StopWatchWidget(props: StopWatchWidget) {

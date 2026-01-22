@@ -1,7 +1,7 @@
-import { Separator } from '../ui/separator';
-import ConfigExport from './ConfigExport';
-import ConfigImport from './ConfigImport';
-import ThemeSettings from './ThemeSettings';
+import { Separator } from '../../ui/separator';
+import ConfigExport from '../ConfigExport';
+import ConfigImport from '../ConfigImport';
+import ThemeSettings from '../ThemeSettings';
 
 export default function Settings() {
   return (

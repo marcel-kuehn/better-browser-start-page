@@ -1,9 +1,9 @@
 import { AppConfig } from '@/types';
-import { DEFAULT_CONFIG_VERSION } from '@/constants/config';
+import { DEFAULT_CONFIG_VERSION } from './constants';
 import { DEFAULT_THEME } from '@/constants/themes';
 import { WIDGET_TYPE_GRID, WIDGET_TYPE_SEARCH } from '@/constants/widgetTypes';
 import { DEFAULT_GRID_COLUMNS, DEFAULT_GRID_ROWS } from '@/constants/grid';
-import { DEFAULT_SEARCH_URL } from '@/constants/urls';
+import { DEFAULT_SEARCH_URL } from '@/components/blocks/SearchWidget/constants';
 
 export const INITIAL_CONFIG: AppConfig = {
   _v: DEFAULT_CONFIG_VERSION,

@@ -5,7 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { getWidgetOptions } from '@/constants/widgets';
+import { getWidgetOptions } from './helpers';
 import { useTranslation } from 'react-i18next';
 import { WidgetSelectionDialogProps } from './types';
 import WidgetOptionsList from './WidgetOptionsList';

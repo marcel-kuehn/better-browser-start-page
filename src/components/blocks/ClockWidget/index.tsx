@@ -1,21 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { ClockWidget } from './types';
 import { Widget } from '@/components/shared/Widget';
-
-const getTime = (): string => {
-  return new Date().toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
-  });
-};
-
-const getDate = (): string => {
-  return new Date().toLocaleDateString([], {
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric',
-  });
-};
+import { getDate, getTime } from './helpers';
 
 export function ClockWidget({ ...props }: ClockWidget) {
   const [time, setTime] = useState(getTime());

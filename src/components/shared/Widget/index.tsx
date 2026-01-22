@@ -1,14 +1,9 @@
 import { Card } from '@/components/ui/card';
-import type { Widget as WidgetType } from '@/types';
 import { useAppConfig } from '@/contexts/AppConfig/useAppConfig';
 import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-
-interface WidgetProps extends WidgetType {
-  children?: React.ReactNode;
-  className?: string;
-}
+import type { WidgetProps } from './types';
 
 export function Widget({ children, className, gridArea, id }: WidgetProps) {
   const { isInEditMode, removeElementById } = useAppConfig();

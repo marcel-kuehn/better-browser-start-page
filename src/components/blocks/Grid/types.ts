@@ -5,6 +5,11 @@ export interface GridSpan {
   columnSpan: number;
 }
 
+export interface AddWidgetButtonProps {
+  position: CellPosition;
+  onClick: (row: number, col: number) => void;
+}
+
 export interface Grid extends Block {
   type: 'grid';
   span: GridSpan;

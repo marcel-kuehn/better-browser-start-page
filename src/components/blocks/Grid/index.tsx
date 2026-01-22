@@ -7,7 +7,7 @@ import { useAppConfig } from '@/contexts/AppConfig/useAppConfig';
 import { GridControl } from './GridControl';
 import { AddWidgetButton } from './AddWidgetButton';
 import { useGridEditor } from './useGridEditor';
-import { createDefaultWidgetConfigs } from '@/constants/widgets';
+import { createDefaultWidgetConfigs } from '@/components/shared/WidgetSelectionDialog/helpers';
 import { GRID_ROW_MIN_HEIGHT } from '@/constants/grid';
 
 import {
@@ -15,7 +15,7 @@ import {
   canGridBeContracted,
   getTargetArea,
   isCollidingWithOtherWidgets,
-} from '@/lib/grid';
+} from './helpers';
 import WidgetSelectionDialog from '@/components/shared/WidgetSelectionDialog';
 import { Widget } from '@/types';
 
@@ -80,8 +80,7 @@ export default function Grid({ span, elements, id }: GridProps) {
         return (
           <AddWidgetButton
             key={`cell-${row}-${column}`}
-            row={row}
-            col={column}
+            position={{ row, column }}
             onClick={() => setSelectedCell({ row, column })}
           />
         );

@@ -1,14 +1,9 @@
 import { CheckIcon, CopyIcon } from 'lucide-react';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 import { useState } from 'react';
+import type { CopyButtonProps } from './types';
 
-export const CopyButton = ({
-  textToCopy,
-  children,
-}: {
-  textToCopy: string;
-  children: React.ReactNode;
-}) => {
+export const CopyButton = ({ textToCopy, children }: CopyButtonProps) => {
   const [hasCopied, setHasCopied] = useState(false);
   const copyToClipboard = () => {
     navigator.clipboard.writeText(textToCopy);
