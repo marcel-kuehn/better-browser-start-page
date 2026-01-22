@@ -10,6 +10,7 @@ export default function View({ children }: { children: React.ReactNode }) {
 
   return (
     <div
+      data-testid="main-layout"
       className={
         'bg-muted flex min-h-screen w-screen flex-col items-center justify-center bg-cover bg-center p-4'
       }
