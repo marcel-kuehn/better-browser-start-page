@@ -1,4 +1,3 @@
-import { Block } from '@/types';
 import {
   WIDGET_TYPE_GRID,
   WIDGET_TYPE_SEARCH,
@@ -7,20 +6,21 @@ import {
   WIDGET_TYPE_CLOCK,
   WIDGET_TYPE_STOPWATCH,
 } from '@/constants/widgetTypes';
-import { SearchWidget as SearchWidgetType } from '../blocks/SearchWidget/types';
-import { AppsWidget as AppsWidgetType } from '../blocks/AppsWidget/types';
-import { LinksWidget as LinksWidgetType } from '../blocks/LinksWidget/types';
-import { ClockWidget as ClockWidgetType } from '../blocks/ClockWidget/types';
-import { SearchWidget } from '../blocks/SearchWidget';
-import { AppsWidget } from '../blocks/AppsWidget';
-import { LinksWidget } from '../blocks/LinksWidget';
-import { ClockWidget } from '../blocks/ClockWidget';
-import { Grid as GridType } from '../blocks/Grid/types';
-import Grid from '../blocks/Grid';
-import { StopWatchWidget as StopWatchWidgetType } from '../blocks/StopWatchWidget/types';
-import StopWatchWidget from '../blocks/StopWatchWidget';
+import { SearchWidget as SearchWidgetType } from '../../blocks/SearchWidget/types';
+import { AppsWidget as AppsWidgetType } from '../../blocks/AppsWidget/types';
+import { LinksWidget as LinksWidgetType } from '../../blocks/LinksWidget/types';
+import { ClockWidget as ClockWidgetType } from '../../blocks/ClockWidget/types';
+import { SearchWidget } from '../../blocks/SearchWidget';
+import { AppsWidget } from '../../blocks/AppsWidget';
+import { LinksWidget } from '../../blocks/LinksWidget';
+import { ClockWidget } from '../../blocks/ClockWidget';
+import { Grid as GridType } from '../../blocks/Grid/types';
+import Grid from '../../blocks/Grid';
+import { StopWatchWidget as StopWatchWidgetType } from '../../blocks/StopWatchWidget/types';
+import StopWatchWidget from '../../blocks/StopWatchWidget';
+import type { BlockRendererProps } from './types';
 
-export default function BlockRenderer({ blocks }: { blocks: Block[] }) {
+export default function BlockRenderer({ blocks }: BlockRendererProps) {
   return (
     <>
       {blocks

@@ -1,10 +1,10 @@
-import { getDomain, openUrl } from '@/lib/url';
+import { getDomain } from '@/lib/url';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { useMemo, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { SearchIcon } from 'lucide-react';
-import { replacePlaceholder } from '@/lib/string';
+import { replacePlaceholder, openUrl } from './helpers';
 import type { SearchWidget } from './types';
 import { Widget } from '@/components/shared/Widget';
 import FaviconLoader from '@/components/shared/FaviconLoader';

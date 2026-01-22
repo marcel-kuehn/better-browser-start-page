@@ -1,4 +1,4 @@
-import { CellPosition, Direction, GridSpan } from '@/components/blocks/Grid/types';
+import { CellPosition, Direction, GridSpan } from './types';
 import { GridArea, Widget } from '@/types';
 
 export const isGridAreaColliding = (areaA: GridArea, areaB: GridArea): boolean => {

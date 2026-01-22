@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useAppConfig } from '@/contexts/AppConfig/useAppConfig';
-import { CopyButton } from './CopyButton';
-import { Label } from '../ui/label';
+import { CopyButton } from '../CopyButton';
+import { Label } from '../../ui/label';
 
 export default function ConfigExport() {
   const { t } = useTranslation();

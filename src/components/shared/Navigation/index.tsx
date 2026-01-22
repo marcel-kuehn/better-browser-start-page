@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { PencilIcon, PencilOffIcon } from 'lucide-react';
-import { Button } from '../ui/button';
-import Sidebar from './Sidebar';
+import { Button } from '../../ui/button';
+import Sidebar from '../Sidebar';
 import { useAppConfig } from '@/contexts/AppConfig/useAppConfig';
 
 export default function Navigation() {

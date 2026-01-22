@@ -3,7 +3,7 @@ import { INITIAL_CONFIG } from './initialState';
 import { AppConfig, Block, Theme } from '@/types';
 import { AppConfigContext } from './context';
 import { isLatestConfigVersion, migrateConfig } from '@/lib/migration';
-import { LOCAL_STORAGE_KEY } from '@/constants/storage';
+import { LOCAL_STORAGE_KEY } from './constants';
 
 const getSecureConfig = (config: Record<string, unknown>) => {
   const version = (config as { _v?: string })._v ?? '0.0.0';

@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useAppConfig } from '@/contexts/AppConfig/useAppConfig';
-import { Label } from '../ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { Label } from '../../ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../ui/select';
 import { Theme } from '@/types';
 import { THEME_GLASSMORPHISM, THEMES } from '@/constants/themes';
 

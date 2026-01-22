@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { SettingsIcon } from 'lucide-react';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 import {
   Sheet,
   SheetClose,
@@ -9,8 +9,8 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '../ui/sheet';
-import Settings from './Settings';
+} from '../../ui/sheet';
+import Settings from '../Settings';
 
 export default function Sidebar() {
   const { t } = useTranslation();

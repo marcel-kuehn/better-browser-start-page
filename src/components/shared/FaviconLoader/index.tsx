@@ -2,16 +2,9 @@ import { getDomain, getFaviconUrl } from '@/lib/url';
 import { cn } from '@/lib/utils';
 import { GlobeIcon } from 'lucide-react';
 import { useState } from 'react';
+import type { FaviconLoaderProps } from './types';
 
-export default function FaviconLoader({
-  url,
-  faviconUrl,
-  className,
-}: {
-  url: string;
-  faviconUrl?: string;
-  className?: string;
-}) {
+export default function FaviconLoader({ url, faviconUrl, className }: FaviconLoaderProps) {
   const src = faviconUrl ?? getFaviconUrl(url);
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
