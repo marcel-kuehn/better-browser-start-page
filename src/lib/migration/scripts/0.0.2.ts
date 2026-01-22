@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { WIDGET_TYPE_GRID } from '@/constants/widgetTypes';
 import { MigrationFunction } from '../types';
 import { DEFAULT_THEME } from '@/constants/themes';
 
@@ -27,7 +28,20 @@ export const migrateToVersion_0_0_2: MigrationFunction = (
   cb?: MigrationFunction
 ): Record<string, unknown> => {
   // 1. Prepare the new config structure
-  const elements = Array.isArray(oldConfig.elements) ? addIdsToBlocks(oldConfig.elements) : [];
+  let elements = Array.isArray(oldConfig.elements) ? addIdsToBlocks(oldConfig.elements) : [];
+
+  elements = elements.map(element => {
+    if (element.type === WIDGET_TYPE_GRID) {
+      return {
+        ...element,
+        span: {
+          rowSpan: element.rows,
+          columnSpan: element.columns,
+        },
+      };
+    }
+    return element;
+  });
 
   const newConfig = {
     ...oldConfig,

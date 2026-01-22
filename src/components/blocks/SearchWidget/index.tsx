@@ -36,7 +36,7 @@ export function SearchWidget({ elements, ...props }: SearchWidget) {
             onValueChange={setSelectedElement}
           >
             {elements.map(element => (
-              <ToggleGroupItem key={element.url} value={element.url}>
+              <ToggleGroupItem key={element.id} value={element.url}>
                 <FaviconLoader
                   url={element.url}
                   faviconUrl={element.faviconUrl}

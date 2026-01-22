@@ -14,7 +14,10 @@ export const INITIAL_CONFIG: AppConfig = {
     {
       id: crypto.randomUUID(),
       type: WIDGET_TYPE_GRID,
-      columns: DEFAULT_GRID_COLUMNS,
+      span: {
+        rowSpan: DEFAULT_GRID_ROWS,
+        columnSpan: DEFAULT_GRID_COLUMNS,
+      },
       rows: DEFAULT_GRID_ROWS,
       elements: [
         {
