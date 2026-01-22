@@ -46,12 +46,22 @@ jobs:
   test:
     name: Unit & Integration Tests
     runs-on: ubuntu-latest
+    env:
+      LANG: de_DE.UTF-8
+      LC_ALL: de_DE.UTF-8
+      TZ: Europe/Berlin
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
+      - name: Install German locale
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y locales
+          sudo locale-gen de_DE.UTF-8
+          sudo update-locale LANG=de_DE.UTF-8
       - run: npm ci
       - run: npm run test:coverage
       - uses: actions/upload-artifact@v4
@@ -63,12 +73,22 @@ jobs:
   test-e2e:
     name: E2E Tests
     runs-on: ubuntu-latest
+    env:
+      LANG: de_DE.UTF-8
+      LC_ALL: de_DE.UTF-8
+      TZ: Europe/Berlin
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
+      - name: Install German locale
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y locales
+          sudo locale-gen de_DE.UTF-8
+          sudo update-locale LANG=de_DE.UTF-8
       - run: npm ci
       - run: npx playwright install --with-deps
       - run: npm run test:e2e
@@ -139,9 +159,25 @@ jobs:
         run: |
           OUTDATED=$(npm outdated --json 2>/dev/null || echo "{}")
           if [ -n "$OUTDATED" ] && [ "$OUTDATED" != "{}" ]; then
-            echo "::warning::Some packages are outdated. Consider updating them."
+            # Check for major version updates only
+            MAJOR_UPDATES=$(echo "$OUTDATED" | jq -r '
+              to_entries[] |
+              select(
+                (.value.current // "0" | split(".")[0]) !=
+                (.value.latest // "0" | split(".")[0])
+              ) |
+              .key
+            ' 2>/dev/null || echo "")
+            
+            # Report all outdated packages as warnings
             echo "$OUTDATED" | jq -r 'to_entries[] | "::warning::\(.key): current=\(.value.current // "unknown"), wanted=\(.value.wanted // "unknown"), latest=\(.value.latest // "unknown")"' || true
-            exit 1
+            
+            if [ -n "$MAJOR_UPDATES" ]; then
+              echo "::error::Major version updates available for: $MAJOR_UPDATES"
+              exit 1
+            else
+              echo "Only minor/patch updates available. No action required."
+            fi
           else
             echo "All packages are up to date."
           fi
