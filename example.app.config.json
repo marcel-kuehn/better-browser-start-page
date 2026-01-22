@@ -217,7 +217,11 @@
           "id": "0979a429-2164-447d-be05-7bf1f46f1ec7"
         }
       ],
-      "id": "ec7f5bb8-2a79-4c3c-9e55-85435fb77118"
+      "id": "ec7f5bb8-2a79-4c3c-9e55-85435fb77118",
+      "span": {
+        "rowSpan": 4,
+        "columnSpan": 4
+      }
     }
   ],
   "settings": {

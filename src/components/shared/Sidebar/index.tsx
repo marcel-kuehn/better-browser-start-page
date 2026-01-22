@@ -18,12 +18,12 @@ export default function Sidebar() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button data-testid="settings-trigger" variant="ghost" size="icon">
           <SettingsIcon aria-label={t('ui.settings')} />
         </Button>
       </SheetTrigger>
 
-      <SheetContent>
+      <SheetContent data-testid="settings-sidebar">
         <SheetHeader>
           <SheetTitle>{t('ui.settings')}</SheetTitle>
         </SheetHeader>
@@ -32,7 +32,9 @@ export default function Sidebar() {
 
         <SheetFooter>
           <SheetClose asChild>
-            <Button variant="outline">{t('ui.close')}</Button>
+            <Button data-testid="settings-close" variant="outline">
+              {t('ui.close')}
+            </Button>
           </SheetClose>
         </SheetFooter>
       </SheetContent>

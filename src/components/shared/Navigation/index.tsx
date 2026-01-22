@@ -13,7 +13,12 @@ export default function Navigation() {
       <div className="flex w-full items-center justify-between">
         <div></div>
         <div className="flex gap-1">
-          <Button variant="ghost" size="icon" onClick={() => updateEditMode(!isInEditMode)}>
+          <Button
+            data-testid="edit-mode-toggle"
+            variant="ghost"
+            size="icon"
+            onClick={() => updateEditMode(!isInEditMode)}
+          >
             {isInEditMode ? (
               <PencilOffIcon aria-label={t('ui.stopEditing')} />
             ) : (
