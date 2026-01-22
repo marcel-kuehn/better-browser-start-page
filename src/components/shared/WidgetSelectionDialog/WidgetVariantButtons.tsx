@@ -12,7 +12,7 @@ export default function WidgetVariantButtons({
         const sizeLabel = `${variant.rowSpan}x${variant.columnSpan}`;
         return (
           <Button
-            key={sizeLabel}
+            key={`${type}-${sizeLabel}`}
             variant="outline"
             size="sm"
             className="h-8 px-3"

@@ -34,6 +34,7 @@ export default function Grid({ span, elements, id }: GridProps) {
 
     const baseConfig = DEFAULT_WIDGET_CONFIGS[type] || {};
     const targetArea = getTargetArea(selectedCell, span);
+    console.log('targetArea', targetArea);
     if (!targetArea) return;
 
     if (!canFitWidget(elements, targetArea, span)) {
@@ -54,6 +55,7 @@ export default function Grid({ span, elements, id }: GridProps) {
     return (['top', 'left', 'bottom', 'right'] as Direction[]).map((direction: Direction) => {
       return (
         <GridControl
+          key={direction}
           onExpand={() => expandGrid(direction)}
           onContract={() => contractGrid(direction)}
           canContract={canGridBeContracted(direction, elements, span)}
