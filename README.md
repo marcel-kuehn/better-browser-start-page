@@ -18,8 +18,6 @@ Also this project is open source. We don't track you and your data does not get 
 
 ## Themes
 
-You can switch themes in the settings.
-
 ### Glassmorphism
 
 ![Glassmorphism Screenshot](./docs/glassmorphism-screenshot-2.png)
@@ -30,7 +28,16 @@ You can switch themes in the settings.
 ![Glassmorphism Dark Screenshot](./docs/glassmorphism-dark-screenshot-2.png)
 ![Glassmorphism Dark Screenshot](./docs/glassmorphism-dark-screenshot.png)
 
+### Changing Themes
+
+You can switch themes in the settings.
+
+![Settings UI Screenshot](./docs/settings.png)
+
 ## Visual Editor
+
+![Grid Manipulation UI Screenshot](./docs/grid-edit.png)
+![Widget Selection UI Screenshot](./docs/add-widgets.png)
 
 The app features a built-in **Visual Editor**, making it easy to create a unique workspace without touching any code.
 
