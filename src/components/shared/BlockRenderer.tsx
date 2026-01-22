@@ -27,22 +27,22 @@ export default function BlockRenderer({ blocks }: { blocks: Block[] }) {
         .filter(block => !block.hidden)
         .map(block => {
           if (block.type === WIDGET_TYPE_GRID) {
-            return <Grid {...(block as GridType)} />;
+            return <Grid key={block.id} {...(block as GridType)} />;
           }
           if (block.type === WIDGET_TYPE_SEARCH) {
-            return <SearchWidget {...(block as SearchWidgetType)} />;
+            return <SearchWidget key={block.id} {...(block as SearchWidgetType)} />;
           }
           if (block.type === WIDGET_TYPE_APPS) {
-            return <AppsWidget {...(block as AppsWidgetType)} />;
+            return <AppsWidget key={block.id} {...(block as AppsWidgetType)} />;
           }
           if (block.type === WIDGET_TYPE_LINKS) {
-            return <LinksWidget {...(block as LinksWidgetType)} />;
+            return <LinksWidget key={block.id} {...(block as LinksWidgetType)} />;
           }
           if (block.type === WIDGET_TYPE_CLOCK) {
-            return <ClockWidget {...(block as ClockWidgetType)} />;
+            return <ClockWidget key={block.id} {...(block as ClockWidgetType)} />;
           }
           if (block.type === WIDGET_TYPE_STOPWATCH) {
-            return <StopWatchWidget {...(block as StopWatchWidgetType)} />;
+            return <StopWatchWidget key={block.id} {...(block as StopWatchWidgetType)} />;
           }
           return null;
         })}

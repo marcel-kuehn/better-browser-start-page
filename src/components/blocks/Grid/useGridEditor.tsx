@@ -1,17 +1,19 @@
 import { Widget, Block } from '@/types';
+import { GridSpan } from './types';
 
 type Direction = 'top' | 'bottom' | 'left' | 'right';
 
 export function useGridEditor(
   id: string,
-  rows: number,
-  columns: number,
+  span: GridSpan,
   elements: Widget[],
   updateElementById: (id: string, data: Partial<Block>) => void
 ) {
+  const { rowSpan, columnSpan } = span;
+
   const expandGrid = (direction: Direction) => {
-    let newRows = rows;
-    let newColumns = columns;
+    let newRows = rowSpan;
+    let newColumns = columnSpan;
 
     const updatedElements = elements.map(el => {
       const { rowStart, rowEnd, columnStart, columnEnd } = el.gridArea;
@@ -42,8 +44,10 @@ export function useGridEditor(
     else newColumns += 1;
 
     updateElementById(id, {
-      rows: newRows,
-      columns: newColumns,
+      span: {
+        rowSpan: newRows,
+        columnSpan: newColumns,
+      },
       elements: updatedElements,
     });
   };
@@ -52,9 +56,9 @@ export function useGridEditor(
     const isOccupied = elements.some(el => {
       const { rowStart, rowEnd, columnStart, columnEnd } = el.gridArea;
       if (direction === 'top') return rowStart === 1;
-      if (direction === 'bottom') return rowEnd === rows + 1;
+      if (direction === 'bottom') return rowEnd === rowSpan + 1;
       if (direction === 'left') return columnStart === 1;
-      if (direction === 'right') return columnEnd === columns + 1;
+      if (direction === 'right') return columnEnd === columnSpan + 1;
       return false;
     });
 
@@ -64,8 +68,8 @@ export function useGridEditor(
     }
 
     if (
-      ((direction === 'top' || direction === 'bottom') && rows <= 1) ||
-      ((direction === 'left' || direction === 'right') && columns <= 1)
+      ((direction === 'top' || direction === 'bottom') && rowSpan <= 1) ||
+      ((direction === 'left' || direction === 'right') && columnSpan <= 1)
     )
       return;
 
@@ -94,12 +98,14 @@ export function useGridEditor(
       return el;
     });
 
-    const newRows = direction === 'top' || direction === 'bottom' ? rows - 1 : rows;
-    const newCols = direction === 'left' || direction === 'right' ? columns - 1 : columns;
+    const newRows = direction === 'top' || direction === 'bottom' ? rowSpan - 1 : rowSpan;
+    const newCols = direction === 'left' || direction === 'right' ? columnSpan - 1 : columnSpan;
 
     updateElementById(id, {
-      rows: newRows,
-      columns: newCols,
+      span: {
+        rowSpan: newRows,
+        columnSpan: newCols,
+      },
       elements: updatedElements,
     });
   };

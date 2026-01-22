@@ -10,7 +10,7 @@ export function LinksWidget({ title, elements, ...props }: LinksWidget) {
       </h3>
       <ul className="-mx-2 flex flex-col">
         {elements.map(element => (
-          <li key={element.url}>
+          <li key={element.id}>
             <Link {...element} />
           </li>
         ))}

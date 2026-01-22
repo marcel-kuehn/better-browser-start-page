@@ -8,14 +8,7 @@ import {
   WIDGET_TYPE_STOPWATCH,
 } from './widgetTypes';
 import { DEFAULT_SEARCH_URL, EXAMPLE_URL, EXAMPLE_URL_WITH_TRAILING_SLASH } from './urls';
-
-export type WidgetOption = {
-  type: string;
-  label: string;
-  description: string;
-  icon: typeof SearchIcon;
-  variants: Array<{ w: number; h: number }>;
-};
+import { WidgetOption } from '@/components/shared/WidgetSelectionDialog/types';
 
 export const createDefaultWidgetConfigs = (t: TFunction): Record<string, unknown> => ({
   [WIDGET_TYPE_SEARCH]: {
@@ -50,9 +43,10 @@ export const getWidgetOptions = (t: TFunction): WidgetOption[] => [
     description: t('widgets.search.description'),
     icon: SearchIcon,
     variants: [
-      { w: 2, h: 1 },
-      { w: 3, h: 1 },
-      { w: 4, h: 1 },
+      { rowSpan: 2, columnSpan: 1 },
+      { rowSpan: 3, columnSpan: 1 },
+      { rowSpan: 4, columnSpan: 1 },
+      { rowSpan: 4, columnSpan: 1 },
     ],
   },
   {
@@ -61,22 +55,23 @@ export const getWidgetOptions = (t: TFunction): WidgetOption[] => [
     description: t('widgets.apps.description'),
     icon: LayoutGridIcon,
     variants: [
-      { w: 1, h: 1 },
-      { w: 1, h: 2 },
-      { w: 1, h: 3 },
-      { w: 1, h: 4 },
-      { w: 2, h: 1 },
-      { w: 2, h: 2 },
-      { w: 2, h: 3 },
-      { w: 2, h: 4 },
-      { w: 3, h: 1 },
-      { w: 3, h: 2 },
-      { w: 3, h: 3 },
-      { w: 3, h: 4 },
-      { w: 4, h: 1 },
-      { w: 4, h: 2 },
-      { w: 4, h: 3 },
-      { w: 4, h: 4 },
+      { rowSpan: 1, columnSpan: 1 },
+      { rowSpan: 2, columnSpan: 1 },
+      { rowSpan: 3, columnSpan: 1 },
+      { rowSpan: 4, columnSpan: 1 },
+      { rowSpan: 2, columnSpan: 1 },
+      { rowSpan: 2, columnSpan: 2 },
+      { rowSpan: 2, columnSpan: 3 },
+      { rowSpan: 4, columnSpan: 1 },
+      { rowSpan: 2, columnSpan: 3 },
+      { rowSpan: 3, columnSpan: 1 },
+      { rowSpan: 3, columnSpan: 2 },
+      { rowSpan: 3, columnSpan: 3 },
+      { rowSpan: 3, columnSpan: 4 },
+      { rowSpan: 4, columnSpan: 1 },
+      { rowSpan: 4, columnSpan: 2 },
+      { rowSpan: 4, columnSpan: 3 },
+      { rowSpan: 4, columnSpan: 4 },
     ],
   },
   {
@@ -85,10 +80,10 @@ export const getWidgetOptions = (t: TFunction): WidgetOption[] => [
     description: t('widgets.links.description'),
     icon: LinkIcon,
     variants: [
-      { w: 1, h: 1 },
-      { w: 1, h: 2 },
-      { w: 1, h: 3 },
-      { w: 1, h: 4 },
+      { rowSpan: 1, columnSpan: 1 },
+      { rowSpan: 1, columnSpan: 2 },
+      { rowSpan: 1, columnSpan: 3 },
+      { rowSpan: 1, columnSpan: 4 },
     ],
   },
   {
@@ -96,13 +91,13 @@ export const getWidgetOptions = (t: TFunction): WidgetOption[] => [
     label: t('widgets.clock.label'),
     description: t('widgets.clock.description'),
     icon: ClockIcon,
-    variants: [{ w: 1, h: 1 }],
+    variants: [{ rowSpan: 1, columnSpan: 1 }],
   },
   {
     type: WIDGET_TYPE_STOPWATCH,
     label: t('widgets.stopwatch.label'),
     description: t('widgets.stopwatch.description'),
     icon: TimerIcon,
-    variants: [{ w: 1, h: 1 }],
+    variants: [{ rowSpan: 1, columnSpan: 1 }],
   },
 ];

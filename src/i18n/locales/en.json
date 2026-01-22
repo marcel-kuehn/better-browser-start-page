@@ -37,8 +37,7 @@
     "theme": "Theme"
   },
   "errors": {
-    "notEnoughSpace": "Not enough space to the right or bottom!",
-    "overlapError": "This area overlaps with an existing widget.",
+    "notEnoughSpace": "Not enough space to fit the widget.",
     "parseConfigFailed": "Failed to parse config. Please upload a valid JSON file."
   },
   "themes": {
