@@ -2,7 +2,6 @@ import { describe, it, expect, vi } from 'vitest';
 import { migrateToVersion_0_0_3 } from './0.0.3';
 import { DEFAULT_THEME } from '@/constants/themes';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 describe('migrateToVersion_0_0_3', () => {
   it('should add customBackgroundImage field to settings when missing', () => {
     const oldConfig = {

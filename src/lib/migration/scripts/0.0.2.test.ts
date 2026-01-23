@@ -3,7 +3,6 @@ import { migrateToVersion_0_0_2 } from './0.0.2';
 import { WIDGET_TYPE_GRID } from '@/constants/widgetTypes';
 import { DEFAULT_THEME } from '@/constants/themes';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 describe('migrateToVersion_0_0_2', () => {
   beforeEach(() => {
     vi.spyOn(crypto, 'randomUUID').mockReturnValue('mock-uuid-123-123-123');
