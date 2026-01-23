@@ -7,6 +7,7 @@ It allows you to:
 - **Search:** Configure and search your favorite search engines.
 - **Organize:** Group and categorize your links efficiently.
 - **Widgets:** Use an ever-expanding list of useful widgets (Clock, Stopwatch, etc.).
+- **Multi-language Support:** Available in English and German.
 
 You can make it look the way you like using themes and the visual editor. You can import and export your configuration, if you want to do a backup or switch to a different browser.
 
@@ -43,6 +44,21 @@ You can upload your own custom wallpaper/background image to personalize your st
 - **Upload Custom Wallpaper:** Go to settings and use the "Custom Background" option to upload an image file
 - **Clear Custom Wallpaper:** Use the clear button in settings to revert back to the theme's default wallpaper
 - **Persistence:** Your custom wallpaper is saved in your configuration and will persist across page reloads
+
+## Language Support
+
+The application supports multiple languages. Currently available:
+
+- **English** (default)
+- **German** (Deutsch)
+
+### Changing Language
+
+You can switch languages in the settings. The language preference is saved in your configuration and will persist across page reloads.
+
+- All UI elements, labels, and messages will be translated to the selected language
+- The clock widget will display dates and times in the appropriate locale format
+- Widget labels and descriptions in the widget selection dialog will be translated
 
 ## Visual Editor
 

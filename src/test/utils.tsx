@@ -4,6 +4,7 @@ import { vi } from 'vitest';
 import { AppConfigProvider } from '@/contexts/AppConfig/provider';
 import { AppConfig, Block, Widget } from '@/types';
 import { DEFAULT_THEME } from '@/constants/themes';
+import { DEFAULT_LANGUAGE } from '@/constants/languages';
 import { DEFAULT_CONFIG_VERSION } from '@/contexts/AppConfig/constants';
 
 /**
@@ -14,6 +15,7 @@ export const createMockConfig = (overrides?: Partial<AppConfig>): AppConfig => {
     _v: DEFAULT_CONFIG_VERSION,
     settings: {
       theme: DEFAULT_THEME,
+      language: DEFAULT_LANGUAGE,
     },
     elements: [],
     ...overrides,

@@ -17,13 +17,16 @@ export interface Widget extends Block {
 
 export type Theme = 'glassmorphism' | 'glassmorphism-dark';
 
+export type Language = 'en' | 'de';
+
 export interface Settings {
   theme: Theme;
   customBackgroundImage?: string | null;
+  language: Language;
 }
 
 export interface AppConfig {
   elements: Block[];
   settings: Settings;
-  _v: '0.0.3';
+  _v: '0.0.4';
 }

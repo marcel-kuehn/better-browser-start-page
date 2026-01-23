@@ -1,4 +1,4 @@
-import { AppConfig, Block, Theme } from '@/types';
+import { AppConfig, Block, Language, Theme } from '@/types';
 
 export interface AppConfigContextType {
   config: AppConfig;
@@ -11,4 +11,6 @@ export interface AppConfigContextType {
   getTheme: () => Theme;
   updateCustomBackground: (image: string | null) => void;
   getCustomBackground: () => string | null;
+  updateLanguage: (language: Language) => void;
+  getLanguage: () => Language;
 }

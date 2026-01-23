@@ -1,11 +1,13 @@
 import { Widget } from '@/components/shared/Widget';
 import type { StopWatchWidget } from './types';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { formatElapsedTime } from './helpers';
 import { PauseIcon, PlayIcon, RotateCcwIcon } from 'lucide-react';
 
 export default function StopWatchWidget(props: StopWatchWidget) {
+  const { t } = useTranslation();
   const [startTime, setStartTime] = useState<number | null>(null);
   const [elapsedTime, setElapsedTime] = useState<number | null>(null);
 
@@ -32,7 +34,7 @@ export default function StopWatchWidget(props: StopWatchWidget) {
           setStartTime(null);
         }}
       >
-        <PauseIcon aria-label="Pause" />
+        <PauseIcon aria-label={t('ui.pause')} />
       </Button>
     );
 
@@ -43,7 +45,7 @@ export default function StopWatchWidget(props: StopWatchWidget) {
           setStartTime(Date.now() - (elapsedTime ?? 0));
         }}
       >
-        <PlayIcon aria-label={elapsedTime ? 'Resume' : 'Start'} />
+        <PlayIcon aria-label={elapsedTime ? t('ui.resume') : t('ui.start')} />
       </Button>
     );
 
@@ -55,7 +57,7 @@ export default function StopWatchWidget(props: StopWatchWidget) {
           setElapsedTime(null);
         }}
       >
-        <RotateCcwIcon aria-label="Reset" />
+        <RotateCcwIcon aria-label={t('ui.reset')} />
       </Button>
     );
 

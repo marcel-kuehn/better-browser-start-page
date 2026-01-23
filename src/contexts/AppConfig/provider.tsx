@@ -1,9 +1,10 @@
 import { useState, useEffect, ReactNode } from 'react';
 import { INITIAL_CONFIG } from './initialState';
-import { AppConfig, Block, Theme } from '@/types';
+import { AppConfig, Block, Language, Theme } from '@/types';
 import { AppConfigContext } from './context';
 import { isLatestConfigVersion, migrateConfig } from '@/lib/migration';
 import { LOCAL_STORAGE_KEY } from './constants';
+import i18n from '@/i18n/config';
 
 const getSecureConfig = (config: Record<string, unknown>) => {
   const version = (config as { _v?: string })._v ?? '0.0.0';
@@ -66,6 +67,25 @@ export const AppConfigProvider = ({ children }: { children: ReactNode }) => {
   const getCustomBackground = (): string | null => {
     return config.settings.customBackgroundImage ?? null;
   };
+
+  const updateLanguage = (language: Language) => {
+    setConfig(prev => ({
+      ...prev,
+      settings: { ...prev.settings, language },
+    }));
+    i18n.changeLanguage(language);
+  };
+
+  const getLanguage = (): Language => {
+    return config.settings.language;
+  };
+
+  // Sync i18n language with config on mount and when language changes
+  useEffect(() => {
+    if (config.settings.language && i18n.language !== config.settings.language) {
+      i18n.changeLanguage(config.settings.language);
+    }
+  }, [config.settings.language]);
 
   const updateEditMode = (isInEditMode: boolean) => {
     setIsInEditMode(isInEditMode);
@@ -131,6 +151,8 @@ export const AppConfigProvider = ({ children }: { children: ReactNode }) => {
         getTheme,
         updateCustomBackground,
         getCustomBackground,
+        updateLanguage,
+        getLanguage,
         updateElementById,
         removeElementById,
       }}

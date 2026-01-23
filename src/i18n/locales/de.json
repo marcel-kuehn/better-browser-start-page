@@ -1,0 +1,62 @@
+{
+  "widgets": {
+    "search": {
+      "label": "Suchleiste",
+      "description": "Multi-Suchmaschinen-Interface."
+    },
+    "apps": {
+      "label": "Apps-Raster",
+      "description": "Angeheftete Verknüpfungen und Lesezeichen."
+    },
+    "links": {
+      "label": "Linkliste",
+      "description": "Gruppierte vertikale Listen."
+    },
+    "clock": {
+      "label": "Uhr",
+      "description": "Zeit- und Datumsanzeige."
+    },
+    "stopwatch": {
+      "label": "Stoppuhr",
+      "description": "Produktivitäts-Timer."
+    }
+  },
+  "ui": {
+    "addWidget": "Widget hinzufügen",
+    "pickWidget": "Wähle ein Widget für dein Raster.",
+    "newCategory": "Neue Kategorie",
+    "exampleLink": "Beispiel-Link",
+    "edit": "Bearbeiten",
+    "stopEditing": "Bearbeitung beenden",
+    "settings": "Einstellungen",
+    "close": "Schließen",
+    "exportConfig": "Konfiguration exportieren",
+    "copyConfig": "Aktuelle Konfiguration kopieren",
+    "importConfig": "Konfiguration importieren",
+    "replaceConfig": "Aktuelle Konfiguration mit hochgeladener ersetzen",
+    "theme": "Design",
+    "language": "Sprache",
+    "customBackground": "Benutzerdefinierter Hintergrund",
+    "customBackgroundPreview": "Vorschau des benutzerdefinierten Hintergrunds",
+    "clearBackground": "Hintergrund entfernen",
+    "pause": "Pause",
+    "resume": "Fortsetzen",
+    "start": "Start",
+    "reset": "Zurücksetzen",
+    "searchPlaceholder": "Suche {{domain}}..."
+  },
+  "errors": {
+    "parseConfigFailed": "Konfiguration konnte nicht gelesen werden. Bitte lade eine gültige JSON-Datei hoch.",
+    "invalidImageType": "Ungültiger Bildtyp. Bitte lade ein JPEG-, PNG-, GIF- oder WebP-Bild hoch.",
+    "imageTooLarge": "Das Bild ist zu groß. Maximale Größe ist {{maxSize}}MB.",
+    "imageUploadFailed": "Bild konnte nicht hochgeladen werden. Bitte versuche es erneut."
+  },
+  "themes": {
+    "glassmorphism": "Glasmorphismus (Standard)",
+    "glassmorphismDark": "Glasmorphismus Dunkel"
+  },
+  "languages": {
+    "en": "Englisch",
+    "de": "Deutsch"
+  }
+}

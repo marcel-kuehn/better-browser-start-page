@@ -8,6 +8,7 @@ describe('Migration utilities', () => {
       expect(getNextConfigVersion('0.0.0')).toBe('0.0.1');
       expect(getNextConfigVersion('0.0.1')).toBe('0.0.2');
       expect(getNextConfigVersion('0.0.2')).toBe('0.0.3');
+      expect(getNextConfigVersion('0.0.3')).toBe('0.0.4');
     });
 
     it('should return null for latest version', () => {
@@ -31,6 +32,7 @@ describe('Migration utilities', () => {
       expect(isLatestConfigVersion('0.0.0')).toBe(false);
       expect(isLatestConfigVersion('0.0.1')).toBe(false);
       expect(isLatestConfigVersion('0.0.2')).toBe(false);
+      expect(isLatestConfigVersion('0.0.3')).toBe(false);
     });
   });
 
@@ -73,27 +75,42 @@ describe('Migration utilities', () => {
       expect(result._v).toBe(CONFIG_VERSION_ORDER[CONFIG_VERSION_ORDER.length - 1]);
     });
 
-    it('should migrate from 0.0.2 to 0.0.3 and add customBackgroundImage', () => {
+    it('should migrate from 0.0.2 to latest and add customBackgroundImage and language', () => {
       const oldConfig = {
         _v: '0.0.2',
         settings: { theme: 'glassmorphism' },
         elements: [],
       };
       const result = migrateConfig(oldConfig);
-      expect(result._v).toBe('0.0.3');
+      expect(result._v).toBe(CONFIG_VERSION_ORDER[CONFIG_VERSION_ORDER.length - 1]);
       expect(result.settings).toHaveProperty('customBackgroundImage');
       expect(result.settings.customBackgroundImage).toBeNull();
+      expect(result.settings).toHaveProperty('language');
+      expect(result.settings.language).toBe('en');
     });
 
-    it('should preserve existing customBackgroundImage during 0.0.2 to 0.0.3 migration', () => {
+    it('should preserve existing customBackgroundImage during migration from 0.0.2', () => {
       const oldConfig = {
         _v: '0.0.2',
         settings: { theme: 'glassmorphism', customBackgroundImage: 'data:image/jpeg;base64,test' },
         elements: [],
       };
       const result = migrateConfig(oldConfig);
-      expect(result._v).toBe('0.0.3');
+      expect(result._v).toBe(CONFIG_VERSION_ORDER[CONFIG_VERSION_ORDER.length - 1]);
       expect(result.settings.customBackgroundImage).toBe('data:image/jpeg;base64,test');
+      expect(result.settings.language).toBe('en');
+    });
+
+    it('should migrate from 0.0.3 to latest and add language', () => {
+      const oldConfig = {
+        _v: '0.0.3',
+        settings: { theme: 'glassmorphism', customBackgroundImage: null },
+        elements: [],
+      };
+      const result = migrateConfig(oldConfig);
+      expect(result._v).toBe(CONFIG_VERSION_ORDER[CONFIG_VERSION_ORDER.length - 1]);
+      expect(result.settings).toHaveProperty('language');
+      expect(result.settings.language).toBe('en');
     });
 
     it('should handle config without version (defaults to 0.0.0)', () => {

@@ -1,6 +1,7 @@
 import { getDomain } from '@/lib/url';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { SearchIcon } from 'lucide-react';
@@ -10,6 +11,7 @@ import { Widget } from '@/components/shared/Widget';
 import FaviconLoader from '@/components/shared/FaviconLoader';
 
 export function SearchWidget({ elements, ...props }: SearchWidget) {
+  const { t } = useTranslation();
   const [selectedElement, setSelectedElement] = useState<string>(elements[0]?.url ?? '');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
@@ -49,7 +51,7 @@ export function SearchWidget({ elements, ...props }: SearchWidget) {
         <div className="flex gap-2">
           <Input
             type="text"
-            placeholder={`Search ${getDomain(selectedElement)}...`}
+            placeholder={t('ui.searchPlaceholder', { domain: getDomain(selectedElement) })}
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
           />

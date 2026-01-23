@@ -117,8 +117,8 @@ test.describe('Custom Background', () => {
     await page.goto('/');
     await page.evaluate(customBg => {
       const config = {
-        _v: '0.0.3',
-        settings: { theme: 'glassmorphism', customBackgroundImage: customBg },
+        _v: '0.0.4',
+        settings: { theme: 'glassmorphism', language: 'en', customBackgroundImage: customBg },
         elements: [],
       };
       localStorage.setItem('app_config', JSON.stringify(config));
@@ -192,8 +192,8 @@ test.describe('Custom Background', () => {
     await page.goto('/');
     await page.evaluate(customBg => {
       const config = {
-        _v: '0.0.3',
-        settings: { theme: 'glassmorphism', customBackgroundImage: customBg },
+        _v: '0.0.4',
+        settings: { theme: 'glassmorphism', language: 'en', customBackgroundImage: customBg },
         elements: [],
       };
       localStorage.setItem('app_config', JSON.stringify(config));
@@ -205,7 +205,7 @@ test.describe('Custom Background', () => {
     await expect(page.getByTestId('settings-sidebar')).toBeVisible();
 
     // Switch to dark theme
-    const themeSelect = page.locator('[role="combobox"]');
+    const themeSelect = page.getByTestId('theme-select');
     await themeSelect.click();
     const darkOption = page.locator('[role="option"]').filter({ hasText: /dark/i });
     await darkOption.click();

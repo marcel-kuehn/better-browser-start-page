@@ -26,8 +26,6 @@ describe('ConfigExport', () => {
 
   it('should export current config as JSON', () => {
     const mockConfig = createMockConfig({
-      _v: '0.0.3',
-      settings: { theme: 'glassmorphism' },
       elements: [{ id: '1', type: 'test' }],
     });
 
@@ -41,7 +39,7 @@ describe('ConfigExport', () => {
 
     expect(exportedText).toBeTruthy();
     const parsed = JSON.parse(exportedText!);
-    expect(parsed._v).toBe('0.0.3');
+    expect(parsed._v).toBe('0.0.4');
     expect(parsed.elements).toHaveLength(1);
   });
 

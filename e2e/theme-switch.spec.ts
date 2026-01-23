@@ -34,7 +34,7 @@ test.describe('Theme Switching', () => {
     await expect(themeLabel).toBeVisible();
 
     // Select element should be present
-    const themeSelect = page.locator('[role="combobox"]');
+    const themeSelect = page.getByTestId('theme-select');
     await expect(themeSelect).toBeVisible();
   });
 
@@ -46,7 +46,7 @@ test.describe('Theme Switching', () => {
     await expect(page.getByTestId('settings-sidebar')).toBeVisible();
 
     // Click the theme select
-    const themeSelect = page.locator('[role="combobox"]');
+    const themeSelect = page.getByTestId('theme-select');
     await themeSelect.click();
 
     // Select dark theme option
@@ -71,8 +71,8 @@ test.describe('Theme Switching', () => {
     await page.goto('/');
     await page.evaluate(() => {
       const config = {
-        _v: '0.0.3',
-        settings: { theme: 'glassmorphism-dark' },
+        _v: '0.0.4',
+        settings: { theme: 'glassmorphism-dark', language: 'en' },
         elements: [],
       };
       localStorage.setItem('app_config', JSON.stringify(config));
@@ -84,7 +84,7 @@ test.describe('Theme Switching', () => {
     await expect(page.getByTestId('settings-sidebar')).toBeVisible();
 
     // Click the theme select
-    const themeSelect = page.locator('[role="combobox"]');
+    const themeSelect = page.getByTestId('theme-select');
     await themeSelect.click();
 
     // Select light theme option (the non-dark one)
@@ -112,7 +112,7 @@ test.describe('Theme Switching', () => {
     await page.getByTestId('settings-trigger').click();
     await expect(page.getByTestId('settings-sidebar')).toBeVisible();
 
-    const themeSelect = page.locator('[role="combobox"]');
+    const themeSelect = page.getByTestId('theme-select');
     await themeSelect.click();
 
     const darkOption = page.locator('[role="option"]').filter({ hasText: /dark/i });
@@ -158,8 +158,8 @@ test.describe('Theme Switching', () => {
     await page.goto('/');
     await page.evaluate(customBg => {
       const config = {
-        _v: '0.0.3',
-        settings: { theme: 'glassmorphism', customBackgroundImage: customBg },
+        _v: '0.0.4',
+        settings: { theme: 'glassmorphism', language: 'en', customBackgroundImage: customBg },
         elements: [],
       };
       localStorage.setItem('app_config', JSON.stringify(config));
@@ -187,7 +187,7 @@ test.describe('Theme Switching', () => {
     await expect(sidebar).toBeVisible();
 
     // Change theme
-    const themeSelect = page.locator('[role="combobox"]');
+    const themeSelect = page.getByTestId('theme-select');
     await themeSelect.click();
 
     const option = page.locator('[role="option"]').first();
@@ -208,8 +208,8 @@ test.describe('Theme Switching', () => {
     await page.goto('/');
     await page.evaluate(() => {
       const config = {
-        _v: '0.0.3',
-        settings: { theme: 'glassmorphism-dark' },
+        _v: '0.0.4',
+        settings: { theme: 'glassmorphism-dark', language: 'en' },
         elements: [],
       };
       localStorage.setItem('app_config', JSON.stringify(config));
@@ -221,7 +221,7 @@ test.describe('Theme Switching', () => {
     await expect(page.getByTestId('settings-sidebar')).toBeVisible();
 
     // The select trigger should show the current theme
-    const themeSelect = page.locator('[role="combobox"]');
+    const themeSelect = page.getByTestId('theme-select');
     const selectText = await themeSelect.textContent();
 
     // Should contain dark theme indicator

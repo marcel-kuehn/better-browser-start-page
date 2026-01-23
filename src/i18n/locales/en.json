@@ -35,9 +35,15 @@
     "importConfig": "Import configuration",
     "replaceConfig": "Replace current config with uploaded config",
     "theme": "Theme",
+    "language": "Language",
     "customBackground": "Custom Background",
     "customBackgroundPreview": "Custom background preview",
-    "clearBackground": "Clear Background"
+    "clearBackground": "Clear Background",
+    "pause": "Pause",
+    "resume": "Resume",
+    "start": "Start",
+    "reset": "Reset",
+    "searchPlaceholder": "Search {{domain}}..."
   },
   "errors": {
     "parseConfigFailed": "Failed to parse config. Please upload a valid JSON file.",
@@ -48,5 +54,9 @@
   "themes": {
     "glassmorphism": "Glassmorphism (default)",
     "glassmorphismDark": "Glassmorphism Dark"
+  },
+  "languages": {
+    "en": "English",
+    "de": "German"
   }
 }

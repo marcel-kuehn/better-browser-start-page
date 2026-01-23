@@ -22,7 +22,7 @@ export default function ThemeSettings() {
           updateTheme(value as Theme);
         }}
       >
-        <SelectTrigger>
+        <SelectTrigger data-testid="theme-select">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>

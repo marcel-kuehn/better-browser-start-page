@@ -5,6 +5,7 @@ import { AppConfigProvider } from './provider';
 import { useAppConfig } from './useAppConfig';
 import { LOCAL_STORAGE_KEY } from './constants';
 import { DEFAULT_THEME } from '@/constants/themes';
+import { DEFAULT_LANGUAGE, LANGUAGE_GERMAN } from '@/constants/languages';
 import { WIDGET_TYPE_SEARCH } from '@/constants/widgetTypes';
 import { AppConfig } from '@/types';
 
@@ -21,6 +22,8 @@ const TestComponent = () => {
     getTheme,
     updateCustomBackground,
     getCustomBackground,
+    updateLanguage,
+    getLanguage,
   } = useAppConfig();
 
   return (
@@ -28,13 +31,17 @@ const TestComponent = () => {
       <div data-testid="config-version">{config._v}</div>
       <div data-testid="edit-mode">{isInEditMode ? 'true' : 'false'}</div>
       <div data-testid="theme">{getTheme()}</div>
+      <div data-testid="language">{getLanguage()}</div>
       <div data-testid="custom-background">{getCustomBackground() ?? 'none'}</div>
       <div data-testid="elements-count">{config.elements.length}</div>
-      <button data-testid="update-config" onClick={() => updateConfig({ ...config, _v: '0.0.3' })}>
+      <button data-testid="update-config" onClick={() => updateConfig({ ...config, _v: '0.0.4' })}>
         Update Config
       </button>
       <button data-testid="update-theme" onClick={() => updateTheme('glassmorphism-dark')}>
         Update Theme
+      </button>
+      <button data-testid="update-language" onClick={() => updateLanguage(LANGUAGE_GERMAN)}>
+        Update Language
       </button>
       <button data-testid="toggle-edit" onClick={() => updateEditMode(!isInEditMode)}>
         Toggle Edit
@@ -81,14 +88,15 @@ describe('AppConfigProvider', () => {
       </AppConfigProvider>
     );
 
-    expect(screen.getByTestId('config-version')).toHaveTextContent('0.0.3');
+    expect(screen.getByTestId('config-version')).toHaveTextContent('0.0.4');
     expect(screen.getByTestId('theme')).toHaveTextContent(DEFAULT_THEME);
+    expect(screen.getByTestId('language')).toHaveTextContent(DEFAULT_LANGUAGE);
   });
 
   it('should load config from localStorage on mount', () => {
     const savedConfig: AppConfig = {
-      _v: '0.0.3',
-      settings: { theme: 'glassmorphism-dark' },
+      _v: '0.0.4',
+      settings: { theme: 'glassmorphism-dark', language: LANGUAGE_GERMAN },
       elements: [{ id: '1', type: 'test' }],
     };
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(savedConfig));
@@ -99,8 +107,9 @@ describe('AppConfigProvider', () => {
       </AppConfigProvider>
     );
 
-    expect(screen.getByTestId('config-version')).toHaveTextContent('0.0.3');
+    expect(screen.getByTestId('config-version')).toHaveTextContent('0.0.4');
     expect(screen.getByTestId('theme')).toHaveTextContent('glassmorphism-dark');
+    expect(screen.getByTestId('language')).toHaveTextContent(LANGUAGE_GERMAN);
     expect(screen.getByTestId('elements-count')).toHaveTextContent('1');
   });
 
@@ -119,7 +128,7 @@ describe('AppConfigProvider', () => {
       const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
       expect(saved).toBeTruthy();
       const parsed = JSON.parse(saved!);
-      expect(parsed._v).toBe('0.0.3');
+      expect(parsed._v).toBe('0.0.4');
     });
   });
 
@@ -160,11 +169,32 @@ describe('AppConfigProvider', () => {
     });
   });
 
+  it('should update language and persist to localStorage', async () => {
+    const user = userEvent.setup();
+    render(
+      <AppConfigProvider>
+        <TestComponent />
+      </AppConfigProvider>
+    );
+
+    expect(screen.getByTestId('language')).toHaveTextContent(DEFAULT_LANGUAGE);
+
+    const languageButton = screen.getByTestId('update-language');
+    await user.click(languageButton);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('language')).toHaveTextContent(LANGUAGE_GERMAN);
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      const parsed = JSON.parse(saved!);
+      expect(parsed.settings.language).toBe(LANGUAGE_GERMAN);
+    });
+  });
+
   it('should update element by id', async () => {
     const user = userEvent.setup();
     const savedConfig: AppConfig = {
-      _v: '0.0.3',
-      settings: { theme: DEFAULT_THEME },
+      _v: '0.0.4',
+      settings: { theme: DEFAULT_THEME, language: DEFAULT_LANGUAGE },
       elements: [{ id: 'test-id', type: WIDGET_TYPE_SEARCH }],
     };
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(savedConfig));
@@ -188,8 +218,8 @@ describe('AppConfigProvider', () => {
   it('should remove element by id', async () => {
     const user = userEvent.setup();
     const savedConfig: AppConfig = {
-      _v: '0.0.3',
-      settings: { theme: DEFAULT_THEME },
+      _v: '0.0.4',
+      settings: { theme: DEFAULT_THEME, language: DEFAULT_LANGUAGE },
       elements: [{ id: 'test-id', type: WIDGET_TYPE_SEARCH }],
     };
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(savedConfig));
@@ -221,7 +251,7 @@ describe('AppConfigProvider', () => {
     );
 
     // Should fallback to INITIAL_CONFIG
-    expect(screen.getByTestId('config-version')).toHaveTextContent('0.0.3');
+    expect(screen.getByTestId('config-version')).toHaveTextContent('0.0.4');
     expect(consoleSpy).toHaveBeenCalled();
     consoleSpy.mockRestore();
   });
@@ -245,7 +275,7 @@ describe('AppConfigProvider', () => {
     );
 
     // Should be migrated to latest version
-    expect(screen.getByTestId('config-version')).toHaveTextContent('0.0.3');
+    expect(screen.getByTestId('config-version')).toHaveTextContent('0.0.4');
   });
 
   it('should update custom background and persist to localStorage', async () => {
@@ -274,8 +304,12 @@ describe('AppConfigProvider', () => {
   it('should clear custom background and persist to localStorage', async () => {
     const user = userEvent.setup();
     const savedConfig: AppConfig = {
-      _v: '0.0.3',
-      settings: { theme: DEFAULT_THEME, customBackgroundImage: 'data:image/jpeg;base64,existing' },
+      _v: '0.0.4',
+      settings: {
+        theme: DEFAULT_THEME,
+        language: DEFAULT_LANGUAGE,
+        customBackgroundImage: 'data:image/jpeg;base64,existing',
+      },
       elements: [],
     };
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(savedConfig));
@@ -303,8 +337,12 @@ describe('AppConfigProvider', () => {
 
   it('should load custom background from localStorage on mount', () => {
     const savedConfig: AppConfig = {
-      _v: '0.0.3',
-      settings: { theme: DEFAULT_THEME, customBackgroundImage: 'data:image/png;base64,loaded' },
+      _v: '0.0.4',
+      settings: {
+        theme: DEFAULT_THEME,
+        language: DEFAULT_LANGUAGE,
+        customBackgroundImage: 'data:image/png;base64,loaded',
+      },
       elements: [],
     };
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(savedConfig));
@@ -323,8 +361,8 @@ describe('AppConfigProvider', () => {
   it('should update nested elements recursively', async () => {
     const user = userEvent.setup();
     const savedConfig: AppConfig = {
-      _v: '0.0.3',
-      settings: { theme: DEFAULT_THEME },
+      _v: '0.0.4',
+      settings: { theme: DEFAULT_THEME, language: DEFAULT_LANGUAGE },
       elements: [
         {
           id: 'parent',
