@@ -71,7 +71,7 @@ test.describe('Theme Switching', () => {
     await page.goto('/');
     await page.evaluate(() => {
       const config = {
-        _v: '0.0.2',
+        _v: '0.0.3',
         settings: { theme: 'glassmorphism-dark' },
         elements: [],
       };
@@ -151,6 +151,33 @@ test.describe('Theme Switching', () => {
     expect(backgroundStyle.toLowerCase()).toContain('wallpaper');
   });
 
+  test('should use custom background over theme wallpaper when set', async ({ page }) => {
+    const customBase64 =
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+
+    await page.goto('/');
+    await page.evaluate(customBg => {
+      const config = {
+        _v: '0.0.3',
+        settings: { theme: 'glassmorphism', customBackgroundImage: customBg },
+        elements: [],
+      };
+      localStorage.setItem('app_config', JSON.stringify(config));
+    }, customBase64);
+    await page.reload();
+
+    // Wait for the page to fully render
+    await page.waitForTimeout(500);
+
+    // Check background image on the main layout div
+    const mainLayout = page.getByTestId('main-layout');
+    const backgroundStyle = await mainLayout.evaluate(el => el.style.backgroundImage);
+
+    // Background should reference the custom image, not the wallpaper
+    expect(backgroundStyle).toContain('data:image/png;base64');
+    expect(backgroundStyle.toLowerCase()).not.toContain('wallpaper');
+  });
+
   test('should close settings after theme change', async ({ page }) => {
     await page.goto('/');
 
@@ -181,7 +208,7 @@ test.describe('Theme Switching', () => {
     await page.goto('/');
     await page.evaluate(() => {
       const config = {
-        _v: '0.0.2',
+        _v: '0.0.3',
         settings: { theme: 'glassmorphism-dark' },
         elements: [],
       };

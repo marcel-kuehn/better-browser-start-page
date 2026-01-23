@@ -19,10 +19,11 @@ export type Theme = 'glassmorphism' | 'glassmorphism-dark';
 
 export interface Settings {
   theme: Theme;
+  customBackgroundImage?: string | null;
 }
 
 export interface AppConfig {
   elements: Block[];
   settings: Settings;
-  _v: '0.0.2';
+  _v: '0.0.3';
 }

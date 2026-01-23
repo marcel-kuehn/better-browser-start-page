@@ -56,6 +56,17 @@ export const AppConfigProvider = ({ children }: { children: ReactNode }) => {
     return config.settings.theme;
   };
 
+  const updateCustomBackground = (image: string | null) => {
+    setConfig(prev => ({
+      ...prev,
+      settings: { ...prev.settings, customBackgroundImage: image },
+    }));
+  };
+
+  const getCustomBackground = (): string | null => {
+    return config.settings.customBackgroundImage ?? null;
+  };
+
   const updateEditMode = (isInEditMode: boolean) => {
     setIsInEditMode(isInEditMode);
   };
@@ -118,6 +129,8 @@ export const AppConfigProvider = ({ children }: { children: ReactNode }) => {
         updateConfig,
         updateTheme,
         getTheme,
+        updateCustomBackground,
+        getCustomBackground,
         updateElementById,
         removeElementById,
       }}

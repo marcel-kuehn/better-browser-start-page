@@ -34,11 +34,17 @@
     "copyConfig": "Copy current config",
     "importConfig": "Import configuration",
     "replaceConfig": "Replace current config with uploaded config",
-    "theme": "Theme"
+    "theme": "Theme",
+    "customBackground": "Custom Background",
+    "customBackgroundPreview": "Custom background preview",
+    "clearBackground": "Clear Background"
   },
   "errors": {
     "notEnoughSpace": "Not enough space to fit the widget.",
-    "parseConfigFailed": "Failed to parse config. Please upload a valid JSON file."
+    "parseConfigFailed": "Failed to parse config. Please upload a valid JSON file.",
+    "invalidImageType": "Invalid image type. Please upload a JPEG, PNG, GIF, or WebP image.",
+    "imageTooLarge": "Image is too large. Maximum size is {{maxSize}}MB.",
+    "imageUploadFailed": "Failed to upload image. Please try again."
   },
   "themes": {
     "glassmorphism": "Glassmorphism (default)",

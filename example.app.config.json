@@ -1,5 +1,5 @@
 {
-  "_v": "0.0.2",
+  "_v": "0.0.3",
   "elements": [
     {
       "type": "grid",
@@ -225,6 +225,7 @@
     }
   ],
   "settings": {
-    "theme": "glassmorphism"
+    "theme": "glassmorphism",
+    "customBackgroundImage": null
   }
 }
