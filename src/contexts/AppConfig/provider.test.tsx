@@ -6,8 +6,8 @@ import { useAppConfig } from './useAppConfig';
 import { LOCAL_STORAGE_KEY } from './constants';
 import { DEFAULT_THEME } from '@/constants/themes';
 import { DEFAULT_LANGUAGE, LANGUAGE_GERMAN } from '@/constants/languages';
-import { WIDGET_TYPE_SEARCH } from '@/constants/widgetTypes';
-import { AppConfig } from '@/types';
+import { WIDGET_TYPE_SEARCH, WIDGET_TYPE_CLOCK } from '@/constants/widgetTypes';
+import { AppConfig, Widget } from '@/types';
 
 // Test component that uses the context
 const TestComponent = () => {
@@ -404,6 +404,147 @@ describe('AppConfigProvider', () => {
 
     await waitFor(() => {
       expect(screen.getByTestId('child-type')).toHaveTextContent('updated-child');
+    });
+  });
+
+  describe('Clipboard functionality', () => {
+    const testWidget: Widget = {
+      id: 'widget-1',
+      type: WIDGET_TYPE_CLOCK,
+      gridArea: { rowStart: 1, rowEnd: 2, columnStart: 1, columnEnd: 2 },
+    };
+
+    const TestClipboardComponent = () => {
+      const { clipboard, copyWidget, clearClipboard, removeElementById, config } = useAppConfig();
+
+      return (
+        <div>
+          <div data-testid="clipboard-content">{clipboard ? clipboard.id : 'empty'}</div>
+          <div data-testid="clipboard-type">{clipboard ? clipboard.type : 'none'}</div>
+          <div data-testid="elements-count">{config.elements.length}</div>
+          <button data-testid="copy-widget" onClick={() => copyWidget(testWidget)}>
+            Copy Widget
+          </button>
+          <button data-testid="clear-clipboard" onClick={() => clearClipboard()}>
+            Clear Clipboard
+          </button>
+          <button data-testid="remove-widget" onClick={() => removeElementById(testWidget.id)}>
+            Remove Widget
+          </button>
+        </div>
+      );
+    };
+
+    it('should copy a widget to clipboard', async () => {
+      const user = userEvent.setup();
+      render(
+        <AppConfigProvider>
+          <TestClipboardComponent />
+        </AppConfigProvider>
+      );
+
+      expect(screen.getByTestId('clipboard-content')).toHaveTextContent('empty');
+
+      await user.click(screen.getByTestId('copy-widget'));
+
+      await waitFor(() => {
+        expect(screen.getByTestId('clipboard-content')).toHaveTextContent('widget-1');
+        expect(screen.getByTestId('clipboard-type')).toHaveTextContent(WIDGET_TYPE_CLOCK);
+      });
+    });
+
+    it('should clear clipboard', async () => {
+      const user = userEvent.setup();
+      render(
+        <AppConfigProvider>
+          <TestClipboardComponent />
+        </AppConfigProvider>
+      );
+
+      // First copy
+      await user.click(screen.getByTestId('copy-widget'));
+      await waitFor(() => {
+        expect(screen.getByTestId('clipboard-content')).toHaveTextContent('widget-1');
+      });
+
+      // Then clear
+      await user.click(screen.getByTestId('clear-clipboard'));
+      await waitFor(() => {
+        expect(screen.getByTestId('clipboard-content')).toHaveTextContent('empty');
+      });
+    });
+
+    it('should persist clipboard after removing the original widget', async () => {
+      const user = userEvent.setup();
+      const savedConfig: AppConfig = {
+        _v: '0.0.4',
+        settings: { theme: DEFAULT_THEME, language: DEFAULT_LANGUAGE },
+        elements: [testWidget],
+      };
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(savedConfig));
+
+      render(
+        <AppConfigProvider>
+          <TestClipboardComponent />
+        </AppConfigProvider>
+      );
+
+      expect(screen.getByTestId('elements-count')).toHaveTextContent('1');
+
+      // Copy widget
+      await user.click(screen.getByTestId('copy-widget'));
+      await waitFor(() => {
+        expect(screen.getByTestId('clipboard-content')).toHaveTextContent('widget-1');
+      });
+
+      // Remove widget
+      await user.click(screen.getByTestId('remove-widget'));
+      await waitFor(() => {
+        expect(screen.getByTestId('elements-count')).toHaveTextContent('0');
+      });
+
+      // Clipboard should still have the widget
+      expect(screen.getByTestId('clipboard-content')).toHaveTextContent('widget-1');
+      expect(screen.getByTestId('clipboard-type')).toHaveTextContent(WIDGET_TYPE_CLOCK);
+    });
+
+    it('should create a deep clone when copying (not a reference)', async () => {
+      const user = userEvent.setup();
+
+      const TestDeepCloneComponent = () => {
+        const { clipboard, copyWidget } = useAppConfig();
+        const widgetWithElements: Widget = {
+          id: 'widget-with-elements',
+          type: WIDGET_TYPE_SEARCH,
+          gridArea: { rowStart: 1, rowEnd: 2, columnStart: 1, columnEnd: 2 },
+          elements: [{ id: 'child-1', url: 'https://example.com' }],
+        };
+
+        return (
+          <div>
+            <div data-testid="clipboard-id">{clipboard?.id ?? 'empty'}</div>
+            <div data-testid="clipboard-elements">
+              {clipboard?.elements ? JSON.stringify(clipboard.elements) : 'none'}
+            </div>
+            <button data-testid="copy" onClick={() => copyWidget(widgetWithElements)}>
+              Copy
+            </button>
+          </div>
+        );
+      };
+
+      render(
+        <AppConfigProvider>
+          <TestDeepCloneComponent />
+        </AppConfigProvider>
+      );
+
+      await user.click(screen.getByTestId('copy'));
+
+      await waitFor(() => {
+        expect(screen.getByTestId('clipboard-id')).toHaveTextContent('widget-with-elements');
+        expect(screen.getByTestId('clipboard-elements')).toHaveTextContent('child-1');
+      });
     });
   });
 });

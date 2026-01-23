@@ -47,7 +47,10 @@
     "settingsTabs": {
       "appearance": "Appearance",
       "data": "Data"
-    }
+    },
+    "copyWidget": "Copy widget",
+    "pasteFromClipboard": "Paste from Clipboard",
+    "paste": "Paste"
   },
   "errors": {
     "parseConfigFailed": "Failed to parse config. Please upload a valid JSON file.",

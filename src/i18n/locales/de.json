@@ -47,7 +47,10 @@
     "settingsTabs": {
       "appearance": "Aussehen",
       "data": "Daten"
-    }
+    },
+    "copyWidget": "Widget kopieren",
+    "pasteFromClipboard": "Aus Zwischenablage einfügen",
+    "paste": "Einfügen"
   },
   "errors": {
     "parseConfigFailed": "Konfiguration konnte nicht gelesen werden. Bitte lade eine gültige JSON-Datei hoch.",

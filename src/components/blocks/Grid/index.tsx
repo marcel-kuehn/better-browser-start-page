@@ -40,6 +40,18 @@ export default function Grid({ span, elements, id }: GridProps) {
     setSelectedCell(null);
   };
 
+  const handlePasteWidget = (widget: Widget, widgetSpan: GridSpan) => {
+    if (!selectedCell) return;
+
+    const targetArea = getTargetArea(selectedCell, widgetSpan);
+    if (!targetArea) return;
+
+    updateElementById(id, {
+      elements: [...elements, { ...widget, gridArea: targetArea }],
+    });
+    setSelectedCell(null);
+  };
+
   const getGridControls = (span: GridSpan, elements: Widget[]) => {
     return (['top', 'left', 'bottom', 'right'] as Direction[]).map((direction: Direction) => {
       return (
@@ -97,6 +109,7 @@ export default function Grid({ span, elements, id }: GridProps) {
               isOpen={!!selectedCell}
               onOpenChange={open => !open && setSelectedCell(null)}
               handleSelectWidget={handleSelectWidget}
+              handlePasteWidget={handlePasteWidget}
               selectedCell={selectedCell}
               elements={elements}
               gridSpan={span}

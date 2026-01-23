@@ -8,7 +8,7 @@ export function AppsWidget({ elements, ...props }: AppsWidget) {
   if (!hasElements) return null;
 
   return (
-    <Widget className="flex max-w-full items-center" {...props}>
+    <Widget className="flex max-w-full items-center" {...props} elements={elements}>
       <div className="flex w-full flex-wrap items-center justify-center gap-4">
         {elements.map(element => (
           <AppLink key={element.id} {...element} />

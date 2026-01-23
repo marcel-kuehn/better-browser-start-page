@@ -167,4 +167,23 @@ describe('migrateToVersion_0_0_2', () => {
     expect(result._v).toBe('0.0.2');
     expect(result.elements).toEqual([]);
   });
+
+  it('should remove rows and columns from grid elements', () => {
+    const oldConfig = {
+      _v: '0.0.1',
+      elements: [
+        {
+          type: WIDGET_TYPE_GRID,
+          columns: 4,
+          rows: 4,
+          elements: [],
+        },
+      ],
+    };
+
+    const result = migrateToVersion_0_0_2(oldConfig);
+
+    expect(result.elements[0]).not.toHaveProperty('rows');
+    expect(result.elements[0]).not.toHaveProperty('columns');
+  });
 });

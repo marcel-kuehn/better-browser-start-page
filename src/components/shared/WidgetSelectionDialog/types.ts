@@ -4,12 +4,15 @@ import { LucideIcon } from 'lucide-react';
 
 export type SelectWidgetHandler = (type: string, span: GridSpan) => void;
 
+export type PasteWidgetHandler = (widget: Widget, span: GridSpan) => void;
+
 export type IsVariantDisabled = (variant: GridSpan) => boolean;
 
 export interface WidgetSelectionDialogProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   handleSelectWidget: SelectWidgetHandler;
+  handlePasteWidget: PasteWidgetHandler;
   selectedCell: CellPosition | null;
   elements: Widget[];
   gridSpan: GridSpan;

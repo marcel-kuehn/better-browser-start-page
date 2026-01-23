@@ -3,8 +3,6 @@
   "elements": [
     {
       "type": "grid",
-      "columns": 4,
-      "rows": 4,
       "elements": [
         {
           "type": "clock-widget",

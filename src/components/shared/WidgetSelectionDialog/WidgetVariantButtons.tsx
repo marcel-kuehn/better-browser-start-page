@@ -20,6 +20,7 @@ export default function WidgetVariantButtons({
             className="h-8 px-3"
             onClick={() => onSelectWidget(type, variant)}
             disabled={isDisabled}
+            data-testid={`widget-variant-${type}-${sizeLabel}`}
           >
             {sizeLabel}
           </Button>
