@@ -9,4 +9,6 @@ export interface AppConfigContextType {
   updateElementById: (id: string, element: Partial<Block>) => void;
   removeElementById: (id: string) => void;
   getTheme: () => Theme;
+  updateCustomBackground: (image: string | null) => void;
+  getCustomBackground: () => string | null;
 }

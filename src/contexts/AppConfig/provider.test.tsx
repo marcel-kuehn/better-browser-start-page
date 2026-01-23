@@ -18,6 +18,8 @@ const TestComponent = () => {
     updateElementById,
     removeElementById,
     getTheme,
+    updateCustomBackground,
+    getCustomBackground,
   } = useAppConfig();
 
   return (
@@ -25,8 +27,9 @@ const TestComponent = () => {
       <div data-testid="config-version">{config._v}</div>
       <div data-testid="edit-mode">{isInEditMode ? 'true' : 'false'}</div>
       <div data-testid="theme">{getTheme()}</div>
+      <div data-testid="custom-background">{getCustomBackground() ?? 'none'}</div>
       <div data-testid="elements-count">{config.elements.length}</div>
-      <button data-testid="update-config" onClick={() => updateConfig({ ...config, _v: '0.0.2' })}>
+      <button data-testid="update-config" onClick={() => updateConfig({ ...config, _v: '0.0.3' })}>
         Update Config
       </button>
       <button data-testid="update-theme" onClick={() => updateTheme('glassmorphism-dark')}>
@@ -34,6 +37,15 @@ const TestComponent = () => {
       </button>
       <button data-testid="toggle-edit" onClick={() => updateEditMode(!isInEditMode)}>
         Toggle Edit
+      </button>
+      <button
+        data-testid="update-background"
+        onClick={() => updateCustomBackground('data:image/jpeg;base64,test')}
+      >
+        Update Background
+      </button>
+      <button data-testid="clear-background" onClick={() => updateCustomBackground(null)}>
+        Clear Background
       </button>
       {config.elements.length > 0 && config.elements[0].id && (
         <button
@@ -68,13 +80,13 @@ describe('AppConfigProvider', () => {
       </AppConfigProvider>
     );
 
-    expect(screen.getByTestId('config-version')).toHaveTextContent('0.0.2');
+    expect(screen.getByTestId('config-version')).toHaveTextContent('0.0.3');
     expect(screen.getByTestId('theme')).toHaveTextContent(DEFAULT_THEME);
   });
 
   it('should load config from localStorage on mount', () => {
     const savedConfig: AppConfig = {
-      _v: '0.0.2',
+      _v: '0.0.3',
       settings: { theme: 'glassmorphism-dark' },
       elements: [{ id: '1', type: 'test' }],
     };
@@ -86,7 +98,7 @@ describe('AppConfigProvider', () => {
       </AppConfigProvider>
     );
 
-    expect(screen.getByTestId('config-version')).toHaveTextContent('0.0.2');
+    expect(screen.getByTestId('config-version')).toHaveTextContent('0.0.3');
     expect(screen.getByTestId('theme')).toHaveTextContent('glassmorphism-dark');
     expect(screen.getByTestId('elements-count')).toHaveTextContent('1');
   });
@@ -105,7 +117,7 @@ describe('AppConfigProvider', () => {
       const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
       expect(saved).toBeTruthy();
       const parsed = JSON.parse(saved!);
-      expect(parsed._v).toBe('0.0.2');
+      expect(parsed._v).toBe('0.0.3');
     });
   });
 
@@ -146,7 +158,7 @@ describe('AppConfigProvider', () => {
 
   it('should update element by id', async () => {
     const savedConfig: AppConfig = {
-      _v: '0.0.2',
+      _v: '0.0.3',
       settings: { theme: DEFAULT_THEME },
       elements: [{ id: 'test-id', type: WIDGET_TYPE_SEARCH }],
     };
@@ -170,7 +182,7 @@ describe('AppConfigProvider', () => {
 
   it('should remove element by id', async () => {
     const savedConfig: AppConfig = {
-      _v: '0.0.2',
+      _v: '0.0.3',
       settings: { theme: DEFAULT_THEME },
       elements: [{ id: 'test-id', type: WIDGET_TYPE_SEARCH }],
     };
@@ -203,7 +215,7 @@ describe('AppConfigProvider', () => {
     );
 
     // Should fallback to INITIAL_CONFIG
-    expect(screen.getByTestId('config-version')).toHaveTextContent('0.0.2');
+    expect(screen.getByTestId('config-version')).toHaveTextContent('0.0.3');
     expect(consoleSpy).toHaveBeenCalled();
     consoleSpy.mockRestore();
   });
@@ -227,12 +239,82 @@ describe('AppConfigProvider', () => {
     );
 
     // Should be migrated to latest version
-    expect(screen.getByTestId('config-version')).toHaveTextContent('0.0.2');
+    expect(screen.getByTestId('config-version')).toHaveTextContent('0.0.3');
+  });
+
+  it('should update custom background and persist to localStorage', async () => {
+    render(
+      <AppConfigProvider>
+        <TestComponent />
+      </AppConfigProvider>
+    );
+
+    expect(screen.getByTestId('custom-background')).toHaveTextContent('none');
+
+    const updateButton = screen.getByTestId('update-background');
+    updateButton.click();
+
+    await waitFor(() => {
+      expect(screen.getByTestId('custom-background')).toHaveTextContent(
+        'data:image/jpeg;base64,test'
+      );
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      const parsed = JSON.parse(saved!);
+      expect(parsed.settings.customBackgroundImage).toBe('data:image/jpeg;base64,test');
+    });
+  });
+
+  it('should clear custom background and persist to localStorage', async () => {
+    const savedConfig: AppConfig = {
+      _v: '0.0.3',
+      settings: { theme: DEFAULT_THEME, customBackgroundImage: 'data:image/jpeg;base64,existing' },
+      elements: [],
+    };
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(savedConfig));
+
+    render(
+      <AppConfigProvider>
+        <TestComponent />
+      </AppConfigProvider>
+    );
+
+    expect(screen.getByTestId('custom-background')).toHaveTextContent(
+      'data:image/jpeg;base64,existing'
+    );
+
+    const clearButton = screen.getByTestId('clear-background');
+    clearButton.click();
+
+    await waitFor(() => {
+      expect(screen.getByTestId('custom-background')).toHaveTextContent('none');
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      const parsed = JSON.parse(saved!);
+      expect(parsed.settings.customBackgroundImage).toBeNull();
+    });
+  });
+
+  it('should load custom background from localStorage on mount', () => {
+    const savedConfig: AppConfig = {
+      _v: '0.0.3',
+      settings: { theme: DEFAULT_THEME, customBackgroundImage: 'data:image/png;base64,loaded' },
+      elements: [],
+    };
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(savedConfig));
+
+    render(
+      <AppConfigProvider>
+        <TestComponent />
+      </AppConfigProvider>
+    );
+
+    expect(screen.getByTestId('custom-background')).toHaveTextContent(
+      'data:image/png;base64,loaded'
+    );
   });
 
   it('should update nested elements recursively', async () => {
     const savedConfig: AppConfig = {
-      _v: '0.0.2',
+      _v: '0.0.3',
       settings: { theme: DEFAULT_THEME },
       elements: [
         {
