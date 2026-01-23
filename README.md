@@ -36,6 +36,8 @@ You can switch themes in the settings.
 
 ### Custom Wallpaper
 
+![Screenshot Application Configured with custom wallpaper](./docs/custom-background.png)
+
 You can upload your own custom wallpaper/background image to personalize your start page. The custom wallpaper will override the theme's default wallpaper and will persist even when switching between themes.
 
 - **Upload Custom Wallpaper:** Go to settings and use the "Custom Background" option to upload an image file
