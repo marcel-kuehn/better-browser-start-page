@@ -11,6 +11,7 @@ export function AddWidgetButton({ position, onClick }: AddWidgetButtonProps) {
       aria-label={`Add widget at row ${row}, column ${column}`}
       className="bg-background/40 border-foreground/50 h-full border border-dashed transition-colors"
       style={{ gridArea: `${row} / ${column} / ${row + 1} / ${column + 1}` }}
+      data-testid={`add-widget-button-${row}-${column}`}
     >
       <Plus className="text-foreground" />
     </Button>

@@ -28,7 +28,7 @@ export function SearchWidget({ elements, ...props }: SearchWidget) {
   if (!hasElements) return null;
 
   return (
-    <Widget className="flex justify-center" {...props}>
+    <Widget className="flex justify-center" {...props} elements={elements}>
       <form className="flex w-full max-w-xl flex-col justify-center gap-4" onSubmit={onSubmit}>
         {hasMultipleElements && (
           <ToggleGroup
@@ -54,6 +54,7 @@ export function SearchWidget({ elements, ...props }: SearchWidget) {
             placeholder={t('ui.searchPlaceholder', { domain: getDomain(selectedElement) })}
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
+            data-testid="search-input"
           />
           <div>
             <Button type="submit" size="icon" disabled={!selectedElement}>

@@ -13,6 +13,7 @@ export default function WidgetOptionCard({
 
   if (!hasMultiple) {
     const isDisabled = isVariantDisabled(singleVariant);
+    const sizeLabel = `${singleVariant.rowSpan}x${singleVariant.columnSpan}`;
     return (
       <Button
         key={option.type}
@@ -20,6 +21,7 @@ export default function WidgetOptionCard({
         className="bg-muted/50 flex h-auto items-center justify-start gap-4 p-4"
         onClick={() => onSelectWidget(option.type, singleVariant)}
         disabled={isDisabled}
+        data-testid={`widget-option-${option.type}-${sizeLabel}`}
       >
         <div className="bg-primary rounded-lg p-2 transition-transform">
           <Icon className="text-primary-foreground h-5 w-5" />

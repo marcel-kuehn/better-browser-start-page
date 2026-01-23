@@ -23,7 +23,13 @@ export function GridControl({ onExpand, direction, onContract, canContract }: Gr
   return (
     <>
       <div className={cn('absolute z-20 flex items-center gap-1', positionClass)}>
-        <Button variant="ghost" size="icon" onClick={onExpand} aria-label={addButtonAriaLabel}>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={onExpand}
+          aria-label={addButtonAriaLabel}
+          data-testid={`add-${direction}-${label}`}
+        >
           <PlusCircle className="text-foreground" />
         </Button>
 
@@ -33,6 +39,7 @@ export function GridControl({ onExpand, direction, onContract, canContract }: Gr
             size="icon"
             onClick={onContract}
             aria-label={removeButtonAriaLabel}
+            data-testid={`remove-${direction}-${label}`}
           >
             <MinusCircle className="text-foreground" />
           </Button>

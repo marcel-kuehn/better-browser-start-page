@@ -1,4 +1,12 @@
-import { ClockIcon, LayoutGridIcon, LinkIcon, SearchIcon, TimerIcon } from 'lucide-react';
+import {
+  ClockIcon,
+  LayoutGridIcon,
+  LinkIcon,
+  SearchIcon,
+  TimerIcon,
+  LucideIcon,
+  ClipboardIcon,
+} from 'lucide-react';
 import type { TFunction } from 'i18next';
 import {
   WIDGET_TYPE_SEARCH,
@@ -10,6 +18,7 @@ import {
 import { DEFAULT_SEARCH_URL } from '@/components/blocks/SearchWidget/constants';
 import { EXAMPLE_URL, EXAMPLE_URL_WITH_TRAILING_SLASH } from '@/constants/urls';
 import { WidgetOption } from './types';
+import { GridArea } from '@/types';
 
 export const createDefaultWidgetConfigs = (t: TFunction): Record<string, unknown> => ({
   [WIDGET_TYPE_SEARCH]: {
@@ -37,6 +46,23 @@ export const createDefaultWidgetConfigs = (t: TFunction): Record<string, unknown
   [WIDGET_TYPE_STOPWATCH]: {},
 });
 
+const WIDGET_ICONS: Record<string, LucideIcon> = {
+  [WIDGET_TYPE_SEARCH]: SearchIcon,
+  [WIDGET_TYPE_APPS]: LayoutGridIcon,
+  [WIDGET_TYPE_LINKS]: LinkIcon,
+  [WIDGET_TYPE_CLOCK]: ClockIcon,
+  [WIDGET_TYPE_STOPWATCH]: TimerIcon,
+};
+
+export const getWidgetIcon = (type: string): LucideIcon => {
+  return WIDGET_ICONS[type] || ClipboardIcon;
+};
+
+export const gridAreaToSpan = (gridArea: GridArea) => ({
+  rowSpan: gridArea.rowEnd - gridArea.rowStart,
+  columnSpan: gridArea.columnEnd - gridArea.columnStart,
+});
+
 export const getWidgetOptions = (t: TFunction): WidgetOption[] => [
   {
     type: WIDGET_TYPE_SEARCH,
@@ -44,9 +70,9 @@ export const getWidgetOptions = (t: TFunction): WidgetOption[] => [
     description: t('widgets.search.description'),
     icon: SearchIcon,
     variants: [
-      { rowSpan: 2, columnSpan: 1 },
-      { rowSpan: 3, columnSpan: 1 },
-      { rowSpan: 4, columnSpan: 1 },
+      { rowSpan: 1, columnSpan: 2 },
+      { rowSpan: 1, columnSpan: 3 },
+      { rowSpan: 1, columnSpan: 4 },
     ],
   },
   {

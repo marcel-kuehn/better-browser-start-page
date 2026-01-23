@@ -1,6 +1,6 @@
 import { useState, useEffect, ReactNode } from 'react';
 import { INITIAL_CONFIG } from './initialState';
-import { AppConfig, Block, Language, Theme } from '@/types';
+import { AppConfig, Block, Language, Theme, Widget } from '@/types';
 import { AppConfigContext } from './context';
 import { isLatestConfigVersion, migrateConfig } from '@/lib/migration';
 import { LOCAL_STORAGE_KEY } from './constants';
@@ -33,6 +33,7 @@ export const AppConfigProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const [isInEditMode, setIsInEditMode] = useState<boolean>(false);
+  const [clipboard, setClipboard] = useState<Widget | null>(null);
 
   // Sync to LocalStorage whenever config changes
   useEffect(() => {
@@ -140,11 +141,27 @@ export const AppConfigProvider = ({ children }: { children: ReactNode }) => {
     }));
   };
 
+  /**
+   * Copy a widget to the clipboard (deep clone).
+   * The clipboard persists even if the original widget is deleted.
+   */
+  const copyWidget = (widget: Widget) => {
+    setClipboard(structuredClone(widget));
+  };
+
+  /**
+   * Clear the clipboard.
+   */
+  const clearClipboard = () => {
+    setClipboard(null);
+  };
+
   return (
     <AppConfigContext.Provider
       value={{
         config,
         isInEditMode,
+        clipboard,
         updateEditMode,
         updateConfig,
         updateTheme,
@@ -155,6 +172,8 @@ export const AppConfigProvider = ({ children }: { children: ReactNode }) => {
         getLanguage,
         updateElementById,
         removeElementById,
+        copyWidget,
+        clearClipboard,
       }}
     >
       {children}

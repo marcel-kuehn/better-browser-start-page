@@ -20,7 +20,6 @@ export const INITIAL_CONFIG: AppConfig = {
         rowSpan: DEFAULT_GRID_ROWS,
         columnSpan: DEFAULT_GRID_COLUMNS,
       },
-      rows: DEFAULT_GRID_ROWS,
       elements: [
         {
           id: crypto.randomUUID(),

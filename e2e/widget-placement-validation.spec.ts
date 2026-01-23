@@ -371,4 +371,160 @@ test.describe('Widget Placement Validation', () => {
       expect(parseFloat(opacity)).toBeLessThan(1);
     });
   });
+
+  test.describe('Paste Button Validation', () => {
+    test('should disable paste button when pasted widget would go out of bounds', async ({
+      page,
+    }) => {
+      // First, add a 2x2 Apps widget at position (1,1) and copy it
+      const addWidgetAt1x1 = page.getByTestId('add-widget-button-1-1');
+      await addWidgetAt1x1.click();
+
+      const dialog = page.getByTestId('widget-selection-dialog');
+      await expect(dialog).toBeVisible();
+
+      // Add 2x2 Apps widget
+      const size2x2Button = dialog.getByRole('button', { name: '2x2' }).first();
+      await size2x2Button.click();
+      await expect(dialog).not.toBeVisible();
+
+      // Wait for widget to be added
+      await page.waitForTimeout(500);
+
+      // Copy the 2x2 widget
+      const appsWidget = page.getByTestId('widget-apps-widget-1-1');
+      await expect(appsWidget).toBeVisible();
+
+      const copyButton = appsWidget.getByTestId('copy-widget-button');
+      await copyButton.click();
+
+      // Try to paste at position (4,4) - bottom-right corner
+      // A 2x2 widget at (4,4) would extend to (6,6), which is out of bounds for a 4x4 grid
+      const addWidgetAt4x4 = page.getByTestId('add-widget-button-4-4');
+      await addWidgetAt4x4.click();
+
+      const pasteDialog = page.getByTestId('widget-selection-dialog');
+      await expect(pasteDialog).toBeVisible();
+      await expect(pasteDialog.getByText(/paste from clipboard/i)).toBeVisible();
+
+      // Paste button should be disabled - would go out of bounds
+      const pasteButton = pasteDialog.getByTestId('paste-widget-button');
+      await expect(pasteButton).toBeDisabled();
+    });
+
+    test('should disable paste button when pasted widget would collide with existing widget', async ({
+      page,
+    }) => {
+      // First, add a 2x2 Apps widget at position (2,2)
+      const addWidgetAt2x2 = page.getByTestId('add-widget-button-2-2');
+      await addWidgetAt2x2.click();
+
+      const dialog = page.getByTestId('widget-selection-dialog');
+      await expect(dialog).toBeVisible();
+
+      // Add 2x2 Apps widget
+      const size2x2Button = dialog.getByRole('button', { name: '2x2' }).first();
+      await size2x2Button.click();
+      await expect(dialog).not.toBeVisible();
+
+      // Wait for widget to be added
+      await page.waitForTimeout(500);
+
+      // Copy the 2x2 widget
+      const appsWidget = page.getByTestId('widget-apps-widget-2-2');
+      await expect(appsWidget).toBeVisible();
+
+      const copyButton = appsWidget.getByTestId('copy-widget-button');
+      await copyButton.click();
+
+      // Try to paste at position (1,1)
+      // A 2x2 widget at (1,1) would extend to (3,3), which would overlap with the existing widget at (2,2)
+      const addWidgetAt1x1 = page.getByTestId('add-widget-button-1-1');
+      await addWidgetAt1x1.click();
+
+      const pasteDialog = page.getByTestId('widget-selection-dialog');
+      await expect(pasteDialog).toBeVisible();
+      await expect(pasteDialog.getByText(/paste from clipboard/i)).toBeVisible();
+
+      // Paste button should be disabled - would collide with existing widget
+      const pasteButton = pasteDialog.getByTestId('paste-widget-button');
+      await expect(pasteButton).toBeDisabled();
+    });
+
+    test('should enable paste button when pasted widget fits without collision or out-of-bounds', async ({
+      page,
+    }) => {
+      // First, add a 1x1 Clock widget at position (1,1) and copy it
+      const addWidgetAt1x1 = page.getByTestId('add-widget-button-1-1');
+      await addWidgetAt1x1.click();
+
+      const dialog = page.getByTestId('widget-selection-dialog');
+      await expect(dialog).toBeVisible();
+
+      // Add Clock widget (1x1)
+      const clockOption = dialog.getByTestId('widget-option-clock-widget-1x1');
+      await clockOption.click();
+      await expect(dialog).not.toBeVisible();
+
+      // Wait for widget to be added
+      await page.waitForTimeout(500);
+
+      // Copy the clock widget
+      const clockWidget = page.getByTestId('widget-clock-widget-1-1');
+      await expect(clockWidget).toBeVisible();
+
+      const copyButton = clockWidget.getByTestId('copy-widget-button');
+      await copyButton.click();
+
+      // Try to paste at position (1,2) - adjacent but not overlapping
+      // A 1x1 widget at (1,2) doesn't collide with the widget at (1,1) and fits within bounds
+      const addWidgetAt1x2 = page.getByTestId('add-widget-button-1-2');
+      await addWidgetAt1x2.click();
+
+      const pasteDialog = page.getByTestId('widget-selection-dialog');
+      await expect(pasteDialog).toBeVisible();
+      await expect(pasteDialog.getByText(/paste from clipboard/i)).toBeVisible();
+
+      // Paste button should be enabled - fits without collision or out-of-bounds
+      const pasteButton = pasteDialog.getByTestId('paste-widget-button');
+      await expect(pasteButton).toBeEnabled();
+    });
+
+    test('should enable paste button for 1x1 widget at any valid position', async ({ page }) => {
+      // First, add a Clock widget (1x1) at position (1,1) and copy it
+      const addWidgetAt1x1 = page.getByTestId('add-widget-button-1-1');
+      await addWidgetAt1x1.click();
+
+      const dialog = page.getByTestId('widget-selection-dialog');
+      await expect(dialog).toBeVisible();
+
+      // Add Clock widget (1x1)
+      const clockOption = dialog.getByTestId('widget-option-clock-widget-1x1');
+      await clockOption.click();
+      await expect(dialog).not.toBeVisible();
+
+      // Wait for widget to be added
+      await page.waitForTimeout(500);
+
+      // Copy the clock widget
+      const clockWidget = page.getByTestId('widget-clock-widget-1-1');
+      await expect(clockWidget).toBeVisible();
+
+      const copyButton = clockWidget.getByTestId('copy-widget-button');
+      await copyButton.click();
+
+      // Try to paste at position (4,4) - bottom-right corner
+      // A 1x1 widget should fit anywhere
+      const addWidgetAt4x4 = page.getByTestId('add-widget-button-4-4');
+      await addWidgetAt4x4.click();
+
+      const pasteDialog = page.getByTestId('widget-selection-dialog');
+      await expect(pasteDialog).toBeVisible();
+      await expect(pasteDialog.getByText(/paste from clipboard/i)).toBeVisible();
+
+      // Paste button should be enabled - 1x1 fits anywhere
+      const pasteButton = pasteDialog.getByTestId('paste-widget-button');
+      await expect(pasteButton).toBeEnabled();
+    });
+  });
 });

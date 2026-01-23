@@ -32,13 +32,18 @@ export const migrateToVersion_0_0_2: MigrationFunction = (
 
   elements = elements.map(element => {
     if (element.type === WIDGET_TYPE_GRID) {
-      return {
+      const grid = {
         ...element,
         span: {
           rowSpan: element.rows,
           columnSpan: element.columns,
         },
       };
+
+      delete grid.rows;
+      delete grid.columns;
+
+      return grid;
     }
     return element;
   });
