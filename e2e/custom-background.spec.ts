@@ -23,7 +23,7 @@ test.describe('Custom Background', () => {
     await expect(backgroundLabel).toBeVisible();
 
     // File input should be present
-    const fileInput = page.locator('input[type="file"][accept*="image"]');
+    const fileInput = page.getByTestId('background-image-input');
     await expect(fileInput).toBeAttached();
   });
 
@@ -35,7 +35,7 @@ test.describe('Custom Background', () => {
     await expect(page.getByTestId('settings-sidebar')).toBeVisible();
 
     // Create a test image file
-    const fileInput = page.locator('input[type="file"][accept*="image"]');
+    const fileInput = page.getByTestId('background-image-input');
 
     // Upload a test image using a data URL converted to file
     await fileInput.setInputFiles({
@@ -68,7 +68,7 @@ test.describe('Custom Background', () => {
     await expect(page.getByTestId('settings-sidebar')).toBeVisible();
 
     // Upload a test image
-    const fileInput = page.locator('input[type="file"][accept*="image"]');
+    const fileInput = page.getByTestId('background-image-input');
     await fileInput.setInputFiles({
       name: 'test-image.png',
       mimeType: 'image/png',
@@ -82,7 +82,7 @@ test.describe('Custom Background', () => {
     await page.waitForTimeout(500);
 
     // Preview image should be visible in the settings
-    const previewImage = page.getByTestId('settings-sidebar').locator('img');
+    const previewImage = page.getByTestId('background-preview');
     await expect(previewImage).toBeVisible();
   });
 
@@ -94,7 +94,7 @@ test.describe('Custom Background', () => {
     await expect(page.getByTestId('settings-sidebar')).toBeVisible();
 
     // Upload a test image
-    const fileInput = page.locator('input[type="file"][accept*="image"]');
+    const fileInput = page.getByTestId('background-image-input');
     await fileInput.setInputFiles({
       name: 'test-image.png',
       mimeType: 'image/png',
@@ -108,7 +108,7 @@ test.describe('Custom Background', () => {
     await page.waitForTimeout(500);
 
     // Clear button should be visible
-    const clearButton = page.getByRole('button', { name: /clear background/i });
+    const clearButton = page.getByTestId('clear-background-button');
     await expect(clearButton).toBeVisible();
   });
 
@@ -135,7 +135,7 @@ test.describe('Custom Background', () => {
     await expect(page.getByTestId('settings-sidebar')).toBeVisible();
 
     // Click clear button
-    const clearButton = page.getByRole('button', { name: /clear background/i });
+    const clearButton = page.getByTestId('clear-background-button');
     await clearButton.click();
 
     // Wait for the change to apply
@@ -160,7 +160,7 @@ test.describe('Custom Background', () => {
     await page.getByTestId('settings-trigger').click();
     await expect(page.getByTestId('settings-sidebar')).toBeVisible();
 
-    const fileInput = page.locator('input[type="file"][accept*="image"]');
+    const fileInput = page.getByTestId('background-image-input');
     await fileInput.setInputFiles({
       name: 'test-image.png',
       mimeType: 'image/png',
@@ -172,9 +172,8 @@ test.describe('Custom Background', () => {
 
     await page.waitForTimeout(500);
 
-    // Close settings
-    const closeButton = page.getByTestId('settings-close');
-    await closeButton.click();
+    // Close settings using keyboard shortcut (Escape) as the close button may be outside viewport
+    await page.keyboard.press('Escape');
 
     // Reload the page
     await page.reload();

@@ -35,7 +35,7 @@ test.describe('Config Import/Export', () => {
     await expect(importLabel).toBeVisible();
 
     // File input should be present
-    const fileInput = page.locator('input[type="file"]');
+    const fileInput = page.getByTestId('config-import-input');
     await expect(fileInput).toBeAttached();
   });
 
@@ -103,7 +103,7 @@ test.describe('Config Import/Export', () => {
     await expect(page.getByTestId('settings-sidebar')).toBeVisible();
 
     // Replace button should be disabled
-    const replaceButton = page.locator('button').filter({ hasText: /replace/i });
+    const replaceButton = page.getByTestId('config-replace-button');
     await expect(replaceButton).toBeDisabled();
   });
 
@@ -122,7 +122,7 @@ test.describe('Config Import/Export', () => {
     };
 
     // Upload the file
-    const fileInput = page.locator('input[type="file"]');
+    const fileInput = page.getByTestId('config-import-input');
 
     // Create a buffer for the file
     const buffer = Buffer.from(JSON.stringify(validConfig));
@@ -136,7 +136,7 @@ test.describe('Config Import/Export', () => {
     await page.waitForTimeout(500);
 
     // Replace button should now be enabled
-    const replaceButton = page.locator('button').filter({ hasText: /replace/i });
+    const replaceButton = page.getByTestId('config-replace-button');
     await expect(replaceButton).toBeEnabled();
   });
 
@@ -162,7 +162,7 @@ test.describe('Config Import/Export', () => {
     };
 
     // Upload the file
-    const fileInput = page.locator('input[type="file"]');
+    const fileInput = page.getByTestId('config-import-input');
     const buffer = Buffer.from(JSON.stringify(importConfig));
     await fileInput.setInputFiles({
       name: 'config.json',
@@ -173,7 +173,7 @@ test.describe('Config Import/Export', () => {
     await page.waitForTimeout(500);
 
     // Click replace button
-    const replaceButton = page.locator('button').filter({ hasText: /replace/i });
+    const replaceButton = page.getByTestId('config-replace-button');
     await replaceButton.click();
     await page.waitForTimeout(500);
 
@@ -200,7 +200,7 @@ test.describe('Config Import/Export', () => {
     });
 
     // Upload invalid JSON file
-    const fileInput = page.locator('input[type="file"]');
+    const fileInput = page.getByTestId('config-import-input');
     const buffer = Buffer.from('{ invalid json }');
     await fileInput.setInputFiles({
       name: 'config.json',
@@ -211,7 +211,7 @@ test.describe('Config Import/Export', () => {
     await page.waitForTimeout(500);
 
     // Replace button should still be disabled
-    const replaceButton = page.locator('button').filter({ hasText: /replace/i });
+    const replaceButton = page.getByTestId('config-replace-button');
     await expect(replaceButton).toBeDisabled();
   });
 
@@ -272,7 +272,7 @@ test.describe('Config Import/Export', () => {
 
     // Import the original config
     if (originalConfig) {
-      const fileInput = page.locator('input[type="file"]');
+      const fileInput = page.getByTestId('config-import-input');
       const buffer = Buffer.from(JSON.stringify(originalConfig));
       await fileInput.setInputFiles({
         name: 'config.json',
@@ -282,7 +282,7 @@ test.describe('Config Import/Export', () => {
 
       await page.waitForTimeout(500);
 
-      const replaceButton = page.locator('button').filter({ hasText: /replace/i });
+      const replaceButton = page.getByTestId('config-replace-button');
       if (await replaceButton.isEnabled()) {
         await replaceButton.click();
         await page.waitForTimeout(500);

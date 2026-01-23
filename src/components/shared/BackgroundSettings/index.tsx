@@ -56,6 +56,7 @@ export default function BackgroundSettings() {
             src={customBackground}
             alt={t('ui.customBackgroundPreview')}
             className="h-full w-full object-cover"
+            data-testid="background-preview"
           />
         </div>
       )}
@@ -65,10 +66,16 @@ export default function BackgroundSettings() {
         type="file"
         accept={IMAGE_ACCEPT_TYPES}
         onChange={handleFileChange}
+        data-testid="background-image-input"
       />
 
       {customBackground && (
-        <Button variant="destructive" onClick={handleClear} className="w-full">
+        <Button
+          variant="destructive"
+          onClick={handleClear}
+          className="w-full"
+          data-testid="clear-background-button"
+        >
           {t('ui.clearBackground')}
         </Button>
       )}
