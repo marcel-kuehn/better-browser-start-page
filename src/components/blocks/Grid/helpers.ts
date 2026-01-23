@@ -54,3 +54,15 @@ export const canGridBeContracted = (direction: Direction, elements: Widget[], sp
     return !elements.some(el => el.gridArea.columnEnd === columnSpan + 1) && columnSpan > 1;
   return false;
 };
+
+export const createIsVariantDisabled = (
+  selectedCell: CellPosition | null,
+  elements: Widget[],
+  gridSpan: GridSpan
+): ((variant: GridSpan) => boolean) => {
+  return (variant: GridSpan): boolean => {
+    if (!selectedCell) return true;
+    const targetArea = getTargetArea(selectedCell, variant);
+    return !canFitWidget(elements, targetArea, gridSpan);
+  };
+};

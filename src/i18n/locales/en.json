@@ -40,7 +40,6 @@
     "clearBackground": "Clear Background"
   },
   "errors": {
-    "notEnoughSpace": "Not enough space to fit the widget.",
     "parseConfigFailed": "Failed to parse config. Please upload a valid JSON file.",
     "invalidImageType": "Invalid image type. Please upload a JPEG, PNG, GIF, or WebP image.",
     "imageTooLarge": "Image is too large. Maximum size is {{maxSize}}MB.",

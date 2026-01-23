@@ -31,14 +31,7 @@ test.describe('Widget Placement Validation', () => {
   });
 
   test.describe('Out of Bounds Prevention', () => {
-    test('should show alert when adding large widget at bottom-right corner', async ({ page }) => {
-      // Handle alert dialog
-      let alertMessage = '';
-      page.on('dialog', async dialog => {
-        alertMessage = dialog.message();
-        await dialog.accept();
-      });
-
+    test('should disable large widget buttons at bottom-right corner', async ({ page }) => {
       // Click add widget button at position (4,4) - bottom-right corner of default 4x4 grid
       const addWidgetButton = page.locator('button[aria-label="Add widget at row 4, column 4"]');
       await expect(addWidgetButton).toBeVisible();
@@ -49,23 +42,16 @@ test.describe('Widget Placement Validation', () => {
       await expect(dialog).toBeVisible();
 
       // Find Apps widget section (which has larger size variants including 2x2, 4x4, etc.)
-      // Click on 2x2 variant - this would extend beyond the 4x4 grid from position (4,4)
+      // 2x2 variant should be disabled - this would extend beyond the 4x4 grid from position (4,4)
       const size2x2Button = dialog.getByRole('button', { name: '2x2' }).first();
-      await size2x2Button.click();
+      await expect(size2x2Button).toBeDisabled();
 
-      // Should have triggered an alert about not enough space
-      await page.waitForTimeout(500);
-      expect(alertMessage).toBeTruthy();
+      // 1x1 should still be enabled
+      const size1x1Button = dialog.getByRole('button', { name: '1x1' }).first();
+      await expect(size1x1Button).not.toBeDisabled();
     });
 
-    test('should show alert when adding 4x4 widget at position (2,2)', async ({ page }) => {
-      // Handle alert dialog
-      let alertMessage = '';
-      page.on('dialog', async dialog => {
-        alertMessage = dialog.message();
-        await dialog.accept();
-      });
-
+    test('should disable 4x4 widget button at position (2,2)', async ({ page }) => {
       // Click add widget button at position (2,2)
       const addWidgetButton = page.locator('button[aria-label="Add widget at row 2, column 2"]');
       await expect(addWidgetButton).toBeVisible();
@@ -75,25 +61,22 @@ test.describe('Widget Placement Validation', () => {
       const dialog = page.locator('[role="dialog"]');
       await expect(dialog).toBeVisible();
 
-      // Try to add 4x4 Apps widget - would extend to (6,6), way beyond 4x4 grid
+      // 4x4 Apps widget should be disabled - would extend to (6,6), way beyond 4x4 grid
       const size4x4Button = dialog.getByRole('button', { name: '4x4' }).first();
-      await size4x4Button.click();
+      await expect(size4x4Button).toBeDisabled();
 
-      // Should have triggered an alert
-      await page.waitForTimeout(500);
-      expect(alertMessage).toBeTruthy();
+      // 3x3 should be enabled - extends to (5,5) which is valid for 4-row/4-column grid
+      const size3x3Button = dialog.getByRole('button', { name: '3x3' }).first();
+      await expect(size3x3Button).not.toBeDisabled();
+
+      // 2x2 should be enabled at (2,2) - extends to (4,4)
+      const size2x2Button = dialog.getByRole('button', { name: '2x2' }).first();
+      await expect(size2x2Button).not.toBeDisabled();
     });
 
     test('should allow 1x1 widget at any position including bottom-right corner', async ({
       page,
     }) => {
-      // Handle alert dialog
-      let alertTriggered = false;
-      page.on('dialog', async dialog => {
-        alertTriggered = true;
-        await dialog.accept();
-      });
-
       // Click add widget button at position (4,4)
       const addWidgetButton = page.locator('button[aria-label="Add widget at row 4, column 4"]');
       await addWidgetButton.click();
@@ -102,29 +85,24 @@ test.describe('Widget Placement Validation', () => {
       const dialog = page.locator('[role="dialog"]');
       await expect(dialog).toBeVisible();
 
-      // Click on Clock widget (which is 1x1)
+      // Clock widget (1x1) should be enabled
       const clockOption = dialog.locator('button').filter({ hasText: /clock/i }).first();
+      await expect(clockOption).not.toBeDisabled();
+
+      // Click on Clock widget
       await clockOption.click();
 
-      // Dialog should close without alert
+      // Dialog should close
       await expect(dialog).not.toBeVisible();
-      expect(alertTriggered).toBe(false);
 
       // Clock widget should be visible
       const timeDisplay = page.locator('text=/\\d{2}:\\d{2}/');
       await expect(timeDisplay).toBeVisible();
     });
 
-    test('should allow 2x2 widget at position (3,3) on 4x4 grid (exactly fits)', async ({
+    test('should enable 2x2 widget at position (3,3) on 4x4 grid (exactly fits)', async ({
       page,
     }) => {
-      // Handle alert dialog
-      let alertTriggered = false;
-      page.on('dialog', async dialog => {
-        alertTriggered = true;
-        await dialog.accept();
-      });
-
       // Click add widget button at position (3,3)
       const addWidgetButton = page.locator('button[aria-label="Add widget at row 3, column 3"]');
       await addWidgetButton.click();
@@ -133,20 +111,20 @@ test.describe('Widget Placement Validation', () => {
       const dialog = page.locator('[role="dialog"]');
       await expect(dialog).toBeVisible();
 
-      // Click on 2x2 Apps widget - should fit exactly (extends to 5,5 which is valid for 4x4 grid)
+      // 2x2 Apps widget should be enabled - should fit exactly (extends to 5,5 which is valid for 4x4 grid)
       const size2x2Button = dialog.getByRole('button', { name: '2x2' }).first();
+      await expect(size2x2Button).not.toBeDisabled();
+
+      // Click on 2x2 variant
       await size2x2Button.click();
 
-      // Should succeed without alert
+      // Should succeed
       await expect(dialog).not.toBeVisible();
-      expect(alertTriggered).toBe(false);
     });
   });
 
   test.describe('Collision Prevention', () => {
-    test('should show alert when adding widget that would overlap existing widget', async ({
-      page,
-    }) => {
+    test('should disable widget button that would overlap existing widget', async ({ page }) => {
       // First, add a 2x2 widget at position (2,2)
       const addWidgetAt2x2 = page.locator('button[aria-label="Add widget at row 2, column 2"]');
       await addWidgetAt2x2.click();
@@ -162,26 +140,19 @@ test.describe('Widget Placement Validation', () => {
       // Wait for widget to be added
       await page.waitForTimeout(500);
 
-      // Now try to add another widget at position (1,1) with size 2x2
-      // This would overlap with the existing widget at (2,2)
-      let alertMessage = '';
-      page.on('dialog', async dlg => {
-        alertMessage = dlg.message();
-        await dlg.accept();
-      });
-
+      // Now try to add another widget at position (1,1)
       const addWidgetAt1x1 = page.locator('button[aria-label="Add widget at row 1, column 1"]');
       await addWidgetAt1x1.click();
 
       await expect(dialog).toBeVisible();
 
-      // Try to add 2x2 widget - would overlap with existing widget
+      // 2x2 widget button should be disabled - would overlap with existing widget at (2,2)
       const size2x2Button2 = dialog.getByRole('button', { name: '2x2' }).first();
-      await size2x2Button2.click();
+      await expect(size2x2Button2).toBeDisabled();
 
-      // Should show alert
-      await page.waitForTimeout(500);
-      expect(alertMessage).toBeTruthy();
+      // 1x1 should still be enabled
+      const size1x1Button = dialog.getByRole('button', { name: '1x1' }).first();
+      await expect(size1x1Button).not.toBeDisabled();
     });
 
     test('should allow widget adjacent to existing widget without overlap', async ({ page }) => {
@@ -201,27 +172,22 @@ test.describe('Widget Placement Validation', () => {
       await page.waitForTimeout(500);
 
       // Now add another widget at position (1,2) - adjacent but not overlapping
-      let alertTriggered = false;
-      page.on('dialog', async dlg => {
-        alertTriggered = true;
-        await dlg.accept();
-      });
-
       const addWidgetAt1x2 = page.locator('button[aria-label="Add widget at row 1, column 2"]');
       await addWidgetAt1x2.click();
 
       await expect(dialog).toBeVisible();
 
-      // Add Stopwatch widget (1x1)
+      // Stopwatch widget (1x1) should be enabled - adjacent but not overlapping
       const stopwatchOption = dialog
         .locator('button')
         .filter({ hasText: /stopwatch/i })
         .first();
+      await expect(stopwatchOption).not.toBeDisabled();
+
       await stopwatchOption.click();
 
-      // Should succeed without alert
+      // Should succeed
       await expect(dialog).not.toBeVisible();
-      expect(alertTriggered).toBe(false);
     });
   });
 
@@ -317,7 +283,7 @@ test.describe('Widget Placement Validation', () => {
   });
 
   test.describe('Edge Cases', () => {
-    test('should prevent adding large widget when small widget blocks it', async ({ page }) => {
+    test('should disable large widget button when small widget blocks it', async ({ page }) => {
       // Add a small 1x1 widget at position (3,3)
       const addWidgetAt3x3 = page.locator('button[aria-label="Add widget at row 3, column 3"]');
       await addWidgetAt3x3.click();
@@ -331,25 +297,23 @@ test.describe('Widget Placement Validation', () => {
       await expect(dialog).not.toBeVisible();
       await page.waitForTimeout(500);
 
-      // Now try to add 3x3 widget at position (2,2) - would overlap with clock at (3,3)
-      let alertMessage = '';
-      page.on('dialog', async dlg => {
-        alertMessage = dlg.message();
-        await dlg.accept();
-      });
-
+      // Now try to add widget at position (2,2)
       const addWidgetAt2x2 = page.locator('button[aria-label="Add widget at row 2, column 2"]');
       await addWidgetAt2x2.click();
 
       await expect(dialog).toBeVisible();
 
-      // Try to add 3x3 Apps widget
+      // 3x3 Apps widget should be disabled - would overlap with clock at (3,3)
       const size3x3Button = dialog.getByRole('button', { name: '3x3' }).first();
-      await size3x3Button.click();
+      await expect(size3x3Button).toBeDisabled();
 
-      // Should show alert
-      await page.waitForTimeout(500);
-      expect(alertMessage).toBeTruthy();
+      // 2x2 should also be disabled - would overlap with clock at (3,3)
+      const size2x2Button = dialog.getByRole('button', { name: '2x2' }).first();
+      await expect(size2x2Button).toBeDisabled();
+
+      // 1x1 should still be enabled
+      const size1x1Button = dialog.getByRole('button', { name: '1x1' }).first();
+      await expect(size1x1Button).not.toBeDisabled();
     });
 
     test('should allow filling remaining space after existing widget', async ({ page }) => {
@@ -367,24 +331,44 @@ test.describe('Widget Placement Validation', () => {
       await page.waitForTimeout(500);
 
       // Now add another 2x2 widget at position (3,3) - should fit perfectly
-      let alertTriggered = false;
-      page.on('dialog', async dlg => {
-        alertTriggered = true;
-        await dlg.accept();
-      });
-
       const addWidgetAt3x3 = page.locator('button[aria-label="Add widget at row 3, column 3"]');
       await addWidgetAt3x3.click();
 
       await expect(dialog).toBeVisible();
 
-      // Add another 2x2 widget
+      // 2x2 button should be enabled - fits at (3,3) without collision or out-of-bounds
       const size2x2Button2 = dialog.getByRole('button', { name: '2x2' }).first();
+      await expect(size2x2Button2).not.toBeDisabled();
+
+      // Add another 2x2 widget
       await size2x2Button2.click();
 
       // Should succeed
       await expect(dialog).not.toBeVisible();
-      expect(alertTriggered).toBe(false);
+    });
+  });
+
+  test.describe('Disabled Button Visual Appearance', () => {
+    test('should show disabled buttons as visible but not clickable', async ({ page }) => {
+      // Click add widget button at position (4,4)
+      const addWidgetButton = page.locator('button[aria-label="Add widget at row 4, column 4"]');
+      await addWidgetButton.click();
+
+      // Wait for dialog
+      const dialog = page.locator('[role="dialog"]');
+      await expect(dialog).toBeVisible();
+
+      // 2x2 variant should be visible but disabled
+      const size2x2Button = dialog.getByRole('button', { name: '2x2' }).first();
+      await expect(size2x2Button).toBeVisible();
+      await expect(size2x2Button).toBeDisabled();
+
+      // Verify it has reduced opacity (disabled styling)
+      const opacity = await size2x2Button.evaluate(el => {
+        const style = window.getComputedStyle(el);
+        return style.opacity;
+      });
+      expect(parseFloat(opacity)).toBeLessThan(1);
     });
   });
 });

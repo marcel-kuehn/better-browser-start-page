@@ -2,18 +2,24 @@ import { Button } from '@/components/ui/button';
 import type { WidgetOptionCardProps } from './types';
 import WidgetVariantButtons from './WidgetVariantButtons';
 
-export default function WidgetOptionCard({ option, onSelectWidget }: WidgetOptionCardProps) {
+export default function WidgetOptionCard({
+  option,
+  onSelectWidget,
+  isVariantDisabled,
+}: WidgetOptionCardProps) {
   const Icon = option.icon;
   const hasMultiple = option.variants.length > 1;
   const singleVariant = option.variants[0];
 
   if (!hasMultiple) {
+    const isDisabled = isVariantDisabled(singleVariant);
     return (
       <Button
         key={option.type}
         variant="outline"
         className="bg-muted/50 flex h-auto items-center justify-start gap-4 p-4"
         onClick={() => onSelectWidget(option.type, singleVariant)}
+        disabled={isDisabled}
       >
         <div className="bg-primary rounded-lg p-2 transition-transform">
           <Icon className="text-primary-foreground h-5 w-5" />
@@ -45,6 +51,7 @@ export default function WidgetOptionCard({ option, onSelectWidget }: WidgetOptio
         type={option.type}
         variants={option.variants}
         onSelectWidget={onSelectWidget}
+        isVariantDisabled={isVariantDisabled}
       />
     </div>
   );

@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { AppConfigProvider } from './provider';
 import { useAppConfig } from './useAppConfig';
 import { LOCAL_STORAGE_KEY } from './constants';
@@ -104,6 +105,7 @@ describe('AppConfigProvider', () => {
   });
 
   it('should persist config changes to localStorage', async () => {
+    const user = userEvent.setup();
     render(
       <AppConfigProvider>
         <TestComponent />
@@ -111,7 +113,7 @@ describe('AppConfigProvider', () => {
     );
 
     const updateButton = screen.getByTestId('update-config');
-    updateButton.click();
+    await user.click(updateButton);
 
     await waitFor(() => {
       const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -122,6 +124,7 @@ describe('AppConfigProvider', () => {
   });
 
   it('should update theme and persist to localStorage', async () => {
+    const user = userEvent.setup();
     render(
       <AppConfigProvider>
         <TestComponent />
@@ -129,7 +132,7 @@ describe('AppConfigProvider', () => {
     );
 
     const themeButton = screen.getByTestId('update-theme');
-    themeButton.click();
+    await user.click(themeButton);
 
     await waitFor(() => {
       expect(screen.getByTestId('theme')).toHaveTextContent('glassmorphism-dark');
@@ -140,6 +143,7 @@ describe('AppConfigProvider', () => {
   });
 
   it('should toggle edit mode', async () => {
+    const user = userEvent.setup();
     render(
       <AppConfigProvider>
         <TestComponent />
@@ -149,7 +153,7 @@ describe('AppConfigProvider', () => {
     expect(screen.getByTestId('edit-mode')).toHaveTextContent('false');
 
     const toggleButton = screen.getByTestId('toggle-edit');
-    toggleButton.click();
+    await user.click(toggleButton);
 
     await waitFor(() => {
       expect(screen.getByTestId('edit-mode')).toHaveTextContent('true');
@@ -157,6 +161,7 @@ describe('AppConfigProvider', () => {
   });
 
   it('should update element by id', async () => {
+    const user = userEvent.setup();
     const savedConfig: AppConfig = {
       _v: '0.0.3',
       settings: { theme: DEFAULT_THEME },
@@ -171,7 +176,7 @@ describe('AppConfigProvider', () => {
     );
 
     const updateButton = screen.getByTestId('update-element');
-    updateButton.click();
+    await user.click(updateButton);
 
     await waitFor(() => {
       const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -181,6 +186,7 @@ describe('AppConfigProvider', () => {
   });
 
   it('should remove element by id', async () => {
+    const user = userEvent.setup();
     const savedConfig: AppConfig = {
       _v: '0.0.3',
       settings: { theme: DEFAULT_THEME },
@@ -197,7 +203,7 @@ describe('AppConfigProvider', () => {
     expect(screen.getByTestId('elements-count')).toHaveTextContent('1');
 
     const removeButton = screen.getByTestId('remove-element');
-    removeButton.click();
+    await user.click(removeButton);
 
     await waitFor(() => {
       expect(screen.getByTestId('elements-count')).toHaveTextContent('0');
@@ -243,6 +249,7 @@ describe('AppConfigProvider', () => {
   });
 
   it('should update custom background and persist to localStorage', async () => {
+    const user = userEvent.setup();
     render(
       <AppConfigProvider>
         <TestComponent />
@@ -252,7 +259,7 @@ describe('AppConfigProvider', () => {
     expect(screen.getByTestId('custom-background')).toHaveTextContent('none');
 
     const updateButton = screen.getByTestId('update-background');
-    updateButton.click();
+    await user.click(updateButton);
 
     await waitFor(() => {
       expect(screen.getByTestId('custom-background')).toHaveTextContent(
@@ -265,6 +272,7 @@ describe('AppConfigProvider', () => {
   });
 
   it('should clear custom background and persist to localStorage', async () => {
+    const user = userEvent.setup();
     const savedConfig: AppConfig = {
       _v: '0.0.3',
       settings: { theme: DEFAULT_THEME, customBackgroundImage: 'data:image/jpeg;base64,existing' },
@@ -283,7 +291,7 @@ describe('AppConfigProvider', () => {
     );
 
     const clearButton = screen.getByTestId('clear-background');
-    clearButton.click();
+    await user.click(clearButton);
 
     await waitFor(() => {
       expect(screen.getByTestId('custom-background')).toHaveTextContent('none');
@@ -313,6 +321,7 @@ describe('AppConfigProvider', () => {
   });
 
   it('should update nested elements recursively', async () => {
+    const user = userEvent.setup();
     const savedConfig: AppConfig = {
       _v: '0.0.3',
       settings: { theme: DEFAULT_THEME },
@@ -353,7 +362,7 @@ describe('AppConfigProvider', () => {
     );
 
     const updateButton = screen.getByTestId('update-child');
-    updateButton.click();
+    await user.click(updateButton);
 
     await waitFor(() => {
       expect(screen.getByTestId('child-type')).toHaveTextContent('updated-child');

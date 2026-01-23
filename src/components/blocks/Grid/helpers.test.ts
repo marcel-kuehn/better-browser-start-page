@@ -6,9 +6,10 @@ import {
   isCollidingWithOtherWidgets,
   canFitWidget,
   canGridBeContracted,
+  createIsVariantDisabled,
 } from './helpers';
 import { GridArea, Widget } from '@/types';
-import { GridSpan } from './types';
+import { CellPosition, GridSpan } from './types';
 
 describe('Grid helpers', () => {
   describe('isGridAreaColliding', () => {
@@ -517,6 +518,94 @@ describe('Grid helpers', () => {
       ];
       const span: GridSpan = { rowSpan: 4, columnSpan: 3 };
       expect(canGridBeContracted('right', widgets, span)).toBe(false);
+    });
+  });
+
+  describe('createIsVariantDisabled', () => {
+    const gridSpan: GridSpan = { rowSpan: 4, columnSpan: 4 };
+
+    it('should return true for all variants when selectedCell is null', () => {
+      const isDisabled = createIsVariantDisabled(null, [], gridSpan);
+      expect(isDisabled({ rowSpan: 1, columnSpan: 1 })).toBe(true);
+      expect(isDisabled({ rowSpan: 2, columnSpan: 2 })).toBe(true);
+    });
+
+    it('should return false for 1x1 variant at any position', () => {
+      const cell: CellPosition = { row: 4, column: 4 };
+      const isDisabled = createIsVariantDisabled(cell, [], gridSpan);
+      expect(isDisabled({ rowSpan: 1, columnSpan: 1 })).toBe(false);
+    });
+
+    it('should return true for 2x2 variant at bottom-right corner of 4x4 grid', () => {
+      const cell: CellPosition = { row: 4, column: 4 };
+      const isDisabled = createIsVariantDisabled(cell, [], gridSpan);
+      expect(isDisabled({ rowSpan: 2, columnSpan: 2 })).toBe(true);
+    });
+
+    it('should return false for 2x2 variant at position (3,3) of 4x4 grid', () => {
+      const cell: CellPosition = { row: 3, column: 3 };
+      const isDisabled = createIsVariantDisabled(cell, [], gridSpan);
+      expect(isDisabled({ rowSpan: 2, columnSpan: 2 })).toBe(false);
+    });
+
+    it('should return true for variant that would collide with existing widget', () => {
+      const cell: CellPosition = { row: 1, column: 1 };
+      const elements: Widget[] = [
+        {
+          id: '1',
+          type: 'test',
+          gridArea: { rowStart: 2, rowEnd: 3, columnStart: 2, columnEnd: 3 },
+        },
+      ];
+      const isDisabled = createIsVariantDisabled(cell, elements, gridSpan);
+      expect(isDisabled({ rowSpan: 2, columnSpan: 2 })).toBe(true);
+    });
+
+    it('should return false for variant that does not collide with existing widget', () => {
+      const cell: CellPosition = { row: 1, column: 1 };
+      const elements: Widget[] = [
+        {
+          id: '1',
+          type: 'test',
+          gridArea: { rowStart: 3, rowEnd: 4, columnStart: 3, columnEnd: 4 },
+        },
+      ];
+      const isDisabled = createIsVariantDisabled(cell, elements, gridSpan);
+      expect(isDisabled({ rowSpan: 2, columnSpan: 2 })).toBe(false);
+    });
+
+    it('should return true for variant that is both out of bounds and colliding', () => {
+      const cell: CellPosition = { row: 3, column: 3 };
+      const elements: Widget[] = [
+        {
+          id: '1',
+          type: 'test',
+          gridArea: { rowStart: 3, rowEnd: 4, columnStart: 4, columnEnd: 5 },
+        },
+      ];
+      const isDisabled = createIsVariantDisabled(cell, elements, gridSpan);
+      expect(isDisabled({ rowSpan: 3, columnSpan: 3 })).toBe(true);
+    });
+
+    it('should handle multiple existing widgets correctly', () => {
+      const cell: CellPosition = { row: 2, column: 2 };
+      const elements: Widget[] = [
+        {
+          id: '1',
+          type: 'test',
+          gridArea: { rowStart: 1, rowEnd: 2, columnStart: 1, columnEnd: 2 },
+        },
+        {
+          id: '2',
+          type: 'test',
+          gridArea: { rowStart: 3, rowEnd: 4, columnStart: 3, columnEnd: 4 },
+        },
+      ];
+      const isDisabled = createIsVariantDisabled(cell, elements, gridSpan);
+      // 1x1 at (2,2) should fit
+      expect(isDisabled({ rowSpan: 1, columnSpan: 1 })).toBe(false);
+      // 2x2 at (2,2) would collide with widget at (3,3)
+      expect(isDisabled({ rowSpan: 2, columnSpan: 2 })).toBe(true);
     });
   });
 });

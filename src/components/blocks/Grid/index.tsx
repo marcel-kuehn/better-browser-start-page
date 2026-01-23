@@ -10,12 +10,7 @@ import { useGridEditor } from './useGridEditor';
 import { createDefaultWidgetConfigs } from '@/components/shared/WidgetSelectionDialog/helpers';
 import { GRID_ROW_MIN_HEIGHT } from '@/constants/grid';
 
-import {
-  canFitWidget,
-  canGridBeContracted,
-  getTargetArea,
-  isCollidingWithOtherWidgets,
-} from './helpers';
+import { canGridBeContracted, getTargetArea, isCollidingWithOtherWidgets } from './helpers';
 import WidgetSelectionDialog from '@/components/shared/WidgetSelectionDialog';
 import { Widget } from '@/types';
 
@@ -35,11 +30,6 @@ export default function Grid({ span, elements, id }: GridProps) {
     const baseConfig = DEFAULT_WIDGET_CONFIGS[type] || {};
     const targetArea = getTargetArea(selectedCell, widgetSpan);
     if (!targetArea) return;
-
-    if (!canFitWidget(elements, targetArea, span)) {
-      alert(t('errors.notEnoughSpace'));
-      return;
-    }
 
     updateElementById(id, {
       elements: [
@@ -107,6 +97,9 @@ export default function Grid({ span, elements, id }: GridProps) {
               isOpen={!!selectedCell}
               onOpenChange={open => !open && setSelectedCell(null)}
               handleSelectWidget={handleSelectWidget}
+              selectedCell={selectedCell}
+              elements={elements}
+              gridSpan={span}
             />
             {getGridControls(span, elements)}
 

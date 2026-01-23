@@ -6,7 +6,8 @@ import { AppConfigContext } from '@/contexts/AppConfig/context';
 import { AppConfig, Widget } from '@/types';
 import { DEFAULT_THEME } from '@/constants/themes';
 import { DEFAULT_CONFIG_VERSION } from '@/contexts/AppConfig/constants';
-import { Grid as GridType } from './types';
+import { CellPosition, Grid as GridType, GridSpan } from './types';
+import { createIsVariantDisabled } from './helpers';
 
 // Mock the WidgetSelectionDialog to control its behavior
 vi.mock('@/components/shared/WidgetSelectionDialog', () => ({
@@ -14,29 +15,39 @@ vi.mock('@/components/shared/WidgetSelectionDialog', () => ({
     isOpen,
     onOpenChange,
     handleSelectWidget,
+    selectedCell,
+    elements,
+    gridSpan,
   }: {
     isOpen: boolean;
     onOpenChange: (open: boolean) => void;
     handleSelectWidget: (type: string, span: { rowSpan: number; columnSpan: number }) => void;
+    selectedCell: CellPosition | null;
+    elements: Widget[];
+    gridSpan: GridSpan;
   }) => {
     if (!isOpen) return null;
+    const isVariantDisabled = createIsVariantDisabled(selectedCell, elements, gridSpan);
     return (
       <div data-testid="widget-selection-dialog" role="dialog">
         <button
           data-testid="select-1x1-widget"
           onClick={() => handleSelectWidget('clock-widget', { rowSpan: 1, columnSpan: 1 })}
+          disabled={isVariantDisabled({ rowSpan: 1, columnSpan: 1 })}
         >
           Add 1x1 Widget
         </button>
         <button
           data-testid="select-2x2-widget"
           onClick={() => handleSelectWidget('search-widget', { rowSpan: 2, columnSpan: 2 })}
+          disabled={isVariantDisabled({ rowSpan: 2, columnSpan: 2 })}
         >
           Add 2x2 Widget
         </button>
         <button
           data-testid="select-3x3-widget"
           onClick={() => handleSelectWidget('search-widget', { rowSpan: 3, columnSpan: 3 })}
+          disabled={isVariantDisabled({ rowSpan: 3, columnSpan: 3 })}
         >
           Add 3x3 Widget
         </button>
@@ -92,8 +103,6 @@ describe('Grid component - Widget Placement Validation', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    // Mock window.alert
-    vi.spyOn(window, 'alert').mockImplementation(() => {});
   });
 
   describe('AddWidgetButton rendering', () => {
@@ -169,7 +178,7 @@ describe('Grid component - Widget Placement Validation', () => {
   });
 
   describe('Widget placement - out of bounds', () => {
-    it('should show alert when trying to add 2x2 widget at bottom-right corner of 4x4 grid', async () => {
+    it('should disable 2x2 widget button at bottom-right corner of 4x4 grid', async () => {
       const user = userEvent.setup();
       const contextValue = createMockContextValue(true);
       renderWithContext(<Grid {...defaultGridProps} />, contextValue);
@@ -181,18 +190,12 @@ describe('Grid component - Widget Placement Validation', () => {
       // Dialog should open
       expect(screen.getByTestId('widget-selection-dialog')).toBeInTheDocument();
 
-      // Try to add 2x2 widget (would extend to row 6, column 6 - out of bounds)
+      // 2x2 widget button should be disabled (would extend to row 6, column 6 - out of bounds)
       const selectButton = screen.getByTestId('select-2x2-widget');
-      await user.click(selectButton);
-
-      // Should show alert
-      expect(window.alert).toHaveBeenCalled();
-
-      // Widget should not be added
-      expect(contextValue.updateElementById).not.toHaveBeenCalled();
+      expect(selectButton).toBeDisabled();
     });
 
-    it('should show alert when trying to add 3x3 widget at position (3,3) on 4x4 grid', async () => {
+    it('should disable 3x3 widget button at position (3,3) on 4x4 grid', async () => {
       const user = userEvent.setup();
       const contextValue = createMockContextValue(true);
       renderWithContext(<Grid {...defaultGridProps} />, contextValue);
@@ -201,12 +204,9 @@ describe('Grid component - Widget Placement Validation', () => {
       const addButton = screen.getByRole('button', { name: 'Add widget at row 3, column 3' });
       await user.click(addButton);
 
-      // Try to add 3x3 widget (would extend to row 6, column 6 - out of bounds)
+      // 3x3 widget button should be disabled (would extend to row 6, column 6 - out of bounds)
       const selectButton = screen.getByTestId('select-3x3-widget');
-      await user.click(selectButton);
-
-      expect(window.alert).toHaveBeenCalled();
-      expect(contextValue.updateElementById).not.toHaveBeenCalled();
+      expect(selectButton).toBeDisabled();
     });
 
     it('should allow 1x1 widget at any position on 4x4 grid', async () => {
@@ -218,18 +218,20 @@ describe('Grid component - Widget Placement Validation', () => {
       const addButton = screen.getByRole('button', { name: 'Add widget at row 4, column 4' });
       await user.click(addButton);
 
-      // Add 1x1 widget
+      // 1x1 widget should be enabled
       const selectButton = screen.getByTestId('select-1x1-widget');
+      expect(selectButton).not.toBeDisabled();
+
+      // Add 1x1 widget
       await user.click(selectButton);
 
       // Should succeed
-      expect(window.alert).not.toHaveBeenCalled();
       expect(contextValue.updateElementById).toHaveBeenCalled();
     });
   });
 
   describe('Widget placement - collision detection', () => {
-    it('should show alert when trying to add widget that collides with existing widget', async () => {
+    it('should disable widget button that collides with existing widget', async () => {
       const user = userEvent.setup();
       const contextValue = createMockContextValue(true);
       const elements: Widget[] = [
@@ -246,12 +248,9 @@ describe('Grid component - Widget Placement Validation', () => {
       const addButton = screen.getByRole('button', { name: 'Add widget at row 1, column 1' });
       await user.click(addButton);
 
-      // Try to add 2x2 widget (would collide with existing widget at (2,2))
+      // 2x2 widget button should be disabled (would collide with existing widget at (2,2))
       const selectButton = screen.getByTestId('select-2x2-widget');
-      await user.click(selectButton);
-
-      expect(window.alert).toHaveBeenCalled();
-      expect(contextValue.updateElementById).not.toHaveBeenCalled();
+      expect(selectButton).toBeDisabled();
     });
 
     it('should allow widget placement when no collision occurs', async () => {
@@ -271,11 +270,12 @@ describe('Grid component - Widget Placement Validation', () => {
       const addButton = screen.getByRole('button', { name: 'Add widget at row 3, column 3' });
       await user.click(addButton);
 
-      // Add 1x1 widget - should succeed
+      // 1x1 widget should be enabled
       const selectButton = screen.getByTestId('select-1x1-widget');
-      await user.click(selectButton);
+      expect(selectButton).not.toBeDisabled();
 
-      expect(window.alert).not.toHaveBeenCalled();
+      // Add 1x1 widget - should succeed
+      await user.click(selectButton);
       expect(contextValue.updateElementById).toHaveBeenCalled();
     });
 
@@ -296,17 +296,18 @@ describe('Grid component - Widget Placement Validation', () => {
       const addButton = screen.getByRole('button', { name: 'Add widget at row 1, column 2' });
       await user.click(addButton);
 
-      // Add 1x1 widget - should succeed (adjacent but not overlapping)
+      // 1x1 widget should be enabled (adjacent but not overlapping)
       const selectButton = screen.getByTestId('select-1x1-widget');
-      await user.click(selectButton);
+      expect(selectButton).not.toBeDisabled();
 
-      expect(window.alert).not.toHaveBeenCalled();
+      // Add 1x1 widget - should succeed
+      await user.click(selectButton);
       expect(contextValue.updateElementById).toHaveBeenCalled();
     });
   });
 
   describe('Widget placement - combined scenarios', () => {
-    it('should reject widget that is both out of bounds and colliding', async () => {
+    it('should disable widget that is both out of bounds and colliding', async () => {
       const user = userEvent.setup();
       const contextValue = createMockContextValue(true);
       const elements: Widget[] = [
@@ -323,12 +324,9 @@ describe('Grid component - Widget Placement Validation', () => {
       const addButton = screen.getByRole('button', { name: 'Add widget at row 2, column 2' });
       await user.click(addButton);
 
-      // Try to add 3x3 widget - would both collide AND go out of bounds
+      // 3x3 widget button should be disabled - would both collide AND go out of bounds
       const selectButton = screen.getByTestId('select-3x3-widget');
-      await user.click(selectButton);
-
-      expect(window.alert).toHaveBeenCalled();
-      expect(contextValue.updateElementById).not.toHaveBeenCalled();
+      expect(selectButton).toBeDisabled();
     });
 
     it('should successfully add widget when space is available', async () => {
@@ -341,11 +339,13 @@ describe('Grid component - Widget Placement Validation', () => {
       const addButton = screen.getByRole('button', { name: 'Add widget at row 1, column 1' });
       await user.click(addButton);
 
-      // Add 2x2 widget - should fit in 4x4 grid
+      // 2x2 widget should be enabled - fits in 4x4 grid
       const selectButton = screen.getByTestId('select-2x2-widget');
+      expect(selectButton).not.toBeDisabled();
+
+      // Add 2x2 widget
       await user.click(selectButton);
 
-      expect(window.alert).not.toHaveBeenCalled();
       expect(contextValue.updateElementById).toHaveBeenCalledWith('grid-1', {
         elements: expect.arrayContaining([
           expect.objectContaining({
@@ -366,11 +366,13 @@ describe('Grid component - Widget Placement Validation', () => {
       const addButton = screen.getByRole('button', { name: 'Add widget at row 3, column 3' });
       await user.click(addButton);
 
-      // Add 2x2 widget - should fit at position (3,3) extending to (5,5) on a 4x4 grid
+      // 2x2 widget should be enabled - fits at position (3,3) extending to (5,5) on a 4x4 grid
       const selectButton = screen.getByTestId('select-2x2-widget');
+      expect(selectButton).not.toBeDisabled();
+
+      // Add 2x2 widget
       await user.click(selectButton);
 
-      expect(window.alert).not.toHaveBeenCalled();
       expect(contextValue.updateElementById).toHaveBeenCalled();
     });
   });

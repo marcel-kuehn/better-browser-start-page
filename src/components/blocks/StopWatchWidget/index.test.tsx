@@ -54,18 +54,26 @@ describe('StopWatchWidget', () => {
 
     // Start
     const startButton = screen.getByRole('button', { name: /start/i });
-    fireEvent.click(startButton);
+    await act(async () => {
+      fireEvent.click(startButton);
+    });
 
-    vi.advanceTimersByTime(2000);
+    await act(async () => {
+      vi.advanceTimersByTime(2000);
+    });
 
     // Pause
     const pauseButton = screen.getByRole('button', { name: /pause/i });
-    fireEvent.click(pauseButton);
+    await act(async () => {
+      fireEvent.click(pauseButton);
+    });
 
     const elapsedTime = screen.getByText(/^\d{2}:\d{2}$/).textContent;
 
     // Advance more time
-    vi.advanceTimersByTime(2000);
+    await act(async () => {
+      vi.advanceTimersByTime(2000);
+    });
 
     // Time should not have changed
     expect(screen.getByText(/^\d{2}:\d{2}$/).textContent).toBe(elapsedTime);
@@ -77,13 +85,19 @@ describe('StopWatchWidget', () => {
 
     // Start
     const startButton = screen.getByRole('button', { name: /start/i });
-    fireEvent.click(startButton);
+    await act(async () => {
+      fireEvent.click(startButton);
+    });
 
-    vi.advanceTimersByTime(2000);
+    await act(async () => {
+      vi.advanceTimersByTime(2000);
+    });
 
     // Reset
     const resetButton = screen.getByRole('button', { name: /reset/i });
-    fireEvent.click(resetButton);
+    await act(async () => {
+      fireEvent.click(resetButton);
+    });
 
     expect(screen.getByText('00:00')).toBeInTheDocument();
   });
@@ -124,24 +138,32 @@ describe('StopWatchWidget', () => {
     renderWithProviders(<StopWatchWidget {...widget} />);
 
     const startButton = screen.getByRole('button', { name: /start/i });
-    fireEvent.click(startButton);
-    vi.advanceTimersByTime(100);
+    await act(async () => {
+      fireEvent.click(startButton);
+      vi.advanceTimersByTime(100);
+    });
 
     const pauseButton = screen.getByRole('button', { name: /pause/i });
-    fireEvent.click(pauseButton);
+    await act(async () => {
+      fireEvent.click(pauseButton);
+    });
 
     const resumeButton = screen.getByRole('button', { name: /resume/i });
-    fireEvent.click(resumeButton);
-    vi.advanceTimersByTime(100);
+    await act(async () => {
+      fireEvent.click(resumeButton);
+      vi.advanceTimersByTime(100);
+    });
 
-    fireEvent.click(pauseButton);
+    await act(async () => {
+      fireEvent.click(pauseButton);
+    });
 
     // Should still work correctly
     expect(screen.getByText(/^\d{2}:\d{2}$/)).toBeInTheDocument();
   });
 
   describe('cleanup and memory management', () => {
-    it('should clear interval on unmount', () => {
+    it('should clear interval on unmount', async () => {
       const clearIntervalSpy = vi.spyOn(global, 'clearInterval');
       const widget = createMockWidget<StopWatchWidgetType>({ type: 'stopwatch-widget' });
 
@@ -149,7 +171,9 @@ describe('StopWatchWidget', () => {
 
       // Start the stopwatch to create an interval
       const startButton = screen.getByRole('button', { name: /start/i });
-      fireEvent.click(startButton);
+      await act(async () => {
+        fireEvent.click(startButton);
+      });
 
       // Unmount the component
       unmount();
@@ -160,7 +184,7 @@ describe('StopWatchWidget', () => {
       clearIntervalSpy.mockRestore();
     });
 
-    it('should not leak intervals when starting and stopping multiple times', () => {
+    it('should not leak intervals when starting and stopping multiple times', async () => {
       const setIntervalSpy = vi.spyOn(global, 'setInterval');
       const clearIntervalSpy = vi.spyOn(global, 'clearInterval');
 
@@ -169,17 +193,23 @@ describe('StopWatchWidget', () => {
 
       // Start
       const startButton = screen.getByRole('button', { name: /start/i });
-      fireEvent.click(startButton);
-      vi.advanceTimersByTime(1000);
+      await act(async () => {
+        fireEvent.click(startButton);
+        vi.advanceTimersByTime(1000);
+      });
 
       // Pause
       const pauseButton = screen.getByRole('button', { name: /pause/i });
-      fireEvent.click(pauseButton);
+      await act(async () => {
+        fireEvent.click(pauseButton);
+      });
 
       // Resume
       const resumeButton = screen.getByRole('button', { name: /resume/i });
-      fireEvent.click(resumeButton);
-      vi.advanceTimersByTime(1000);
+      await act(async () => {
+        fireEvent.click(resumeButton);
+        vi.advanceTimersByTime(1000);
+      });
 
       // Unmount
       unmount();
@@ -200,7 +230,9 @@ describe('StopWatchWidget', () => {
 
       // Start the stopwatch
       const startButton = screen.getByRole('button', { name: /start/i });
-      fireEvent.click(startButton);
+      await act(async () => {
+        fireEvent.click(startButton);
+      });
 
       // Unmount immediately
       unmount();
@@ -220,7 +252,9 @@ describe('StopWatchWidget', () => {
 
       // Start the stopwatch
       const startButton = screen.getByRole('button', { name: /start/i });
-      fireEvent.click(startButton);
+      await act(async () => {
+        fireEvent.click(startButton);
+      });
 
       // Advance by 1 hour and 1 second
       await act(async () => {
@@ -241,8 +275,8 @@ describe('StopWatchWidget', () => {
 
       // Start and advance
       const startButton = screen.getByRole('button', { name: /start/i });
-      fireEvent.click(startButton);
       await act(async () => {
+        fireEvent.click(startButton);
         vi.advanceTimersByTime(2000);
       });
 
