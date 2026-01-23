@@ -43,7 +43,11 @@
     "resume": "Fortsetzen",
     "start": "Start",
     "reset": "Zurücksetzen",
-    "searchPlaceholder": "Suche {{domain}}..."
+    "searchPlaceholder": "Suche {{domain}}...",
+    "settingsTabs": {
+      "appearance": "Aussehen",
+      "data": "Daten"
+    }
   },
   "errors": {
     "parseConfigFailed": "Konfiguration konnte nicht gelesen werden. Bitte lade eine gültige JSON-Datei hoch.",

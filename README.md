@@ -31,7 +31,7 @@ Also this project is open source. We don't track you and your data does not get 
 
 ### Changing Themes
 
-You can switch themes in the settings.
+You can switch themes in the settings under the **Appearance** tab.
 
 ![Settings UI Screenshot](./docs/settings.png)
 
@@ -41,8 +41,8 @@ You can switch themes in the settings.
 
 You can upload your own custom wallpaper/background image to personalize your start page. The custom wallpaper will override the theme's default wallpaper and will persist even when switching between themes.
 
-- **Upload Custom Wallpaper:** Go to settings and use the "Custom Background" option to upload an image file
-- **Clear Custom Wallpaper:** Use the clear button in settings to revert back to the theme's default wallpaper
+- **Upload Custom Wallpaper:** Go to settings, open the **Appearance** tab, and use the "Custom Background" option to upload an image file
+- **Clear Custom Wallpaper:** Use the clear button in the **Appearance** tab to revert back to the theme's default wallpaper
 - **Persistence:** Your custom wallpaper is saved in your configuration and will persist across page reloads
 
 ## Language Support
@@ -54,7 +54,7 @@ The application supports multiple languages. Currently available:
 
 ### Changing Language
 
-You can switch languages in the settings. The language preference is saved in your configuration and will persist across page reloads.
+You can switch languages in the settings under the **Appearance** tab. The language preference is saved in your configuration and will persist across page reloads.
 
 - All UI elements, labels, and messages will be translated to the selected language
 - The clock widget will display dates and times in the appropriate locale format
@@ -118,9 +118,9 @@ Create categorized link lists (e.g., "Development", "Design", "Management").
 
 ## Migrating to a different browser
 
-1. Go to the settings and export your current configuration (save it as a .json file)
+1. Go to settings, open the **Data** tab, and export your current configuration (save it as a .json file)
 2. Follow the setup section and set it up for the new browser
-3. In the new browser go to settings and import your configuration .json file
+3. In the new browser, go to settings, open the **Data** tab, and import your configuration .json file
 
 ## Outdated configurations
 

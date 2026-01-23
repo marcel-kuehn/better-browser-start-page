@@ -43,7 +43,11 @@
     "resume": "Resume",
     "start": "Start",
     "reset": "Reset",
-    "searchPlaceholder": "Search {{domain}}..."
+    "searchPlaceholder": "Search {{domain}}...",
+    "settingsTabs": {
+      "appearance": "Appearance",
+      "data": "Data"
+    }
   },
   "errors": {
     "parseConfigFailed": "Failed to parse config. Please upload a valid JSON file.",

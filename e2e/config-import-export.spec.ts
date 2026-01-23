@@ -7,12 +7,17 @@ test.describe('Config Import/Export', () => {
     await page.reload();
   });
 
+  const openDataTab = async (page: import('@playwright/test').Page) => {
+    await page.getByTestId('settings-trigger').click();
+    await expect(page.getByTestId('settings-sidebar')).toBeVisible();
+    await page.getByTestId('settings-tab-data').click();
+  };
+
   test('should display export config section in settings', async ({ page }) => {
     await page.goto('/');
 
-    // Open settings using data-testid
-    await page.getByTestId('settings-trigger').click();
-    await expect(page.getByTestId('settings-sidebar')).toBeVisible();
+    // Open settings and navigate to Data tab
+    await openDataTab(page);
 
     // Export section should be visible
     const exportLabel = page.getByText(/export config/i);
@@ -26,9 +31,8 @@ test.describe('Config Import/Export', () => {
   test('should display import config section in settings', async ({ page }) => {
     await page.goto('/');
 
-    // Open settings
-    await page.getByTestId('settings-trigger').click();
-    await expect(page.getByTestId('settings-sidebar')).toBeVisible();
+    // Open settings and navigate to Data tab
+    await openDataTab(page);
 
     // Import section should be visible
     const importLabel = page.getByText(/import config/i);
@@ -45,9 +49,8 @@ test.describe('Config Import/Export', () => {
     // Grant clipboard permissions
     await context.grantPermissions(['clipboard-read', 'clipboard-write']);
 
-    // Open settings
-    await page.getByTestId('settings-trigger').click();
-    await expect(page.getByTestId('settings-sidebar')).toBeVisible();
+    // Open settings and navigate to Data tab
+    await openDataTab(page);
 
     // Click copy button
     const copyButton = page.locator('button').filter({ hasText: /copy/i });
@@ -77,9 +80,8 @@ test.describe('Config Import/Export', () => {
     await page.goto('/');
     await context.grantPermissions(['clipboard-read', 'clipboard-write']);
 
-    // Open settings
-    await page.getByTestId('settings-trigger').click();
-    await expect(page.getByTestId('settings-sidebar')).toBeVisible();
+    // Open settings and navigate to Data tab
+    await openDataTab(page);
 
     // Click copy button
     const copyButton = page.locator('button').filter({ hasText: /copy/i });
@@ -98,9 +100,8 @@ test.describe('Config Import/Export', () => {
   test('should have disabled replace button before file selection', async ({ page }) => {
     await page.goto('/');
 
-    // Open settings
-    await page.getByTestId('settings-trigger').click();
-    await expect(page.getByTestId('settings-sidebar')).toBeVisible();
+    // Open settings and navigate to Data tab
+    await openDataTab(page);
 
     // Replace button should be disabled
     const replaceButton = page.getByTestId('config-replace-button');
@@ -110,9 +111,8 @@ test.describe('Config Import/Export', () => {
   test('should enable replace button after valid file selection', async ({ page }) => {
     await page.goto('/');
 
-    // Open settings
-    await page.getByTestId('settings-trigger').click();
-    await expect(page.getByTestId('settings-sidebar')).toBeVisible();
+    // Open settings and navigate to Data tab
+    await openDataTab(page);
 
     // Create a valid config file
     const validConfig = {
@@ -143,9 +143,8 @@ test.describe('Config Import/Export', () => {
   test('should import config and update application state', async ({ page }) => {
     await page.goto('/');
 
-    // Open settings
-    await page.getByTestId('settings-trigger').click();
-    await expect(page.getByTestId('settings-sidebar')).toBeVisible();
+    // Open settings and navigate to Data tab
+    await openDataTab(page);
 
     // Create a config with dark theme
     const importConfig = {
@@ -189,9 +188,8 @@ test.describe('Config Import/Export', () => {
   test('should show error for invalid JSON file', async ({ page }) => {
     await page.goto('/');
 
-    // Open settings
-    await page.getByTestId('settings-trigger').click();
-    await expect(page.getByTestId('settings-sidebar')).toBeVisible();
+    // Open settings and navigate to Data tab
+    await openDataTab(page);
 
     // Listen for alert
     page.on('dialog', async dialog => {
@@ -219,9 +217,8 @@ test.describe('Config Import/Export', () => {
     await page.goto('/');
     await context.grantPermissions(['clipboard-read', 'clipboard-write']);
 
-    // Open settings
-    await page.getByTestId('settings-trigger').click();
-    await expect(page.getByTestId('settings-sidebar')).toBeVisible();
+    // Open settings and navigate to Data tab
+    await openDataTab(page);
 
     // Click copy button
     const copyButton = page.locator('button').filter({ hasText: /copy/i });
@@ -253,9 +250,8 @@ test.describe('Config Import/Export', () => {
       return config ? JSON.parse(config) : null;
     });
 
-    // Open settings
-    await page.getByTestId('settings-trigger').click();
-    await expect(page.getByTestId('settings-sidebar')).toBeVisible();
+    // Open settings and navigate to Data tab
+    await openDataTab(page);
 
     // Export by copying
     const copyButton = page.locator('button').filter({ hasText: /copy/i });
@@ -266,9 +262,8 @@ test.describe('Config Import/Export', () => {
     await page.evaluate(() => localStorage.clear());
     await page.reload();
 
-    // Reopen settings
-    await page.getByTestId('settings-trigger').click();
-    await expect(page.getByTestId('settings-sidebar')).toBeVisible();
+    // Reopen settings and navigate to Data tab
+    await openDataTab(page);
 
     // Import the original config
     if (originalConfig) {
