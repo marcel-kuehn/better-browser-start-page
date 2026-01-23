@@ -44,12 +44,14 @@ export default function ConfigImportSettings() {
         type="file"
         accept={FILE_ACCEPT_TYPE}
         onChange={handleFileChange}
+        data-testid="config-import-input"
       />
       <Button
         variant="destructive"
         onClick={handleSave}
         disabled={!uploadedConfig}
         className="w-full"
+        data-testid="config-replace-button"
       >
         {t('ui.replaceConfig')}
       </Button>
