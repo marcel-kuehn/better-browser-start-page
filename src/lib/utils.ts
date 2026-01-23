@@ -10,7 +10,7 @@ export function cn(...inputs: ClassValue[]) {
  * Recursively regenerate IDs for a block and all its nested elements.
  * This is used when pasting a copied widget to avoid duplicate IDs.
  */
-export function regenerateIds<T extends Block>(block: T): T {
+export function regenerateIds<T extends Block & { elements?: Block[] }>(block: T): T {
   const newBlock = {
     ...block,
     id: crypto.randomUUID(),
