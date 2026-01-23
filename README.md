@@ -34,6 +34,14 @@ You can switch themes in the settings.
 
 ![Settings UI Screenshot](./docs/settings.png)
 
+### Custom Wallpaper
+
+You can upload your own custom wallpaper/background image to personalize your start page. The custom wallpaper will override the theme's default wallpaper and will persist even when switching between themes.
+
+- **Upload Custom Wallpaper:** Go to settings and use the "Custom Background" option to upload an image file
+- **Clear Custom Wallpaper:** Use the clear button in settings to revert back to the theme's default wallpaper
+- **Persistence:** Your custom wallpaper is saved in your configuration and will persist across page reloads
+
 ## Visual Editor
 
 ![Grid Manipulation UI Screenshot](./docs/grid-edit.png)
