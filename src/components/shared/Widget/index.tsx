@@ -1,19 +1,13 @@
 import { Card } from '@/components/ui/card';
 import { useAppConfig } from '@/contexts/AppConfig/useAppConfig';
-import { X, Copy } from 'lucide-react';
+import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import type { WidgetProps } from './types';
-import { useTranslation } from 'react-i18next';
+import { CopyWidgetButton } from './CopyWidgetButton';
 
 export function Widget({ children, className, gridArea, id, type, ...props }: WidgetProps) {
-  const { isInEditMode, removeElementById, copyWidget } = useAppConfig();
-  const { t } = useTranslation();
-
-  const handleCopy = () => {
-    // Include all widget properties: id, type, gridArea, and any additional props (like elements)
-    copyWidget({ id, type, gridArea, ...props });
-  };
+  const { isInEditMode, removeElementById } = useAppConfig();
 
   return (
     <Card
@@ -28,16 +22,7 @@ export function Widget({ children, className, gridArea, id, type, ...props }: Wi
     >
       {isInEditMode && (
         <div className="absolute top-1 right-1 z-50 flex gap-1">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-5 w-5"
-            onClick={handleCopy}
-            aria-label={t('ui.copyWidget')}
-            data-testid="copy-widget-button"
-          >
-            <Copy className="h-2 w-2" />
-          </Button>
+          <CopyWidgetButton widget={{ id, type, gridArea, ...props }} />
           <Button
             variant="ghost"
             size="icon"

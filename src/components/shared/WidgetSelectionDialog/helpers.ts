@@ -106,9 +106,9 @@ export const getWidgetOptions = (t: TFunction): WidgetOption[] => [
     icon: LinkIcon,
     variants: [
       { rowSpan: 1, columnSpan: 1 },
-      { rowSpan: 1, columnSpan: 2 },
-      { rowSpan: 1, columnSpan: 3 },
-      { rowSpan: 1, columnSpan: 4 },
+      { rowSpan: 2, columnSpan: 1 },
+      { rowSpan: 3, columnSpan: 1 },
+      { rowSpan: 4, columnSpan: 1 },
     ],
   },
   {
