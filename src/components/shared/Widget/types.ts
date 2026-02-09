@@ -4,3 +4,7 @@ export interface WidgetProps extends WidgetType {
   children?: React.ReactNode;
   className?: string;
 }
+
+export interface CopyWidgetButtonProps {
+  widget: WidgetType;
+}

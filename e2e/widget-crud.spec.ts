@@ -177,6 +177,9 @@ test.describe('Widget Copy-Paste Operations', () => {
     const copyButton = clockWidget.getByTestId('copy-widget-button');
     await copyButton.click();
 
+    // Copy button should reflect copied state inline
+    await expect(copyButton).toHaveAttribute('data-state', 'copied');
+
     const addWidgetButton2 = page.getByTestId('add-widget-button-1-4');
     await addWidgetButton2.click();
 
